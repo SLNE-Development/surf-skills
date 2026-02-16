@@ -22,7 +22,10 @@ fun skillCommand() = commandAPICommand("skill") {
                 viewFrame.open(
                     SkillsView::class.java,
                     player,
-                    mapOf("skill_progress" to experiences)
+                    mapOf(
+                        "skill_progress" to experiences,
+                        "player_uuid" to player.uniqueId
+                    )
                 )
             }
         }
