@@ -21,7 +21,6 @@ interface SkillPlayer {
     fun <S : Skill> findOrCreateExperience(clazz: KClass<out S>): SkillExperience
 
     fun <S : Skill> incrementExperience(clazz: KClass<out S>, amount: Int)
-    fun <S : Skill> decrementExperience(clazz: KClass<out S>, amount: Int)
 }
 
 inline fun <reified S : Skill> SkillPlayer.findExperience(): SkillExperience? =
@@ -32,6 +31,3 @@ inline fun <reified S : Skill> SkillPlayer.findOrCreateExperience(): SkillExperi
 
 inline fun <reified S : Skill> SkillPlayer.incrementExperience(amount: Int) =
     incrementExperience(S::class, amount)
-
-inline fun <reified S : Skill> SkillPlayer.decrementExperience(amount: Int) =
-    decrementExperience(S::class, amount)

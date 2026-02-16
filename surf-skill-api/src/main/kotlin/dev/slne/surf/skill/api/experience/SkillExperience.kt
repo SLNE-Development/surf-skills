@@ -14,5 +14,4 @@ interface SkillExperience {
     fun checkLevel(level: Int): LevelState
 
     fun incrementExperience(amount: Int): SkillExperience
-    fun decrementExperience(amount: Int): SkillExperience
 }

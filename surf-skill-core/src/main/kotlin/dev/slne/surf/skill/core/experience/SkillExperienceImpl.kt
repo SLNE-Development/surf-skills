@@ -26,11 +26,7 @@ data class SkillExperienceImpl(
     override fun incrementExperience(amount: Int): SkillExperience {
         currentExperience += amount
 
-        return this
-    }
-
-    override fun decrementExperience(amount: Int): SkillExperience {
-        currentExperience = (currentExperience - amount).coerceAtLeast(0)
+        // TODO: Check if the player has leveled up and trigger level up events if necessary
 
         return this
     }

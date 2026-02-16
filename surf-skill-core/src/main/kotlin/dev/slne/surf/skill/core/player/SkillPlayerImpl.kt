@@ -64,21 +64,4 @@ class SkillPlayerImpl(
         })
     }
 
-    override fun <S : Skill> decrementExperience(clazz: KClass<out S>, amount: Int) {
-        val experience = findOrCreateExperience(clazz).decrementExperience(amount)
-
-        player?.playSound(true) {
-            type(BukkitSound.ENTITY_VILLAGER_HURT)
-            volume(.25f)
-            pitch(1.25f)
-            source(Sound.Source.AMBIENT)
-        }
-
-        player?.sendActionBar(buildText {
-            append(experience.skill.displayName)
-            appendSpace()
-            error("-$amount XP")
-        })
-    }
-
 }
