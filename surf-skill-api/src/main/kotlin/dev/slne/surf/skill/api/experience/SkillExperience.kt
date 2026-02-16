@@ -12,6 +12,5 @@ interface SkillExperience {
     val currentLevel: Int
 
     fun checkLevel(level: Int): LevelState
-
     fun incrementExperience(amount: Int): SkillExperience
 }

@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ItemType
+import java.util.*
 
 interface Skill : ComponentLike {
     val name: String
@@ -23,6 +24,8 @@ interface Skill : ComponentLike {
 
     fun getLevels(): ObjectList<SkillLevel>
     fun displayItemStack(progress: SkillExperience): ItemStack
+
+    suspend fun awardLevelUpRewards(uuid: UUID, level: Int)
 
     companion object {
         const val BASE_EXPERIENCE = 100

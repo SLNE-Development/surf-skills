@@ -26,6 +26,9 @@ class SkillPlayerImpl(
     override val player get() = server.getPlayer(uuid)
     override val offlinePlayer get() = server.getOfflinePlayer(uuid)
 
+    override fun <S : Skill> hasLevel(clazz: KClass<out S>, level: Int): Boolean =
+        (findExperience(clazz)?.currentLevel ?: 0) >= level
+
     override fun <S : Skill> findExperience(clazz: KClass<out S>): SkillExperience? =
         experiences.firstOrNull { clazz.isInstance(it.skill) }
 

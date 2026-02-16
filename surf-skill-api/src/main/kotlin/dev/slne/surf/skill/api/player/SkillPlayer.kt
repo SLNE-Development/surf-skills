@@ -17,11 +17,16 @@ interface SkillPlayer {
 
     val experiences: @Unmodifiable ObjectList<SkillExperience>
 
+    fun <S : Skill> hasLevel(clazz: KClass<out S>, level: Int): Boolean
+
     fun <S : Skill> findExperience(clazz: KClass<out S>): SkillExperience?
     fun <S : Skill> findOrCreateExperience(clazz: KClass<out S>): SkillExperience
 
     fun <S : Skill> incrementExperience(clazz: KClass<out S>, amount: Int)
 }
+
+inline fun <reified S : Skill> SkillPlayer.hasLevel(level: Int): Boolean =
+    hasLevel(S::class, level)
 
 inline fun <reified S : Skill> SkillPlayer.findExperience(): SkillExperience? =
     findExperience(S::class)

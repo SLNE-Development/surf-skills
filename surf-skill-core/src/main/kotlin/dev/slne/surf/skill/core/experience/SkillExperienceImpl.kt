@@ -1,6 +1,7 @@
 package dev.slne.surf.skill.core.experience
 
 import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.skill.api.SkillInstance
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.LevelState
 import java.util.*
@@ -24,9 +25,15 @@ data class SkillExperienceImpl(
     }
 
     override fun incrementExperience(amount: Int): SkillExperience {
+        val beforeAdding = currentLevel
         currentExperience += amount
+        val afterAdding = currentLevel
 
-        // TODO: Check if the player has leveled up and trigger level up events if necessary
+        if (beforeAdding != afterAdding) {
+            SkillInstance.launch {
+                skill.awardLevelUpRewards(uuid, beforeAdding)
+            }
+        }
 
         return this
     }

@@ -9,13 +9,29 @@ import dev.slne.surf.skill.core.level.explanation.PerLevelExplanationLoreBuilder
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.util.freeze
+import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
 import dev.slne.surf.surfapi.core.api.util.objectListOf
 import dev.slne.surf.surfapi.core.api.util.toObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 
-abstract class AbstractSkillLevel(
+fun skillLevel(
+    skill: Skill,
+    level: Int,
+    rewards: ObjectList<LevelReward>.() -> Unit = {},
+    description: (LoreBuilder.() -> Unit)? = null,
+) = object : AbstractSkillLevel(
+    skill = skill,
+    level = level,
+    description = description,
+) {
+    override fun buildRewards(): ObjectList<LevelReward> {
+        return mutableObjectListOf<LevelReward>().apply(rewards)
+    }
+}
+
+open class AbstractSkillLevel(
     override val skill: Skill,
     override val level: Int,
     override val description: (LoreBuilder.() -> Unit)? = null,
@@ -61,6 +77,8 @@ abstract class AbstractSkillLevel(
                 spacer("- ")
                 append(reward.displayName)
             }
+
+            reward.description(this)
         }
 
         if (rewards.isEmpty()) {
