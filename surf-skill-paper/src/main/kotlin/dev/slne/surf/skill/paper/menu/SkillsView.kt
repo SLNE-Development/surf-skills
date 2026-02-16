@@ -6,7 +6,9 @@ import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.api.manager.getSkill
 import dev.slne.surf.skill.api.skills.*
 import dev.slne.surf.skill.core.experience.SkillExperienceImpl
+import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import dev.slne.surf.skill.paper.menu.utils.outlineItem
+import dev.slne.surf.surfapi.bukkit.api.builder.displayName
 import dev.slne.surf.surfapi.bukkit.api.inventory.framework.titleBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -23,6 +25,12 @@ class SkillsView : View() {
     private val skillExperienceState =
         initialState<ObjectList<SkillExperience>>("skill_progress")
 
+    private val closeItem = MenuHeads.CROSS.clone().apply {
+        displayName {
+            primary("Schliessen".toSmallCaps())
+        }
+    }
+
     override fun onInit(config: ViewConfigBuilder) {
         config
             .titleBuilder {
@@ -34,7 +42,7 @@ class SkillsView : View() {
                 "OMOCOFOAO",
                 "OOOOOOOOO",
                 "OWOEOIONO",
-                "OOOOOOOOO",
+                "OOOOXOOOO",
             )
             .cancelInteractions()
     }
@@ -76,6 +84,9 @@ class SkillsView : View() {
 
     override fun onFirstRender(render: RenderContext) {
         render.layoutSlot('O', outlineItem)
+        render.layoutSlot('X', closeItem).onClick { event ->
+            event.closeForPlayer()
+        }
 
         // Skills
         renderSlot<MiningSkill>(render, 'M')
