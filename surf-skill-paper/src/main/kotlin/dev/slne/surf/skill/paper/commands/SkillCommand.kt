@@ -4,7 +4,7 @@ import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.playerExecutor
-import dev.slne.skill.core.experience.ExperienceService
+import dev.slne.surf.skill.core.experience.ExperienceService
 import dev.slne.surf.skill.paper.menu.SkillsView
 import dev.slne.surf.skill.paper.plugin
 import dev.slne.surf.skill.paper.utils.SkillPermissionRegistry

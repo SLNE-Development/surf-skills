@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.paper.listener
 
 import com.github.shynixn.mccoroutine.folia.launch
-import dev.slne.skill.core.experience.ExperienceService
+import dev.slne.surf.skill.core.experience.ExperienceService
 import dev.slne.surf.skill.paper.plugin
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import org.bukkit.event.EventHandler

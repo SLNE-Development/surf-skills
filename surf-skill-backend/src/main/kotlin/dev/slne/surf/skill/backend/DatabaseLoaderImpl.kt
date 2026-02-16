@@ -1,11 +1,11 @@
 package dev.slne.surf.skill.backend
 
 import com.google.auto.service.AutoService
-import dev.slne.skill.core.database.DatabaseLoader
 import dev.slne.surf.database.DatabaseApi
 import dev.slne.surf.database.libs.org.jetbrains.exposed.v1.r2dbc.SchemaUtils
 import dev.slne.surf.database.libs.org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
 import dev.slne.surf.skill.backend.db.tables.SkillExperiencesTable
+import dev.slne.surf.skill.core.database.DatabaseLoader
 import net.kyori.adventure.util.Services
 import java.nio.file.Path
 

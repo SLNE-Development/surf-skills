@@ -1,11 +1,11 @@
 package dev.slne.surf.skill.paper.menu
 
-import dev.slne.skill.core.experience.SkillExperienceImpl
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.api.manager.getSkill
 import dev.slne.surf.skill.api.skills.*
+import dev.slne.surf.skill.core.experience.SkillExperienceImpl
 import dev.slne.surf.skill.paper.menu.utils.outlineItem
 import dev.slne.surf.surfapi.bukkit.api.inventory.framework.titleBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
