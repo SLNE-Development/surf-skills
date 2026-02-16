@@ -37,10 +37,6 @@ class SkillManagerImpl : SkillManager, Services.Fallback {
         skills.forEach { (it as? AbstractSkill)?.registerListeners() }
     }
 
-    fun unregisterListeners() {
-        skills.forEach { (it as? AbstractSkill)?.unregisterListeners() }
-    }
-
     override fun registerSkill(skill: Skill): Boolean {
         return _skills.add(skill)
     }

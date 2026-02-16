@@ -5,7 +5,7 @@ package dev.slne.surf.skill.paper.menu
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.level.LevelState
 import dev.slne.surf.skill.api.level.SkillLevel
-import dev.slne.surf.skill.api.progress.SkillProgress
+import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import dev.slne.surf.skill.paper.menu.utils.outlineItem
 import dev.slne.surf.surfapi.bukkit.api.builder.buildItem
@@ -23,15 +23,15 @@ import me.devnatan.inventoryframework.state.State
 import org.bukkit.inventory.ItemType
 
 class SkillView : View() {
-    private val skillProgressState = initialState<SkillProgress>("skill_progress")
+    private val skillExperienceState = initialState<SkillExperience>("skill_progress")
 
     private val paginationState: State<Pagination> =
         buildLazyPaginationState<SkillLevel> { context ->
-            val state = skillProgressState.get(context)
+            val state = skillExperienceState.get(context)
 
             state.skill.getLevels()
         }.elementFactory { context, builder, _, level ->
-            val state = skillProgressState.get(context)
+            val state = skillExperienceState.get(context)
             val levelState = state.checkLevel(level.level)
 
             builder.withItem(buildLevelItem(state, level, levelState)).onClick { event ->
@@ -40,7 +40,7 @@ class SkillView : View() {
         }.layoutTarget('L').build()
 
     private fun buildLevelItem(
-        progress: SkillProgress,
+        progress: SkillExperience,
         level: SkillLevel,
         state: LevelState
     ) = buildItem(state.itemType, level.level) {
@@ -117,7 +117,7 @@ class SkillView : View() {
     }
 
     override fun onOpen(open: OpenContext) {
-        val skill = skillProgressState.get(open).skill
+        val skill = skillExperienceState.get(open).skill
 
         open.modifyConfig {
             titleBuilder {

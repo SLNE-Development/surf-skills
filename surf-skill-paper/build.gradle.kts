@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api(project(":surf-skill-core"))
-    api(project(":surf-skill-backend"))
+    runtimeOnly(project(":surf-skill-backend"))
 }
 
 surfPaperPluginApi {

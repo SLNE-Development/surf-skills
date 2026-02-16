@@ -1,7 +1,10 @@
 package dev.slne.surf.skill.paper.menu
 
+import dev.slne.skill.core.experience.SkillExperienceImpl
 import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.progress.SkillProgress
+import dev.slne.surf.skill.api.manager.SkillManager
+import dev.slne.surf.skill.api.manager.getSkill
+import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.skill.api.skills.*
 import dev.slne.surf.skill.paper.menu.utils.outlineItem
 import dev.slne.surf.surfapi.bukkit.api.inventory.framework.titleBuilder
@@ -15,8 +18,8 @@ import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.inventory.ItemStack
 
 class SkillsView : View() {
-    private val skillProgressState =
-        initialState<ObjectList<SkillProgress>>("skill_progress")
+    private val skillExperienceState =
+        initialState<ObjectList<SkillExperience>>("skill_progress")
 
     override fun onInit(config: ViewConfigBuilder) {
         config
@@ -34,21 +37,31 @@ class SkillsView : View() {
             .cancelInteractions()
     }
 
-    private inline fun <reified S : Skill> buildSkillItem(context: RenderContext): Pair<SkillProgress, ItemStack> {
-        val skillProgresses = skillProgressState.get(context)
-        val skillProgressWithSkill = skillProgresses.first { it.skill is S }
+    private inline fun <reified S : Skill> buildSkillItem(
+        context: RenderContext,
+        skill: Skill
+    ): Pair<SkillExperience, ItemStack> {
+        val skillProgresses = skillExperienceState.get(context)
+
+        val skillProgressWithSkill = skillProgresses.firstOrNull { it.skill is S } ?: run {
+            SkillExperienceImpl(
+                skill = skill,
+                currentExperience = 0
+            )
+        }
 
         return skillProgressWithSkill to skillProgressWithSkill.skill.displayItemStack(
             skillProgressWithSkill
         )
     }
 
-    private fun skillClickAction(progress: SkillProgress, event: SlotClickContext) {
+    private fun skillClickAction(progress: SkillExperience, event: SlotClickContext) {
         event.openForPlayer(SkillView::class.java, mapOf("skill_progress" to progress))
     }
 
     private inline fun <reified S : Skill> renderSlot(context: RenderContext, slot: Char) {
-        val skillItem = buildSkillItem<S>(context)
+        val skill = SkillManager.getSkill<S>() ?: return
+        val skillItem = buildSkillItem<S>(context, skill)
 
         context.layoutSlot(slot, skillItem.second)
             .onClick { event -> skillClickAction(skillItem.first, event) }

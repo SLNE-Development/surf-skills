@@ -3,7 +3,7 @@ package dev.slne.skill.core.level
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.LevelReward
-import dev.slne.surf.skill.api.progress.SkillProgress
+import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.util.freeze
@@ -21,7 +21,7 @@ abstract class AbstractSkillLevel(
     private val _rewards = buildRewards()
     override val rewards get() = _rewards.freeze()
 
-    override fun buildLore(progress: SkillProgress): ObjectList<Component> {
+    override fun buildLore(progress: SkillExperience): ObjectList<Component> {
         return LoreBuilder().apply {
             emptyLine()
             buildDescriptionLore()
@@ -32,7 +32,7 @@ abstract class AbstractSkillLevel(
         }.build().toObjectList()
     }
 
-    private fun LoreBuilder.buildLevelExplanationLore(progress: SkillProgress) {
+    private fun LoreBuilder.buildLevelExplanationLore(progress: SkillExperience) {
         val skill = progress.skill
         val level = this@AbstractSkillLevel.level
         val currentLevel = progress.currentLevel

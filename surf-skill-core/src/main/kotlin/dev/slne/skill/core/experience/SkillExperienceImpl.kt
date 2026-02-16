@@ -1,13 +1,13 @@
-package dev.slne.skill.core.progress
+package dev.slne.skill.core.experience
 
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.level.LevelState
-import dev.slne.surf.skill.api.progress.SkillProgress
+import dev.slne.surf.skill.api.progress.SkillExperience
 
-data class SkillProgressImpl(
+data class SkillExperienceImpl(
     override val skill: Skill,
-    override val currentExperience: Int,
-) : SkillProgress {
+    override var currentExperience: Int,
+) : SkillExperience {
     override val currentLevel: Int
         get() = skill.experienceCurve.getLevelForExperience(currentExperience)
 

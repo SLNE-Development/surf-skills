@@ -1,6 +1,7 @@
 package dev.slne.surf.skill.paper
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
+import dev.slne.skill.core.database.DatabaseLoader
 import dev.slne.skill.core.manager.skillManagerImpl
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
@@ -11,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
+        DatabaseLoader.connect(dataPath)
+        
         viewFrame.with(SkillsView())
         viewFrame.with(SkillView())
     }
@@ -23,7 +26,7 @@ class PaperMain : SuspendingJavaPlugin() {
     }
 
     override suspend fun onDisableAsync() {
-        ListenerManager.unregister()
+        DatabaseLoader.disconnect()
     }
 }
 

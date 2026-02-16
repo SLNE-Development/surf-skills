@@ -4,13 +4,12 @@ import dev.slne.skill.core.level.EmptySkillLevel
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.curve.curves.ExponentialExperienceCurve
 import dev.slne.surf.skill.api.level.SkillLevel
-import dev.slne.surf.skill.api.progress.SkillProgress
+import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.bukkit.api.builder.buildItem
 import dev.slne.surf.surfapi.bukkit.api.builder.buildLore
 import dev.slne.surf.surfapi.bukkit.api.builder.displayName
 import dev.slne.surf.surfapi.bukkit.api.event.register
-import dev.slne.surf.surfapi.bukkit.api.event.unregister
 import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
 import dev.slne.surf.surfapi.core.api.util.objectListOf
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -48,14 +47,14 @@ abstract class AbstractSkill(
                 skill = this,
                 level = level
             )
-            
+
             levels.add(skillLevel)
         }
 
         return levels
     }
 
-    override fun displayItemStack(progress: SkillProgress) = buildItem(material) {
+    override fun displayItemStack(progress: SkillExperience) = buildItem(material) {
         displayName(displayName)
 
         val experience = progress.currentExperience
@@ -75,10 +74,6 @@ abstract class AbstractSkill(
     fun registerListeners() {
         _listeners.addAll(registerSkillListeners())
         _listeners.forEach { it.register() }
-    }
-
-    fun unregisterListeners() {
-        _listeners.forEach { it.unregister() }
     }
 
     open fun registerSkillListeners(): ObjectList<Listener> = mutableObjectListOf()
