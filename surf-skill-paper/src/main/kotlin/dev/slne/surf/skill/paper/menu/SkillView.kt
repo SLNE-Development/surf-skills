@@ -121,9 +121,9 @@ class SkillView : View() {
 
         open.modifyConfig {
             titleBuilder {
-                primary("Skill".toSmallCaps())
-                appendSpace()
                 append(skill.displayName)
+                appendSpace()
+                primary("Skill".toSmallCaps())
             }
         }
     }
