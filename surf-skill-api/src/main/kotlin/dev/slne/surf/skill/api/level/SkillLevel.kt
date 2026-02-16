@@ -1,8 +1,8 @@
 package dev.slne.surf.skill.api.level
 
 import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.reward.LevelReward
-import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.text.Component
@@ -14,7 +14,7 @@ interface SkillLevel {
     val level: Int
 
     val description: (LoreBuilder.() -> Unit)?
-    fun buildLore(progress: SkillExperience): ObjectList<Component>
+    fun buildLore(experience: SkillExperience): ObjectList<Component>
 
     val rewards: @Unmodifiable ObjectList<LevelReward>
 

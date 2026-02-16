@@ -1,9 +1,11 @@
 package dev.slne.skill.core.level
 
+import dev.slne.skill.core.level.explanation.ExplanationLoreBuilder
+import dev.slne.skill.core.level.explanation.GlobalXPWithPerLevelBarLoreBuilder
 import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.LevelReward
-import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.util.freeze
@@ -21,54 +23,23 @@ abstract class AbstractSkillLevel(
     private val _rewards = buildRewards()
     override val rewards get() = _rewards.freeze()
 
-    override fun buildLore(progress: SkillExperience): ObjectList<Component> {
+    override fun buildLore(experience: SkillExperience): ObjectList<Component> {
         return LoreBuilder().apply {
             emptyLine()
             buildDescriptionLore()
-            buildLevelExplanationLore(progress)
-            emptyLine()
+            buildLevelExplanationLore(experience)
             buildRewardLore()
             emptyLine()
         }.build().toObjectList()
     }
 
-    private fun LoreBuilder.buildLevelExplanationLore(progress: SkillExperience) {
-        val skill = progress.skill
-        val level = this@AbstractSkillLevel.level
-        val currentLevel = progress.currentLevel
-
-        val currentLevelXp = skill.experienceCurve.getExperienceForLevel(level)
-        val totalXpForPreviousLevel =
-            if (level > 1) skill.experienceCurve.getTotalExperienceForLevel(level - 1) else 0
-
-        val xpIntoLevel = when {
-            currentLevel > level -> currentLevelXp
-            currentLevel == level -> (progress.currentExperience - totalXpForPreviousLevel).coerceAtLeast(
-                0
+    private fun LoreBuilder.buildLevelExplanationLore(experience: SkillExperience) {
+        GlobalXPWithPerLevelBarLoreBuilder.run {
+            buildExplanation(
+                experience = experience,
+                level = level,
+                amountOfBars = ExplanationLoreBuilder.AMOUNT_OF_BARS
             )
-
-            else -> 0L
-        }
-
-        val percent =
-            (xpIntoLevel.toDouble() / currentLevelXp.toDouble() * 100.0).coerceIn(0.0, 100.0)
-
-        line {
-            spacer("$xpIntoLevel / $currentLevelXp XP")
-        }
-
-        val totalBars = 50
-        val barsFilled = (percent / 100.0 * totalBars).toInt().coerceIn(0, totalBars)
-
-        line {
-            for (i in 1..totalBars) {
-                when {
-                    i <= barsFilled -> success("|")
-                    else -> error("|")
-                }
-            }
-            appendSpace()
-            spacer("(${percent.toInt()}%)")
         }
     }
 

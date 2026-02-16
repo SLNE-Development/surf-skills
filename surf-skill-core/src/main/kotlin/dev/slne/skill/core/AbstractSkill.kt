@@ -3,8 +3,8 @@ package dev.slne.skill.core
 import dev.slne.skill.core.level.EmptySkillLevel
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.curve.curves.ExponentialExperienceCurve
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.SkillLevel
-import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.bukkit.api.builder.buildItem
 import dev.slne.surf.surfapi.bukkit.api.builder.buildLore

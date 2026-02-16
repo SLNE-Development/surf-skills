@@ -1,6 +1,6 @@
 package dev.slne.skill.core.experience
 
-import dev.slne.surf.skill.api.progress.SkillExperience
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.surfapi.core.api.util.requiredService
 import it.unimi.dsi.fastutil.objects.ObjectList
 import java.util.*

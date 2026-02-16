@@ -3,7 +3,7 @@
 package dev.slne.skill.core.skills.mining
 
 import dev.slne.skill.core.AbstractSkill
-import dev.slne.skill.core.skills.mining.listeners.MiningListener
+import dev.slne.skill.core.skills.mining.listeners.MiningBlockListener
 import dev.slne.surf.skill.api.skills.MiningSkill
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
@@ -25,6 +25,6 @@ object MiningSkillImpl : AbstractSkill(
     }
 ), MiningSkill {
     override fun registerSkillListeners(): ObjectList<Listener> = mutableObjectListOf(
-        MiningListener
+        MiningBlockListener
     )
 }

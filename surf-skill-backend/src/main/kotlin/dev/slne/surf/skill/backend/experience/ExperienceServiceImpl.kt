@@ -5,9 +5,9 @@ import com.google.auto.service.AutoService
 import com.sksamuel.aedile.core.asLoadingCache
 import dev.slne.skill.core.experience.ExperienceService
 import dev.slne.skill.core.experience.SkillExperienceImpl
-import dev.slne.surf.skill.api.progress.SkillExperience
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.backend.db.repository.ExperienceRepository
-import dev.slne.surf.surfapi.core.api.util.toObjectList
+import dev.slne.surf.surfapi.core.api.util.toMutableObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.util.Services
 import java.util.*
@@ -21,7 +21,7 @@ class ExperienceServiceImpl : ExperienceService, Services.Fallback {
         }
 
     override suspend fun getExperiencesForPlayer(uuid: UUID): ObjectList<SkillExperience> {
-        return cache.get(uuid).map { it as SkillExperience }.toObjectList()
+        return cache.get(uuid).map { it as SkillExperience }.toMutableObjectList()
     }
 
     override suspend fun savePlayer(uuid: UUID) {

@@ -3,9 +3,9 @@
 package dev.slne.surf.skill.paper.menu
 
 import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.LevelState
 import dev.slne.surf.skill.api.level.SkillLevel
-import dev.slne.surf.skill.api.progress.SkillExperience
 import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import dev.slne.surf.skill.paper.menu.utils.outlineItem
 import dev.slne.surf.surfapi.bukkit.api.builder.buildItem
