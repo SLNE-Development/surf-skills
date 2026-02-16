@@ -5,7 +5,7 @@ import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.LevelReward
 import dev.slne.surf.skill.core.level.explanation.ExplanationLoreBuilder
-import dev.slne.surf.skill.core.level.explanation.GlobalXPWithPerLevelBarLoreBuilder
+import dev.slne.surf.skill.core.level.explanation.PerLevelExplanationLoreBuilder
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.util.freeze
@@ -34,7 +34,7 @@ abstract class AbstractSkillLevel(
     }
 
     private fun LoreBuilder.buildLevelExplanationLore(experience: SkillExperience) {
-        GlobalXPWithPerLevelBarLoreBuilder.run {
+        PerLevelExplanationLoreBuilder.run {
             buildExplanation(
                 experience = experience,
                 level = level,
