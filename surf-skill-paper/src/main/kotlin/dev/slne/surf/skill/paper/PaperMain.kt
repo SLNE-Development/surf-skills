@@ -1,6 +1,7 @@
 package dev.slne.surf.skill.paper
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
+import dev.slne.surf.skill.api.player.SkillPlayerManager
 import dev.slne.surf.skill.core.database.DatabaseLoader
 import dev.slne.surf.skill.core.manager.skillManagerImpl
 import dev.slne.surf.skill.paper.commands.skillCommand
@@ -26,6 +27,13 @@ class PaperMain : SuspendingJavaPlugin() {
     }
 
     override suspend fun onDisableAsync() {
+        server.onlinePlayers.forEach { player ->
+            val uuid = player.uniqueId
+
+            SkillPlayerManager.savePlayer(uuid)
+            SkillPlayerManager.invalidatePlayer(uuid)
+        }
+
         DatabaseLoader.disconnect()
     }
 }

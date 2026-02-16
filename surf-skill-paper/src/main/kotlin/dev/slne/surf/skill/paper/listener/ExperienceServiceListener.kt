@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.event.server.PluginDisableEvent
 import org.bukkit.event.world.WorldSaveEvent
 
 object ExperienceServiceListener : Listener {
@@ -42,20 +41,6 @@ object ExperienceServiceListener : Listener {
 
             plugin.launch {
                 SkillPlayerManager.savePlayer(uuid)
-            }
-        }
-    }
-
-    @EventHandler
-    fun onDisable(event: PluginDisableEvent) {
-        if (event.plugin != plugin) return
-
-        server.onlinePlayers.forEach { player ->
-            val uuid = player.uniqueId
-
-            plugin.launch {
-                SkillPlayerManager.savePlayer(uuid)
-                SkillPlayerManager.invalidatePlayer(uuid)
             }
         }
     }
