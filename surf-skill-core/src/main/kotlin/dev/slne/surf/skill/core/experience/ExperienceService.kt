@@ -8,10 +8,8 @@ import java.util.*
 private val experienceService = requiredService<ExperienceService>()
 
 interface ExperienceService {
-    suspend fun getExperiencesForPlayer(uuid: UUID): ObjectList<SkillExperience>
-
-    suspend fun savePlayer(uuid: UUID)
-    suspend fun invalidatePlayer(uuid: UUID)
+    suspend fun fetchPlayerExperience(uuid: UUID): ObjectList<SkillExperience>
+    suspend fun savePlayerExperience(uuid: UUID, experience: ObjectList<SkillExperience>)
 
     companion object : ExperienceService by experienceService {
         val INSTANCE get() = experienceService

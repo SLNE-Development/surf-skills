@@ -1,9 +1,9 @@
 package dev.slne.surf.skill.core.skills.combat.listeners
 
 import dev.slne.surf.skill.api.SkillInstance
-import dev.slne.surf.skill.api.experience.utils.findOrCreateSkillExperience
+import dev.slne.surf.skill.api.player.SkillPlayerManager
+import dev.slne.surf.skill.api.player.incrementExperience
 import dev.slne.surf.skill.api.skills.CombatSkill
-import dev.slne.surf.skill.core.experience.ExperienceService
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -34,10 +34,9 @@ object CombatKillListener : Listener {
         val uuid = killer.uniqueId
 
         SkillInstance.launch {
-            val experiences = ExperienceService.getExperiencesForPlayer(uuid)
-            val combatExperience = experiences.findOrCreateSkillExperience<CombatSkill>(uuid)
+            val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
 
-            combatExperience.incrementExperience(1)
+            skillPlayer.incrementExperience<CombatSkill>(1)
         }
     }
 

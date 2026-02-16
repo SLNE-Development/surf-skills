@@ -38,7 +38,7 @@ object ExperienceRepository {
     ) = suspendTransaction {
         val skillName = skillExperience.skill.name
         val experience = skillExperience.currentExperience
-
+        
         SkillExperiencesTable.upsert {
             it[SkillExperiencesTable.uuid] = uuid
             it[SkillExperiencesTable.skillName] = skillName

@@ -2,8 +2,6 @@ package dev.slne.surf.skill.api.experience
 
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.level.LevelState
-import org.bukkit.OfflinePlayer
-import org.bukkit.entity.Player
 import java.util.*
 
 interface SkillExperience {
@@ -12,9 +10,6 @@ interface SkillExperience {
 
     val currentExperience: Int
     val currentLevel: Int
-
-    val player: Player?
-    val offlinePlayer: OfflinePlayer
 
     fun checkLevel(level: Int): LevelState
 

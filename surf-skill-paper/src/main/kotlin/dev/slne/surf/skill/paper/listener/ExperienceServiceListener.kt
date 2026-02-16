@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.paper.listener
 
 import com.github.shynixn.mccoroutine.folia.launch
-import dev.slne.surf.skill.core.experience.ExperienceService
+import dev.slne.surf.skill.api.player.SkillPlayerManager
 import dev.slne.surf.skill.paper.plugin
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import org.bukkit.event.EventHandler
@@ -17,7 +17,7 @@ object ExperienceServiceListener : Listener {
         val uuid = player.uniqueId
 
         plugin.launch {
-            ExperienceService.getExperiencesForPlayer(uuid)
+            SkillPlayerManager.fetchOrCreatePlayer(uuid)
         }
     }
 
@@ -27,8 +27,8 @@ object ExperienceServiceListener : Listener {
         val uuid = player.uniqueId
 
         plugin.launch {
-            ExperienceService.savePlayer(uuid)
-            ExperienceService.invalidatePlayer(uuid)
+            SkillPlayerManager.savePlayer(uuid)
+            SkillPlayerManager.invalidatePlayer(uuid)
         }
     }
 
@@ -40,7 +40,7 @@ object ExperienceServiceListener : Listener {
             val uuid = player.uniqueId
 
             plugin.launch {
-                ExperienceService.savePlayer(uuid)
+                SkillPlayerManager.savePlayer(uuid)
             }
         }
     }
