@@ -7,8 +7,10 @@ import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
+import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ItemType
+import org.jetbrains.annotations.Unmodifiable
 import java.util.*
 
 interface Skill : ComponentLike {
@@ -26,6 +28,12 @@ interface Skill : ComponentLike {
     fun displayItemStack(progress: SkillExperience): ItemStack
 
     suspend fun awardLevelUpRewards(uuid: UUID, level: Int)
+
+    @InternalSkillApi
+    val listeners: @Unmodifiable ObjectList<Listener>
+
+    @InternalSkillApi
+    fun registerListeners()
 
     companion object {
         const val BASE_EXPERIENCE = 100

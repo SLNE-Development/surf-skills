@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     api(projects.surfSkillApi)
+    compileOnlyApi(libs.surf.enchantment.api)
 }

@@ -3,15 +3,7 @@ package dev.slne.surf.skill.core.manager
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.manager.SkillManager
-import dev.slne.surf.skill.core.AbstractSkill
-import dev.slne.surf.skill.core.skills.alchemy.AlchemySkillImpl
-import dev.slne.surf.skill.core.skills.combat.CombatSkillImpl
-import dev.slne.surf.skill.core.skills.enchanting.EnchantingSkillImpl
-import dev.slne.surf.skill.core.skills.exploration.ExplorationSkillImpl
-import dev.slne.surf.skill.core.skills.fishing.FishingSkillImpl
-import dev.slne.surf.skill.core.skills.foraging.ForagingSkillImpl
-import dev.slne.surf.skill.core.skills.mining.MiningSkillImpl
-import dev.slne.surf.skill.core.skills.woodcutting.WoodcuttingSkillImpl
+import dev.slne.surf.skill.api.skills.*
 import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import net.kyori.adventure.util.Services
@@ -23,18 +15,18 @@ class SkillManagerImpl : SkillManager, Services.Fallback {
     override val skills get() = _skills.freeze()
 
     fun registerAllSkills() {
-        registerSkill(AlchemySkillImpl)
-        registerSkill(CombatSkillImpl)
-        registerSkill(EnchantingSkillImpl)
-        registerSkill(FishingSkillImpl)
-        registerSkill(ExplorationSkillImpl)
-        registerSkill(ForagingSkillImpl)
-        registerSkill(MiningSkillImpl)
-        registerSkill(WoodcuttingSkillImpl)
+        registerSkill(AlchemySkill)
+        registerSkill(CombatSkill)
+        registerSkill(EnchantingSkill)
+        registerSkill(FishingSkill)
+        registerSkill(ExplorationSkill)
+        registerSkill(ForagingSkill)
+        registerSkill(MiningSkill)
+        registerSkill(WoodcuttingSkill)
     }
 
     fun registerListeners() {
-        skills.forEach { (it as? AbstractSkill)?.registerListeners() }
+        skills.forEach { it.registerListeners() }
     }
 
     override fun registerSkill(skill: Skill): Boolean {

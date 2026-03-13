@@ -7,12 +7,13 @@ import dev.slne.surf.skill.api.skills.CombatSkill
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 
 object CombatKillListener : Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onKill(event: EntityDeathEvent) {
         var killer = event.entity.killer
         val entity = event.entity

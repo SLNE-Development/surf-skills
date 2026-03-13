@@ -2,13 +2,15 @@
 
 package dev.slne.surf.skill.core.skills.exploration
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.ExplorationSkill
 import dev.slne.surf.skill.core.AbstractSkill
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import org.bukkit.inventory.ItemType
 
-object ExplorationSkillImpl : AbstractSkill(
+@AutoService(ExplorationSkill::class)
+class ExplorationSkillImpl : AbstractSkill(
     name = "exploration",
     material = ItemType.GLOBE_BANNER_PATTERN,
     displayName = buildText {

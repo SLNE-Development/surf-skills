@@ -14,8 +14,8 @@ import dev.slne.surf.surfapi.bukkit.api.event.register
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
+import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
-import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import dev.slne.surf.surfapi.core.api.util.objectListOf
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -38,7 +38,8 @@ abstract class AbstractSkill(
     override val maxExperience: Int = Skill.MAX_EXPERIENCE,
     listeners: ObjectSet<Listener> = objectSetOf()
 ) : Skill {
-    private val _listeners = mutableObjectSetOf<Listener>(listeners)
+    private val _listeners = mutableObjectListOf<Listener>(listeners)
+    override val listeners get() = _listeners.freeze()
 
     override val experienceCurve = ExponentialExperienceCurve(
         maxLevel = maxLevel,
@@ -112,7 +113,7 @@ abstract class AbstractSkill(
         }
     }
 
-    fun registerListeners() {
+    override fun registerListeners() {
         _listeners.forEach { it.register() }
     }
 

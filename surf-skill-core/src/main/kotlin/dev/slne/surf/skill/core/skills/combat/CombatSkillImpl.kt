@@ -2,6 +2,7 @@
 
 package dev.slne.surf.skill.core.skills.combat
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.skills.CombatSkill
@@ -15,9 +16,9 @@ import dev.slne.surf.surfapi.bukkit.api.builder.meta
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import dev.slne.surf.surfapi.core.api.util.objectListOf
+import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.enchantments.Enchantment
-import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemType
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
 
@@ -35,7 +36,8 @@ private val enchantedBook = buildItem(ItemType.ENCHANTED_BOOK) {
     }
 }
 
-object CombatSkillImpl : AbstractSkill(
+@AutoService(CombatSkill::class)
+class CombatSkillImpl : AbstractSkill(
     name = "combat",
     material = ItemType.DIAMOND_SWORD,
     displayName = buildText {
@@ -45,7 +47,8 @@ object CombatSkillImpl : AbstractSkill(
         line {
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Kampf zu verbessern.")
         }
-    }
+    },
+    listeners = objectSetOf(CombatKillListener)
 ), CombatSkill {
     override fun getExtraLevels(): ObjectList<SkillLevel> {
         return objectListOf(
@@ -56,12 +59,6 @@ object CombatSkillImpl : AbstractSkill(
                     add(LevelItemRewards(objectListOf(enchantedBook)))
                 }
             )
-        )
-    }
-
-    override fun registerSkillListeners(): ObjectList<Listener> {
-        return objectListOf(
-            CombatKillListener
         )
     }
 }

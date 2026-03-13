@@ -1,5 +1,10 @@
 package dev.slne.surf.skill.api.skills
 
 import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.surfapi.core.api.util.requiredService
 
-interface WoodcuttingSkill : Skill
+private val impl = requiredService<WoodcuttingSkill>()
+
+interface WoodcuttingSkill : Skill {
+    companion object : WoodcuttingSkill by impl
+}
