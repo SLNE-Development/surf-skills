@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent
 import org.bukkit.persistence.PersistentDataType
 
 object AlchemyListener : Listener {
-    private val ALCHEMY_RESULT_ITEM_KEY = NamespacedKey("surf", "alchemy_result_item")
+    private val ALCHEMY_RESULT_ITEM_KEY = NamespacedKey("surf", "skill_alchemy_result_item")
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onBrew(event: InventoryClickEvent) {
@@ -32,7 +32,7 @@ object AlchemyListener : Listener {
 
         val clickedItem = event.currentItem ?: event.cursor
         val itemType = clickedItem.type
-        
+
         if (itemType != Material.POTION && itemType != Material.SPLASH_POTION && itemType != Material.LINGERING_POTION) return
 
         if (clickedItem.persistentDataContainer.has(ALCHEMY_RESULT_ITEM_KEY)) return

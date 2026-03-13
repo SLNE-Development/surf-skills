@@ -1,5 +1,5 @@
 [versions]
-surf-enchantment-api = "1.21.11-2.0.0-SNAPSHOT"
+surf-enchantment-api = "1.21.11-2.2.0-SNAPSHOT"
 
 [libraries]
 surf-enchantment-api = { module = "dev.slne.surf.enchantment:surf-enchantment-api", version.ref = "surf-enchantment-api" }

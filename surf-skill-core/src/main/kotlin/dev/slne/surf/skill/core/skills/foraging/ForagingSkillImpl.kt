@@ -5,8 +5,10 @@ package dev.slne.surf.skill.core.skills.foraging
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.ForagingSkill
 import dev.slne.surf.skill.core.AbstractSkill
+import dev.slne.surf.skill.core.skills.foraging.listeners.ForagingListener
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
+import dev.slne.surf.surfapi.core.api.util.objectListOf
 import org.bukkit.inventory.ItemType
 
 @AutoService(ForagingSkill::class)
@@ -20,5 +22,6 @@ class ForagingSkillImpl : AbstractSkill(
         line {
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Sammeln zu verbessern.")
         }
-    }
+    },
+    listeners = objectListOf(ForagingListener)
 ), ForagingSkill
