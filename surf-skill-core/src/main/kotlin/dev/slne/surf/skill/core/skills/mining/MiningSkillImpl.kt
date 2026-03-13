@@ -8,7 +8,7 @@ import dev.slne.surf.skill.core.AbstractSkill
 import dev.slne.surf.skill.core.skills.mining.listeners.MiningBlockListener
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import dev.slne.surf.surfapi.core.api.util.objectListOf
 import org.bukkit.inventory.ItemType
 
 @AutoService(MiningSkill::class)
@@ -23,5 +23,5 @@ class MiningSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Bergbau zu verbessern.")
         }
     },
-    listeners = objectSetOf(MiningBlockListener)
+    listeners = objectListOf(MiningBlockListener)
 ), MiningSkill

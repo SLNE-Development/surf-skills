@@ -16,7 +16,6 @@ import dev.slne.surf.surfapi.bukkit.api.builder.meta
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import dev.slne.surf.surfapi.core.api.util.objectListOf
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
@@ -48,7 +47,7 @@ class CombatSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Kampf zu verbessern.")
         }
     },
-    listeners = objectSetOf(CombatKillListener)
+    listeners = objectListOf(CombatKillListener)
 ), CombatSkill {
     override fun getExtraLevels(): ObjectList<SkillLevel> {
         return objectListOf(

@@ -8,7 +8,7 @@ import dev.slne.surf.skill.core.AbstractSkill
 import dev.slne.surf.skill.core.skills.enchanting.listeners.EnchantListener
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import dev.slne.surf.surfapi.core.api.util.objectListOf
 import org.bukkit.inventory.ItemType
 
 @AutoService(EnchantingSkill::class)
@@ -23,5 +23,5 @@ class EnchantingSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Verzauberung zu verbessern.")
         }
     },
-    listeners = objectSetOf(EnchantListener)
+    listeners = objectListOf(EnchantListener)
 ), EnchantingSkill

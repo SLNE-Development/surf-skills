@@ -17,9 +17,7 @@ import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
 import dev.slne.surf.surfapi.core.api.util.objectListOf
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import it.unimi.dsi.fastutil.objects.ObjectList
-import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
@@ -36,7 +34,7 @@ abstract class AbstractSkill(
     override val baseExperience: Int = Skill.BASE_EXPERIENCE,
     override val maxLevel: Int = Skill.MAX_SKILL_LEVEL,
     override val maxExperience: Int = Skill.MAX_EXPERIENCE,
-    listeners: ObjectSet<Listener> = objectSetOf()
+    listeners: ObjectList<Listener> = objectListOf()
 ) : Skill {
     private val _listeners = mutableObjectListOf<Listener>(listeners)
     override val listeners get() = _listeners.freeze()
