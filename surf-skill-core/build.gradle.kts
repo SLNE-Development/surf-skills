@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api(project(":surf-skill-api"))
+    api(projects.surfSkillApi)
 }

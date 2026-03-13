@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":surf-skill-core"))
+    api(projects.surfSkillCore)
 }
 
 surfRawPaperApi {

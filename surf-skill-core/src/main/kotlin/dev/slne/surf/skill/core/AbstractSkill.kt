@@ -15,8 +15,11 @@ import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
+import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import dev.slne.surf.surfapi.core.api.util.objectListOf
+import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import it.unimi.dsi.fastutil.objects.ObjectList
+import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
@@ -32,9 +35,10 @@ abstract class AbstractSkill(
     override val lore: LoreBuilder.() -> Unit,
     override val baseExperience: Int = Skill.BASE_EXPERIENCE,
     override val maxLevel: Int = Skill.MAX_SKILL_LEVEL,
-    override val maxExperience: Int = Skill.MAX_EXPERIENCE
+    override val maxExperience: Int = Skill.MAX_EXPERIENCE,
+    listeners: ObjectSet<Listener> = objectSetOf()
 ) : Skill {
-    private val _listeners = mutableObjectListOf<Listener>()
+    private val _listeners = mutableObjectSetOf<Listener>(listeners)
 
     override val experienceCurve = ExponentialExperienceCurve(
         maxLevel = maxLevel,
@@ -109,11 +113,8 @@ abstract class AbstractSkill(
     }
 
     fun registerListeners() {
-        _listeners.addAll(registerSkillListeners())
         _listeners.forEach { it.register() }
     }
-
-    open fun registerSkillListeners(): ObjectList<Listener> = mutableObjectListOf()
 
     override fun asComponent() = displayName
 }

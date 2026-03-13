@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":surf-skill-core"))
-    runtimeOnly(project(":surf-skill-backend"))
+    api(projects.surfSkillCore)
+    runtimeOnly(projects.surfSkillBackend)
 }
 
 surfPaperPluginApi {
