@@ -3,100 +3,114 @@ package dev.slne.surf.skill.paper.menu
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.manager.SkillManager
-import dev.slne.surf.skill.api.manager.getSkill
 import dev.slne.surf.skill.api.skills.*
 import dev.slne.surf.skill.core.experience.SkillExperienceImpl
 import dev.slne.surf.skill.paper.menu.utils.MenuHeads
-import dev.slne.surf.skill.paper.menu.utils.outlineItem
 import dev.slne.surf.surfapi.bukkit.api.builder.displayName
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.titleBuilder
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.layout
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.layoutSlot
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.onItemClick
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.openForPlayer
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.*
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.container.dsl.blockRow
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.icon.ViewIconColor
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.icon.ViewIconType
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.icon.viewIcon
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.state.get
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.state.initialState
 import dev.slne.surf.surfapi.core.api.font.toSmallCaps
 import it.unimi.dsi.fastutil.objects.ObjectList
-import me.devnatan.inventoryframework.View
-import me.devnatan.inventoryframework.ViewConfigBuilder
 import me.devnatan.inventoryframework.context.RenderContext
-import me.devnatan.inventoryframework.context.SlotClickContext
-import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.inventory.ItemStack
 import java.util.*
+import kotlin.reflect.KClass
 
-class SkillsView : View() {
-    private val playerUuidState = initialState<UUID>("player_uuid")
-    private val skillExperienceState =
-        initialState<ObjectList<SkillExperience>>("skill_progress")
 
-    private val closeItem = MenuHeads.CROSS.clone().apply {
-        displayName {
-            primary("Schliessen".toSmallCaps())
+val skillsView = surfView("Skills") {
+    val playerUuidState = initialState<UUID>("player_uuid")
+    val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
+
+    settings {
+        navigateBackOnOutsideClick(false)
+    }
+
+    containerDefaults {
+        blockRow(1)
+        blockRow(2, exemptColumns = intArrayOf(1, 3, 5, 7))
+        blockRow(3)
+        blockRow(4, exemptColumns = intArrayOf(1, 3, 5, 7))
+        blockRow(5)
+    }
+
+    onInit {
+        layout {
+            empty()
+            row(" M C F A ")
+            empty()
+            row(" W E I N ")
+            row("    X    ")
         }
     }
 
-    override fun onInit(config: ViewConfigBuilder) {
-        config
-            .titleBuilder {
-                primary("Skills".toSmallCaps(), TextDecoration.BOLD)
-            }
-            .size(5)
-            .layout(
-                "OOOOOOOOO",
-                "OMOCOFOAO",
-                "OOOOOOOOO",
-                "OWOEOIONO",
-                "OOOOXOOOO",
-            )
-            .cancelInteractions()
-    }
-
-    private inline fun <reified S : Skill> buildSkillItem(
-        context: RenderContext,
-        skill: Skill,
+    fun <S : Skill> RenderContext.buildSkillItem(
+        skill: S,
     ): Pair<SkillExperience, ItemStack> {
-        val playerUuid = playerUuidState.get(context)
-        val skillProgresses = skillExperienceState.get(context)
+        val playerUuid = playerUuidState[this]
 
-        val skillProgressWithSkill = skillProgresses.firstOrNull { it.skill is S } ?: run {
-            SkillExperienceImpl(
-                uuid = playerUuid,
-                skill = skill,
-                currentExperience = 0
-            )
-        }
+        val skillProgresses = skillExperienceState[this]
+        val skillProgressWithSkill =
+            skillProgresses.firstOrNull { skill.javaClass.isInstance(it.skill) }
+                ?: run {
+                    SkillExperienceImpl(
+                        uuid = playerUuid,
+                        skill = skill,
+                        currentExperience = 0
+                    )
+                }
 
         return skillProgressWithSkill to skillProgressWithSkill.skill.displayItemStack(
             skillProgressWithSkill
         )
     }
 
-    private fun skillClickAction(progress: SkillExperience, event: SlotClickContext) {
-        event.openForPlayer(SkillView::class.java, mapOf("skill_progress" to progress))
-    }
-
-    private inline fun <reified S : Skill> renderSlot(
-        context: RenderContext,
+    fun <S : Skill> RenderContext.renderSlot(
+        skillClass: KClass<S>,
         slot: Char,
     ) {
-        val skill = SkillManager.getSkill<S>() ?: return
-        val skillItem = buildSkillItem<S>(context, skill)
+        val skill = SkillManager.getSkill(skillClass) ?: return
+        val skillItem = buildSkillItem(skill)
 
-        context.layoutSlot(slot, skillItem.second)
-            .onClick { event -> skillClickAction(skillItem.first, event) }
+        layoutSlot(slot, skillItem.second)
+            .onItemClick {
+                openForPlayer(skillView, mapOf("skill_progress" to skillItem.first))
+            }
     }
 
-    override fun onFirstRender(render: RenderContext) {
-        render.layoutSlot('O', outlineItem)
-        render.layoutSlot('X', closeItem).onClick { event ->
-            event.closeForPlayer()
+    onFirstRender {
+        layoutSlot('X') {
+            withItem(MenuHeads.CROSS.apply {
+                displayName {
+                    primary("Schliessen".toSmallCaps())
+                }
+            })
         }
 
-        // Skills
-        renderSlot<MiningSkill>(render, 'M')
-        renderSlot<CombatSkill>(render, 'C')
-        renderSlot<ForagingSkill>(render, 'F')
-        renderSlot<AlchemySkill>(render, 'A')
+        renderSlot(MiningSkill::class, 'M')
+        renderSlot(CombatSkill::class, 'C')
+        renderSlot(ForagingSkill::class, 'F')
+        renderSlot(AlchemySkill::class, 'A')
 
-        renderSlot<WoodcuttingSkill>(render, 'W')
-        renderSlot<ExplorationSkill>(render, 'E')
-        renderSlot<FishingSkill>(render, 'I')
-        renderSlot<EnchantingSkill>(render, 'N')
+        renderSlot(WoodcuttingSkill::class, 'W')
+        renderSlot(ExplorationSkill::class, 'E')
+        renderSlot(FishingSkill::class, 'I')
+        renderSlot(EnchantingSkill::class, 'N')
+
+        layoutSlot('X', viewIcon(ViewIconType.CROSS, ViewIconColor.RED) {
+            displayName {
+                primary("Schliessen".toSmallCaps())
+            }
+        }).onItemClick {
+            closeForPlayer()
+        }
     }
 }

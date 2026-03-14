@@ -6,17 +6,17 @@ import dev.slne.surf.skill.core.database.DatabaseLoader
 import dev.slne.surf.skill.core.manager.skillManagerImpl
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
-import dev.slne.surf.skill.paper.menu.SkillView
-import dev.slne.surf.skill.paper.menu.SkillsView
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.viewFrame
+import dev.slne.surf.skill.paper.menu.skillView
+import dev.slne.surf.skill.paper.menu.skillsView
+import dev.slne.surf.surfapi.bukkit.api.inventory.framework.register
 import org.bukkit.plugin.java.JavaPlugin
 
 class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
         DatabaseLoader.connect(dataPath)
 
-        viewFrame.with(SkillsView())
-        viewFrame.with(SkillView())
+        skillsView.register()
+        skillView.register()
     }
 
     override suspend fun onEnableAsync() {
