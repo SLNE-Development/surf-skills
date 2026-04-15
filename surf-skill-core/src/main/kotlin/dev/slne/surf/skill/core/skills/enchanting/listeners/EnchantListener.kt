@@ -55,9 +55,7 @@ object EnchantListener : Listener {
         if (clickedItem.type == Material.AIR) return
 
         SkillInstance.launch {
-            val skillPlayer = player.skillPlayer()
-
-            skillPlayer.incrementExperience<EnchantingSkill>(1)
+            player.skillPlayer().incrementExperience<EnchantingSkill>(1)
         }
     }
 }
