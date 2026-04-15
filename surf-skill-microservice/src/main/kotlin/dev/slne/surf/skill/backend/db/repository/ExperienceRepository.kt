@@ -8,7 +8,7 @@ import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.backend.db.tables.SkillExperiencesTable
 import dev.slne.surf.skill.core.experience.SkillExperienceImpl
-import dev.slne.surf.surfapi.core.api.util.toMutableObjectList
+import dev.slne.surf.api.core.util.toMutableObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.toList

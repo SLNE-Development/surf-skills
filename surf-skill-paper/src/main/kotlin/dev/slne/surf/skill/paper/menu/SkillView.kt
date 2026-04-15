@@ -4,17 +4,17 @@ package dev.slne.surf.skill.paper.menu
 
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.surfapi.bukkit.api.builder.displayName
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.layout
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.onItemClick
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.dsl.withItem
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.*
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.container.dsl.header
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.pagination.pagination
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.settings.PaginationViewRows
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.state.get
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.view.state.initialState
-import dev.slne.surf.surfapi.core.api.font.toSmallCaps
+import dev.slne.surf.api.paper.builder.displayName
+import dev.slne.surf.api.paper.inventory.framework.dsl.layout
+import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
+import dev.slne.surf.api.paper.inventory.framework.dsl.withItem
+import dev.slne.surf.api.paper.inventory.framework.view.*
+import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.header
+import dev.slne.surf.api.paper.inventory.framework.view.pagination.pagination
+import dev.slne.surf.api.paper.inventory.framework.view.settings.PaginationViewRows
+import dev.slne.surf.api.paper.inventory.framework.view.state.get
+import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
+import dev.slne.surf.api.core.font.toSmallCaps
 import io.papermc.paper.datacomponent.DataComponentTypes
 
 val skillView = paginatedSurfView("aaa") {

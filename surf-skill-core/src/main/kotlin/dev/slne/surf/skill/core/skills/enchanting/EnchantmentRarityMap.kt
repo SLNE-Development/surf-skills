@@ -1,21 +1,22 @@
 package dev.slne.surf.skill.core.skills.enchanting
 
-import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
+import dev.slne.surf.api.core.rarity.Rarity
+
 
 enum class EnchantmentRarityMap(
-    private val rarity: EnchantmentRarity,
+    private val rarity: Rarity,
     val experience: Int
 ) {
-    COMMON(EnchantmentRarity.COMMON, 1),
-    UNCOMMON(EnchantmentRarity.UNCOMMON, 1),
-    RARE(EnchantmentRarity.RARE, 2),
-    EPIC(EnchantmentRarity.EPIC, 3),
-    LEGENDARY(EnchantmentRarity.LEGENDARY, 4),
-    MYTHIC(EnchantmentRarity.MYTHIC, 5);
+    COMMON(Rarity.COMMON, 1),
+    UNCOMMON(Rarity.UNCOMMON, 1),
+    RARE(Rarity.RARE, 2),
+    EPIC(Rarity.EPIC, 3),
+    LEGENDARY(Rarity.LEGENDARY, 4),
+    MYTHIC(Rarity.MYTHIC, 5);
 
     companion object {
         private val map = entries.associateBy { it.rarity }
 
-        fun getByEnchantmentRarity(rarity: EnchantmentRarity) = map[rarity] ?: COMMON
+        fun getByEnchantmentRarity(rarity: Rarity) = map[rarity] ?: COMMON
     }
 }

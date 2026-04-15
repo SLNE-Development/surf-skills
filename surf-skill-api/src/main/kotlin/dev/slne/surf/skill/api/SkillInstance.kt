@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.api
 
 import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.surfapi.core.api.util.requiredService
+import dev.slne.surf.api.core.util.requiredService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job

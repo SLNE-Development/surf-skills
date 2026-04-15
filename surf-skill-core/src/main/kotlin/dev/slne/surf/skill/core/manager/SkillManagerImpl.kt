@@ -4,8 +4,8 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.api.skills.*
-import dev.slne.surf.surfapi.core.api.util.freeze
-import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
+import dev.slne.surf.api.core.util.freeze
+import dev.slne.surf.api.core.util.mutableObjectSetOf
 import net.kyori.adventure.util.Services
 import kotlin.reflect.KClass
 

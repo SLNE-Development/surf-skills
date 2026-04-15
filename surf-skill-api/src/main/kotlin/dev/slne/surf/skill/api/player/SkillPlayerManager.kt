@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.api.player
 
-import dev.slne.surf.surfapi.core.api.util.requiredService
+import dev.slne.surf.api.core.util.requiredService
 import java.util.*
 
 private val playerManager = requiredService<SkillPlayerManager>()

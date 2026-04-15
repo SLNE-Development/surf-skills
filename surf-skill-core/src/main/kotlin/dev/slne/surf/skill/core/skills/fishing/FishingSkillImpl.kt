@@ -5,8 +5,8 @@ package dev.slne.surf.skill.core.skills.fishing
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.FishingSkill
 import dev.slne.surf.skill.core.AbstractSkill
-import dev.slne.surf.surfapi.core.api.font.toSmallCaps
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
+import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.api.core.messages.adventure.buildText
 import org.bukkit.inventory.ItemType
 
 @AutoService(FishingSkill::class)

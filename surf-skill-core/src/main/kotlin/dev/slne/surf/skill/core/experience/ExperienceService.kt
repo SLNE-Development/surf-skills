@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.core.experience
 
 import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.surfapi.core.api.util.requiredService
+import dev.slne.surf.api.core.util.requiredService
 import it.unimi.dsi.fastutil.objects.ObjectList
 import java.util.*
 

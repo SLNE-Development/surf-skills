@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.paper.utils
 
-import dev.slne.surf.surfapi.bukkit.api.permission.PermissionRegistry
+import dev.slne.surf.api.paper.permission.PermissionRegistry
 
 object SkillPermissionRegistry: PermissionRegistry() {
     private const val PREFIX = "surf.skill"

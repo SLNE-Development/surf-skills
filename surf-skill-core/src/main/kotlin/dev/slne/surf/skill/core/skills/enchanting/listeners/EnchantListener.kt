@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.core.skills.enchanting.listeners
 
+import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
-import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
 import dev.slne.surf.skill.api.SkillInstance
 import dev.slne.surf.skill.api.player.incrementExperience
 import dev.slne.surf.skill.api.player.skillPlayer
@@ -23,7 +23,7 @@ object EnchantListener : Listener {
 
         val player = event.enchanter
         val enchantments = event.enchantsToAdd.toList().associateWith {
-            EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: EnchantmentRarity.COMMON
+            EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: Rarity.COMMON
         }
 
         SkillInstance.launch {

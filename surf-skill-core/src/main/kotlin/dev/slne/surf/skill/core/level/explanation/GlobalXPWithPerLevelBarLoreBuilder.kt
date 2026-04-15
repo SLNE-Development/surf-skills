@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.core.level.explanation
 
 import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
+import dev.slne.surf.api.paper.builder.LoreBuilder
 
 object GlobalXPWithPerLevelBarLoreBuilder : ExplanationLoreBuilder {
     override fun LoreBuilder.buildExplanation(

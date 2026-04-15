@@ -3,7 +3,7 @@ package dev.slne.surf.skill.api
 import dev.slne.surf.skill.api.curve.ExperienceCurve
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.SkillLevel
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
+import dev.slne.surf.api.paper.builder.LoreBuilder
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike

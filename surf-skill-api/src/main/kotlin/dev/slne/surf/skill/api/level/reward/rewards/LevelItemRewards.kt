@@ -1,13 +1,13 @@
 package dev.slne.surf.skill.api.level.reward.rewards
 
 import dev.slne.surf.skill.api.level.reward.AbstractLevelReward
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
-import dev.slne.surf.surfapi.core.api.font.toSmallCaps
-import dev.slne.surf.surfapi.core.api.messages.Colors
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
-import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
-import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
-import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
+import dev.slne.surf.api.paper.builder.LoreBuilder
+import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.api.core.messages.Colors
+import dev.slne.surf.api.core.messages.adventure.buildText
+import dev.slne.surf.api.core.messages.adventure.playSound
+import dev.slne.surf.api.core.messages.adventure.sendText
+import dev.slne.surf.api.core.util.mutableObjectListOf
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.format.TextDecoration

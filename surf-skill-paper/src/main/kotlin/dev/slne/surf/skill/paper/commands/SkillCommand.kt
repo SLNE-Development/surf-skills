@@ -8,7 +8,7 @@ import dev.slne.surf.skill.api.player.SkillPlayerManager
 import dev.slne.surf.skill.paper.menu.skillsView
 import dev.slne.surf.skill.paper.plugin
 import dev.slne.surf.skill.paper.utils.SkillPermissionRegistry
-import dev.slne.surf.surfapi.bukkit.api.inventory.framework.open
+import dev.slne.surf.api.paper.inventory.framework.open
 import kotlinx.coroutines.withContext
 
 fun skillCommand() = commandAPICommand("skill") {

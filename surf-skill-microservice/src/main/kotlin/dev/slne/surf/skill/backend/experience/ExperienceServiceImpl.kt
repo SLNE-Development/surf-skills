@@ -4,7 +4,7 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.backend.db.repository.ExperienceRepository
 import dev.slne.surf.skill.core.experience.ExperienceService
-import dev.slne.surf.surfapi.core.api.util.toObjectList
+import dev.slne.surf.api.core.util.toObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.util.Services
 import java.util.*

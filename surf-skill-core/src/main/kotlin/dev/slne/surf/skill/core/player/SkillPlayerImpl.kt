@@ -5,11 +5,11 @@ import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.api.player.SkillPlayer
 import dev.slne.surf.skill.core.experience.SkillExperienceImpl
-import dev.slne.surf.surfapi.bukkit.api.extensions.server
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
-import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
-import dev.slne.surf.surfapi.core.api.util.freeze
-import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
+import dev.slne.surf.api.paper.extensions.server
+import dev.slne.surf.api.core.messages.adventure.buildText
+import dev.slne.surf.api.core.messages.adventure.playSound
+import dev.slne.surf.api.core.util.freeze
+import dev.slne.surf.api.core.util.mutableObjectListOf
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.sound.Sound
 import java.util.*

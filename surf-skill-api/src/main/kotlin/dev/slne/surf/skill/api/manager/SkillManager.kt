@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.api.manager
 
 import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.surfapi.core.api.util.requiredService
+import dev.slne.surf.api.core.util.requiredService
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import org.jetbrains.annotations.Unmodifiable
 import kotlin.reflect.KClass

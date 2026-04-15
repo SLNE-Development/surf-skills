@@ -3,7 +3,7 @@ package dev.slne.surf.skill.paper.listener
 import com.github.shynixn.mccoroutine.folia.launch
 import dev.slne.surf.skill.api.player.SkillPlayerManager
 import dev.slne.surf.skill.paper.plugin
-import dev.slne.surf.surfapi.bukkit.api.extensions.server
+import dev.slne.surf.api.paper.extensions.server
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent

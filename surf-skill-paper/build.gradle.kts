@@ -1,20 +1,19 @@
-import dev.slne.surf.surfapi.gradle.util.registerRequired
+import dev.slne.surf.api.gradle.util.registerRequired
 import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
-    id("dev.slne.surf.surfapi.gradle.paper-plugin")
+    id("dev.slne.surf.api.gradle.paper-plugin")
 }
 
 dependencies {
     api(projects.surfSkillCore)
-    runtimeOnly(projects.surfSkillBackend)
 }
 
 surfPaperPluginApi {
     mainClass("dev.slne.surf.skill.paper.PaperMain")
     foliaSupported(true)
     generateLibraryLoader(false)
-    authors.add("Ammo")
+    authors.addAll("Ammo", "red")
 
     serverDependencies {
         registerRequired(
