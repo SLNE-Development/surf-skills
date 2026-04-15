@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
-        DatabaseLoader.connect(dataPath)
 
         skillsView.register()
         skillView.register()
@@ -33,8 +32,6 @@ class PaperMain : SuspendingJavaPlugin() {
             SkillPlayerManager.savePlayer(uuid)
             SkillPlayerManager.invalidatePlayer(uuid)
         }
-
-        DatabaseLoader.disconnect()
     }
 }
 

@@ -4,7 +4,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-.github
+.github/git-commit-instructions.md
 
 ### IntelliJ IDEA ###
 .idea
