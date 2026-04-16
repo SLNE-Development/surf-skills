@@ -4,7 +4,9 @@ import com.github.shynixn.mccoroutine.folia.*
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.core.experience.SkillExperienceImpl
+import dev.slne.surf.skill.core.paper.PaperLoader
+import dev.slne.surf.skill.core.paper.PaperSkillInstance
+import dev.slne.surf.skill.core.paper.experience.SkillExperienceImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import net.kyori.adventure.util.Services
@@ -14,7 +16,7 @@ import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 @AutoService(SkillInstance::class)
-class SkillInstanceImpl : SkillInstance, Services.Fallback {
+class SkillInstanceImpl : PaperSkillInstance, Services.Fallback {
     override fun launch(
         context: CoroutineContext,
         start: CoroutineStart,
@@ -36,4 +38,6 @@ class SkillInstanceImpl : SkillInstance, Services.Fallback {
         skill = skill,
         currentExperience = currentExperience
     )
+
+    override val paperLoader = PaperLoader(plugin.dataPath)
 }

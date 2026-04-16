@@ -13,10 +13,10 @@ import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.manager.SkillManager
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.Skills.*
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.core.experience.SkillExperienceImpl
 import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import it.unimi.dsi.fastutil.objects.ObjectList

@@ -11,11 +11,12 @@ import dev.slne.surf.api.paper.builder.buildLore
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.event.register
 import dev.slne.surf.api.paper.extensions.server
-import dev.slne.surf.skill.api.curve.curves.ExponentialExperienceCurve
-import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.skill.api.level.SkillLevel
+import dev.slne.surf.skill.api.common.InternalSkillApi
+import dev.slne.surf.skill.api.common.curve.curves.ExponentialExperienceCurve
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
+import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.core.paper.level.EmptySkillLevel
 import it.unimi.dsi.fastutil.objects.ObjectList
 import kotlinx.coroutines.withContext
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemType
 import java.util.*
 import org.bukkit.Sound as BukkitSound
 
+@OptIn(InternalSkillApi::class)
 abstract class AbstractSkill(
     override val name: String,
     override val material: ItemType,

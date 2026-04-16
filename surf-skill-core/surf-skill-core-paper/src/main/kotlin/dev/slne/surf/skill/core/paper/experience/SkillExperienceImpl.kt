@@ -1,9 +1,11 @@
 package dev.slne.surf.skill.core.paper.experience
 
-import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.skill.api.level.LevelState
+import dev.slne.surf.skill.api.common.experience.SimpleExperience
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
+import dev.slne.surf.skill.api.paper.level.LevelState
+import dev.slne.surf.skill.api.paper.manager.SkillManager
 import java.util.*
 
 data class SkillExperienceImpl(
@@ -38,3 +40,16 @@ data class SkillExperienceImpl(
         return this
     }
 }
+
+fun SkillExperience.simple() = SimpleExperience(
+    uuid = uuid,
+    skillName = skill.name,
+    currentExperience = currentExperience
+)
+
+fun SimpleExperience.experience() = SkillExperienceImpl(
+    uuid = uuid,
+    skill = SkillManager.getSkillByName(skillName)
+        ?: error("Trying to deserialize experience for unregistered skill $skillName"),
+    currentExperience = currentExperience
+)

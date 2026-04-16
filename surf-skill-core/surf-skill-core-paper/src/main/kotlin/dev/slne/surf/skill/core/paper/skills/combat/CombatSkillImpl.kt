@@ -10,9 +10,9 @@ import dev.slne.surf.api.paper.builder.buildItem
 import dev.slne.surf.api.paper.builder.buildLore
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.builder.meta
-import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.Skills.CombatSkill
+import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatAbilityListener

@@ -1,4 +1,4 @@
-package dev.slne.surf.skill.backend.db.tables
+package dev.slne.surf.skill.microservice.table
 
 import dev.slne.surf.database.columns.nativeUuid
 import dev.slne.surf.database.libs.org.jetbrains.exposed.v1.core.Table

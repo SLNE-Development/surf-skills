@@ -13,8 +13,8 @@ import dev.slne.surf.api.paper.inventory.framework.view.pagination.pagination
 import dev.slne.surf.api.paper.inventory.framework.view.settings.PaginationViewRows
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import io.papermc.paper.datacomponent.DataComponentTypes
 
 val skillView = paginatedSurfView("aaa") {

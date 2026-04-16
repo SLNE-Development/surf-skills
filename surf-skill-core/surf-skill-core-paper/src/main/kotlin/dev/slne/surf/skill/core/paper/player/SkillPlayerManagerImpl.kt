@@ -3,8 +3,8 @@ package dev.slne.surf.skill.core.paper.player
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.google.auto.service.AutoService
 import com.sksamuel.aedile.core.asLoadingCache
-import dev.slne.surf.skill.api.player.SkillPlayer
-import dev.slne.surf.skill.api.player.SkillPlayerManager
+import dev.slne.surf.skill.api.paper.player.SkillPlayer
+import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.experience.ExperienceService
 import net.kyori.adventure.util.Services
 import java.util.*
