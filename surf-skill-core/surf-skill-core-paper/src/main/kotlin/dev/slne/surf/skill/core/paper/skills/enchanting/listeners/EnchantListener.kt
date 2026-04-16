@@ -3,9 +3,9 @@ package dev.slne.surf.skill.core.paper.skills.enchanting.listeners
 import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.api.paper.Skills.EnchantingSkill
-import dev.slne.surf.skill.api.player.incrementExperience
-import dev.slne.surf.skill.api.player.skillPlayer
+import dev.slne.surf.skill.api.paper.player.incrementExperience
+import dev.slne.surf.skill.api.paper.player.skillPlayer
+import dev.slne.surf.skill.api.paper.skills.EnchantingSkill
 import dev.slne.surf.skill.core.paper.skills.enchanting.EnchantmentRarityMap
 import org.bukkit.Material
 import org.bukkit.entity.Player

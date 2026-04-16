@@ -3,13 +3,15 @@ package dev.slne.surf.skill.core.paper.manager
 import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.util.freeze
 import dev.slne.surf.api.core.util.mutableObjectSetOf
-import dev.slne.surf.skill.api.manager.SkillManager
+import dev.slne.surf.skill.api.common.InternalSkillApi
 import dev.slne.surf.skill.api.paper.Skill
-import dev.slne.surf.skill.api.paper.Skills.*
+import dev.slne.surf.skill.api.paper.manager.SkillManager
+import dev.slne.surf.skill.api.paper.skills.*
 import net.kyori.adventure.util.Services
 import kotlin.reflect.KClass
 
 @AutoService(SkillManager::class)
+@OptIn(InternalSkillApi::class)
 class SkillManagerImpl : SkillManager, Services.Fallback {
     private val _skills = mutableObjectSetOf<Skill>()
     override val skills get() = _skills.freeze()

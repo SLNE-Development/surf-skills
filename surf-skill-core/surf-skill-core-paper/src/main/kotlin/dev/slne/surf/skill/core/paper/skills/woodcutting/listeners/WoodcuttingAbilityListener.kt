@@ -2,7 +2,7 @@
 
 package dev.slne.surf.skill.core.paper.skills.woodcutting.listeners
 
-import dev.slne.surf.skill.api.paper.Skills.WoodcuttingSkill
+import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material
@@ -12,7 +12,6 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import kotlin.collections.contains
 
 object WoodcuttingAbilityListener : Listener {
     private const val CRAFTSMANSHIP_MIN_LEVEL = 1
@@ -72,7 +71,7 @@ object WoodcuttingAbilityListener : Listener {
         val player = event.player
         val blockType = event.blockState.type.asBlockType() ?: return
 
-        if (blockType contains LOG_BLOCKS) return
+        if (blockType !in LOG_BLOCKS) return
         if (!event.block.isEligibleForExperience()) return
 
         val level = AbilityUtil.getPlayerLevel<WoodcuttingSkill>(player)

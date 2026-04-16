@@ -2,7 +2,7 @@
 
 package dev.slne.surf.skill.core.paper.skills.mining.listeners
 
-import dev.slne.surf.skill.api.paper.Skills.MiningSkill
+import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material
@@ -15,8 +15,6 @@ import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import kotlin.collections.contains
-import kotlin.ranges.coerceAtLeast
 
 object MiningAbilityListener : Listener {
     private const val SKILLFUL_EXTRACTION_MIN_LEVEL = 1
@@ -65,7 +63,7 @@ object MiningAbilityListener : Listener {
         val player = event.player
         val blockType = event.blockState.type.asBlockType() ?: return
 
-        if (blockType contains ORE_BLOCKS) return
+        if (blockType !in ORE_BLOCKS) return
         if (!event.block.isEligibleForExperience()) return
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)

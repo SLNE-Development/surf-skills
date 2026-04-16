@@ -7,9 +7,9 @@ import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.api.paper.Skills.ForagingSkill
-import dev.slne.surf.skill.api.player.incrementExperience
-import dev.slne.surf.skill.api.player.skillPlayer
+import dev.slne.surf.skill.api.paper.player.incrementExperience
+import dev.slne.surf.skill.api.paper.player.skillPlayer
+import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.skills.utils.BlockExperienceHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.block.BlockType

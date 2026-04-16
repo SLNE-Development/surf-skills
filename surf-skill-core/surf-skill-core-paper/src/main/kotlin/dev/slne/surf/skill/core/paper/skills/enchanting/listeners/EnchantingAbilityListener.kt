@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.enchanting.listeners
 
-import dev.slne.surf.skill.api.paper.Skills.EnchantingSkill
+import dev.slne.surf.skill.api.paper.skills.EnchantingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority

@@ -1,6 +1,5 @@
 package dev.slne.surf.skill.core.paper.level.explanation
 
-import dev.slne.surf.api.core.messages.builder.SurfComponentBuilder
 import dev.slne.surf.api.paper.builder.LoreBuilder
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
 
@@ -32,7 +31,7 @@ interface ExplanationLoreBuilder {
                     else -> error("|")
                 }
             }
-            SurfComponentBuilder.appendSpace()
+            appendSpace()
             spacer("($percent%)")
         }
     }

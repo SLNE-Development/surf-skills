@@ -1,9 +1,9 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.api.paper.Skills.CombatSkill
-import dev.slne.surf.skill.api.player.SkillPlayerManager
-import dev.slne.surf.skill.api.player.incrementExperience
+import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
+import dev.slne.surf.skill.api.paper.player.incrementExperience
+import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler

@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
-import dev.slne.surf.skill.api.paper.Skills.ForagingSkill
+import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material

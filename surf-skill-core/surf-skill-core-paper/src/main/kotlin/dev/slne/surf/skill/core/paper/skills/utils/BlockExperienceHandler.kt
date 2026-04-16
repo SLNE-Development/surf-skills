@@ -5,8 +5,8 @@ import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.api.paper.pdc.block.pdc
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.api.player.incrementExperience
-import dev.slne.surf.skill.api.player.skillPlayer
+import dev.slne.surf.skill.api.paper.player.incrementExperience
+import dev.slne.surf.skill.api.paper.player.skillPlayer
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.BlockType

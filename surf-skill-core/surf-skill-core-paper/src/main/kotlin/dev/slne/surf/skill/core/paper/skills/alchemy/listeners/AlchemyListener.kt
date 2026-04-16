@@ -1,9 +1,9 @@
 package dev.slne.surf.skill.core.paper.skills.alchemy.listeners
 
 import dev.slne.surf.skill.api.paper.SkillInstance
-import dev.slne.surf.skill.api.paper.Skills.AlchemySkill
-import dev.slne.surf.skill.api.player.incrementExperience
-import dev.slne.surf.skill.api.player.skillPlayer
+import dev.slne.surf.skill.api.paper.player.incrementExperience
+import dev.slne.surf.skill.api.paper.player.skillPlayer
+import dev.slne.surf.skill.api.paper.skills.AlchemySkill
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.LivingEntity

@@ -6,7 +6,7 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
-import dev.slne.surf.skill.api.paper.Skills.FishingSkill
+import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingSkillListener
