@@ -5,6 +5,7 @@ package dev.slne.surf.skill.core.skills.enchanting
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.EnchantingSkill
 import dev.slne.surf.skill.core.AbstractSkill
+import dev.slne.surf.skill.core.skills.enchanting.listeners.EnchantingAbilityListener
 import dev.slne.surf.skill.core.skills.enchanting.listeners.EnchantListener
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
@@ -23,5 +24,5 @@ class EnchantingSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Verzauberung zu verbessern.")
         }
     },
-    listeners = objectListOf(EnchantListener)
+    listeners = objectListOf(EnchantListener, EnchantingAbilityListener)
 ), EnchantingSkill

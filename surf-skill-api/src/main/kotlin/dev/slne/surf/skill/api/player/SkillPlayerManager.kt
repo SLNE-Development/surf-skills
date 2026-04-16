@@ -8,6 +8,8 @@ private val playerManager = requiredService<SkillPlayerManager>()
 interface SkillPlayerManager {
     suspend fun fetchOrCreatePlayer(uuid: UUID): SkillPlayer
 
+    fun getPlayerIfCached(uuid: UUID): SkillPlayer?
+
     suspend fun savePlayer(uuid: UUID)
     suspend fun savePlayer(player: SkillPlayer)
 
