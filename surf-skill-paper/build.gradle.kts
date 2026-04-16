@@ -21,5 +21,6 @@ surfPaperPluginApi {
             joinClassPath = true,
             loadOrder = PaperPluginDescription.RelativeLoadOrder.BEFORE
         )
+        registerRequired("surf-rabbitmq-paper")
     }
 }
