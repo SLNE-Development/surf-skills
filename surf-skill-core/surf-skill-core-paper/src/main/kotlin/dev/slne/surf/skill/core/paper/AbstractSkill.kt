@@ -18,6 +18,7 @@ import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.EmptySkillLevel
 import it.unimi.dsi.fastutil.objects.ObjectList
 import kotlinx.coroutines.withContext
@@ -37,7 +38,8 @@ abstract class AbstractSkill(
     override val baseExperience: Int = Skill.BASE_EXPERIENCE,
     override val maxLevel: Int = Skill.MAX_SKILL_LEVEL,
     override val maxExperience: Int = Skill.MAX_EXPERIENCE,
-    listeners: ObjectList<Listener> = objectListOf()
+    listeners: ObjectList<Listener> = objectListOf(),
+    val abilities: ObjectList<SkillAbility> = objectListOf()
 ) : Skill {
     private val _listeners = mutableObjectListOf<Listener>(listeners)
     override val listeners get() = _listeners.freeze()
@@ -56,6 +58,8 @@ abstract class AbstractSkill(
         val player = server.getPlayer(uuid) ?: return
         val levelRewards = getLevels().firstOrNull { it.level == level }?.rewards ?: objectListOf()
 
+        val activeAbilities = abilities.filter { it.isActiveAtLevel(level) }
+
         player.sendText {
             appendInfoPrefix()
             spacer("-".repeat(15))
@@ -71,9 +75,38 @@ abstract class AbstractSkill(
             append(displayName)
             info(" erreicht!")
 
+            if (activeAbilities.isNotEmpty()) {
+                appendNewInfoPrefixedLine()
+                appendNewInfoPrefixedLine()
+                info("Fähigkeiten:")
+
+                activeAbilities.forEach { ability ->
+                    val newValue = ability.getFormattedValue(level)
+                    val isNew = !ability.isActiveAtLevel(level - 1)
+
+                    appendNewInfoPrefixedLine()
+                    info("  - ")
+                    append(ability.displayName)
+                    info(": ")
+
+                    if (isNew) {
+                        variableValue(newValue)
+                        spacer(" (")
+                        variableValue("NEU!")
+                        spacer(")")
+                    } else {
+                        val oldValue = ability.getFormattedValue(level - 1)
+                        spacer(oldValue)
+                        info(" → ")
+                        variableValue(newValue)
+                    }
+                }
+            }
+
             if (levelRewards.isNotEmpty()) {
                 appendNewInfoPrefixedLine()
-                info(" Du hast folgende Belohnungen erhalten:")
+                appendNewInfoPrefixedLine()
+                info("Belohnungen:")
 
                 levelRewards.forEach { reward ->
                     appendNewInfoPrefixedLine()

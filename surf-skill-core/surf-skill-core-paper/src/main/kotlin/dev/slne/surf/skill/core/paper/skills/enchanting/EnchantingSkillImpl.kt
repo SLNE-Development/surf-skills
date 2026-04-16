@@ -8,6 +8,7 @@ import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.skill.api.paper.skills.EnchantingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
+import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.skills.enchanting.listeners.EnchantListener
 import dev.slne.surf.skill.core.paper.skills.enchanting.listeners.EnchantingAbilityListener
 import org.bukkit.inventory.ItemType
@@ -24,5 +25,25 @@ class EnchantingSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Verzauberung zu verbessern.")
         }
     },
-    listeners = objectListOf(EnchantListener, EnchantingAbilityListener)
+    listeners = objectListOf(EnchantListener, EnchantingAbilityListener),
+    abilities = objectListOf(
+        SkillAbility(
+            displayName = buildText { primary("Verzauberer-Einsicht".toSmallCaps()) },
+            minLevel = 1,
+            maxValue = 0.50,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Arkane Verstärkung".toSmallCaps()) },
+            minLevel = 11,
+            maxValue = 0.20,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Mana-Pool".toSmallCaps()) },
+            minLevel = 21,
+            maxValue = 0.25,
+            valueFormatter = SkillAbility.percentageFormatter()
+        )
+    )
 ), EnchantingSkill

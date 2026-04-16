@@ -8,6 +8,7 @@ import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
+import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingSkillListener
 import org.bukkit.inventory.ItemType
@@ -24,5 +25,25 @@ class FishingSkillImpl : AbstractSkill(
         line {
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Fischen zu verbessern.")
         }
-    }
+    },
+    abilities = objectListOf(
+        SkillAbility(
+            displayName = buildText { primary("Magnetische Angel".toSmallCaps()) },
+            minLevel = 1,
+            maxValue = 0.25,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Neptuns Gunst".toSmallCaps()) },
+            minLevel = 11,
+            maxValue = 0.20,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Größere Lungen".toSmallCaps()) },
+            minLevel = 21,
+            maxValue = 3.00,
+            valueFormatter = SkillAbility.percentageFormatter()
+        )
+    )
 ), FishingSkill
