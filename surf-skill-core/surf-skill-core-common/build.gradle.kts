@@ -10,5 +10,5 @@ surfMicroservice {
 }
 
 dependencies {
-    api(projects.surfSkillApi)
+    api(projects.surfSkillApi.surfSkillApiCommon)
 }
