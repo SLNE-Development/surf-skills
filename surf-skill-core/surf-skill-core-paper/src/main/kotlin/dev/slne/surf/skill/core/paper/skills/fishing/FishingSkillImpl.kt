@@ -43,7 +43,7 @@ class FishingSkillImpl : AbstractSkill(
             displayName = buildText { primary("Größere Lungen".toSmallCaps()) },
             minLevel = 21,
             maxValue = 3.00,
-            valueFormatter = SkillAbility.percentageFormatter()
+            valueFormatter = { value -> "%.2f%%".format(value / (1.0 + value) * 100) }
         )
     )
 ), FishingSkill
