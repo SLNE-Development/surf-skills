@@ -1,6 +1,7 @@
 package dev.slne.surf.skill.microservice.handler
 
 import dev.slne.surf.rabbitmq.api.handler.RabbitHandler
+import dev.slne.surf.rabbitmq.api.packet.standard.response.primitive.PrimitiveResponse
 import dev.slne.surf.skill.core.common.rabbit.packet.request.FindExperiencesRequestPacket
 import dev.slne.surf.skill.core.common.rabbit.packet.request.SaveExperienceRequestPacket
 import dev.slne.surf.skill.core.common.rabbit.packet.response.ManySimpleExperienceResponsePacket
@@ -21,11 +22,11 @@ object SkillExperienceHandler {
 
     @RabbitHandler
     fun handleSaveExperiencePacket(packet: SaveExperienceRequestPacket) = packet.launch {
-        packet.simpleExperiences.forEach {
+        packet.respond(PrimitiveResponse.BooleanResponsePacket(packet.simpleExperiences.all {
             ExperienceRepository.saveExperience(
                 packet.playerUuid,
                 it
             )
-        }
+        }))
     }
 }

@@ -40,5 +40,7 @@ object ExperienceRepository {
             it[SkillExperiencesTable.skillName] = skillName
             it[SkillExperiencesTable.experience] = experience
         }
+
+        true
     }
 }

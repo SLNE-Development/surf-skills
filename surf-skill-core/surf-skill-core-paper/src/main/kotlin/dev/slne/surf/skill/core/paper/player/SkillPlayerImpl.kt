@@ -51,6 +51,10 @@ class SkillPlayerImpl(
     }
 
     override fun <S : Skill> incrementExperience(clazz: KClass<out S>, amount: Int) {
+        if (amount < 1) {
+            return
+        }
+
         val experience = findOrCreateExperience(clazz).incrementExperience(amount)
 
         player?.playSound(true) {

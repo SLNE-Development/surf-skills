@@ -34,14 +34,14 @@ object MiningBlockListener : Listener {
     private val blockExpMap = mapOf(
 
         // --- OVERWORLD BASIC (0–2) ---
-        Material.DIRT to 0,
+        Material.DIRT to 1,
         Material.GRASS_BLOCK to 1,
-        Material.COARSE_DIRT to 0,
+        Material.COARSE_DIRT to 1,
         Material.ROOTED_DIRT to 1,
         Material.PODZOL to 1,
         Material.MYCELIUM to 1,
-        Material.SAND to 0,
-        Material.RED_SAND to 0,
+        Material.SAND to 1,
+        Material.RED_SAND to 1,
         Material.GRAVEL to 1,
         Material.CLAY to 2,
         Material.MUD to 1,
@@ -49,9 +49,9 @@ object MiningBlockListener : Listener {
 
         // --- STONE TYPES (1–3) ---
         Material.STONE to 1,
-        Material.COBBLESTONE to 0,
+        Material.COBBLESTONE to 1,
         Material.DEEPSLATE to 2,
-        Material.COBBLED_DEEPSLATE to 0,
+        Material.COBBLED_DEEPSLATE to 1,
         Material.TUFF to 2,
         Material.CALCITE to 2,
         Material.ANDESITE to 1,

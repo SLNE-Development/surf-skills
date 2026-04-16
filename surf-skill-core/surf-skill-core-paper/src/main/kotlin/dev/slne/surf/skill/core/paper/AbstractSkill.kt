@@ -11,6 +11,7 @@ import dev.slne.surf.api.paper.builder.buildLore
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.event.register
 import dev.slne.surf.api.paper.extensions.server
+import dev.slne.surf.api.paper.util.BukkitSound
 import dev.slne.surf.skill.api.common.InternalSkillApi
 import dev.slne.surf.skill.api.common.curve.curves.ExponentialExperienceCurve
 import dev.slne.surf.skill.api.paper.Skill
@@ -22,10 +23,10 @@ import it.unimi.dsi.fastutil.objects.ObjectList
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemType
 import java.util.*
-import org.bukkit.Sound as BukkitSound
 
 @OptIn(InternalSkillApi::class)
 abstract class AbstractSkill(
@@ -52,31 +53,69 @@ abstract class AbstractSkill(
     }
 
     override suspend fun awardLevelUpRewards(uuid: UUID, level: Int) {
-        val levelRewards = getLevels().firstOrNull { it.level == level }?.rewards ?: objectListOf()
-        if (levelRewards.isEmpty()) return
-
         val player = server.getPlayer(uuid) ?: return
+        val levelRewards = getLevels().firstOrNull { it.level == level }?.rewards ?: objectListOf()
+
+        player.sendText {
+            appendInfoPrefix()
+            spacer("-".repeat(15))
+            variableValue("LEVELUP", TextDecoration.BOLD)
+            spacer("-".repeat(15))
+
+            appendNewInfoPrefixedLine()
+
+            appendNewInfoPrefixedLine()
+            info("Du hast Level ")
+            variableValue(level)
+            info(" in ")
+            append(displayName)
+            info(" erreicht!")
+
+            if (levelRewards.isNotEmpty()) {
+                appendNewInfoPrefixedLine()
+                info(" Du hast folgende Belohnungen erhalten:")
+
+                levelRewards.forEach { reward ->
+                    appendNewInfoPrefixedLine()
+                    info("  - ")
+                    append(reward.displayName)
+                }
+            }
+
+            appendNewInfoPrefixedLine()
+
+            appendNewInfoPrefixedLine()
+            spacer("-".repeat(15))
+            variableValue("LEVELUP", TextDecoration.BOLD)
+            spacer("-".repeat(15))
+        }
+
+        player.playSound(true) {
+            type(BukkitSound.ENTITY_PLAYER_LEVELUP)
+            source(Sound.Source.AMBIENT)
+            volume(.5f)
+            pitch(.25f)
+        }
+
+        player.playSound(true) {
+            type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
+            source(Sound.Source.AMBIENT)
+            volume(.5f)
+        }
+
+        player.playSound(true) {
+            type(BukkitSound.ENTITY_FIREWORK_ROCKET_TWINKLE)
+            source(Sound.Source.AMBIENT)
+            volume(.5f)
+        }
+
+
+        if (levelRewards.isEmpty()) {
+            return
+        }
 
         withContext(SkillInstance.entityDispatcher(player)) {
             levelRewards.forEach { it.grant(player) }
-
-            player.sendText {
-                appendInfoPrefix()
-                info("Du hast Level ")
-                variableValue(level)
-                info(" in ")
-                append(displayName)
-                info(" erreicht und folgende Belohnungen erhalten:")
-
-                // TODO: Show rewards in message
-            }
-
-            player.playSound(true) {
-                type(BukkitSound.ENTITY_PLAYER_LEVELUP)
-                volume(.5f)
-                source(Sound.Source.AMBIENT)
-                pitch(.25f)
-            }
         }
     }
 
