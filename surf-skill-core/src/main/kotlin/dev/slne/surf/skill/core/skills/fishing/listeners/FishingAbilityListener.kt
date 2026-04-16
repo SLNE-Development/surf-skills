@@ -3,22 +3,17 @@ package dev.slne.surf.skill.core.skills.fishing.listeners
 import dev.slne.surf.skill.api.skills.FishingSkill
 import dev.slne.surf.skill.core.ability.AbilityUtil
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.FishHook
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityAirChangeEvent
-import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerFishEvent
 
 object FishingAbilityListener : Listener {
-
-    // ── Magnetic Rod ──
-    // Fish bite 0% → 25% faster
-    // Available from level 1
     private const val MAGNETIC_ROD_MIN_LEVEL = 1
     private const val MAGNETIC_ROD_MAX_VALUE = 0.25
 
@@ -38,12 +33,10 @@ object FishingAbilityListener : Listener {
 
         val reductionFactor = 1.0 - speedBonus
         hook.minWaitTime = (hook.minWaitTime * reductionFactor).toInt().coerceAtLeast(1)
-        hook.maxWaitTime = (hook.maxWaitTime * reductionFactor).toInt().coerceAtLeast(hook.minWaitTime + 1)
+        hook.maxWaitTime =
+            (hook.maxWaitTime * reductionFactor).toInt().coerceAtLeast(hook.minWaitTime + 1)
     }
 
-    // ── Neptune's Favor ──
-    // 0% → 20% chance to receive 2x drops from sea creatures
-    // Available from level 11
     private const val NEPTUNES_FAVOR_MIN_LEVEL = 11
     private const val NEPTUNES_FAVOR_MAX_VALUE = 0.20
 
@@ -74,9 +67,6 @@ object FishingAbilityListener : Listener {
         }
     }
 
-    // ── Bigger Lungs ──
-    // Breathe underwater 0% → 300% longer
-    // Available from level 21
     private const val BIGGER_LUNGS_MIN_LEVEL = 21
     private const val BIGGER_LUNGS_MAX_VALUE = 3.00
 
@@ -87,7 +77,6 @@ object FishingAbilityListener : Listener {
         val oldAir = player.remainingAir
         val newAir = event.amount
 
-        // Only apply when air is decreasing (player is underwater)
         if (newAir >= oldAir) return
 
         val level = AbilityUtil.getPlayerLevel<FishingSkill>(player)
@@ -97,7 +86,6 @@ object FishingAbilityListener : Listener {
 
         if (breathingBonus <= 0.0) return
 
-        // Reduce the air loss by the bonus factor
         val airLoss = oldAir - newAir
         val reducedLoss = (airLoss / (1.0 + breathingBonus)).toInt().coerceAtLeast(0)
         event.amount = oldAir - reducedLoss

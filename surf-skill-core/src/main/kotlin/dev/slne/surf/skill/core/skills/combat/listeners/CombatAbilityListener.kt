@@ -12,13 +12,8 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.inventory.ItemStack
 
 object CombatAbilityListener : Listener {
-
-    // ── Battle Hardened ──
-    // Weapons and armor lose 0% → 50% less durability
-    // Available from level 1
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
     private const val BATTLE_HARDENED_MAX_VALUE = 0.50
 
@@ -27,17 +22,41 @@ object CombatAbilityListener : Listener {
         Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD,
         Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
         Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE,
+        Material.COPPER_AXE, Material.COPPER_SWORD,
         Material.BOW, Material.CROSSBOW, Material.TRIDENT, Material.MACE
     )
 
     private val ARMOR_TYPES = setOf(
-        Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS,
-        Material.CHAINMAIL_HELMET, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_LEGGINGS, Material.CHAINMAIL_BOOTS,
-        Material.IRON_HELMET, Material.IRON_CHESTPLATE, Material.IRON_LEGGINGS, Material.IRON_BOOTS,
-        Material.GOLDEN_HELMET, Material.GOLDEN_CHESTPLATE, Material.GOLDEN_LEGGINGS, Material.GOLDEN_BOOTS,
-        Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS,
-        Material.NETHERITE_HELMET, Material.NETHERITE_CHESTPLATE, Material.NETHERITE_LEGGINGS, Material.NETHERITE_BOOTS,
-        Material.TURTLE_HELMET, Material.SHIELD
+        Material.LEATHER_HELMET,
+        Material.LEATHER_CHESTPLATE,
+        Material.LEATHER_LEGGINGS,
+        Material.LEATHER_BOOTS,
+        Material.CHAINMAIL_HELMET,
+        Material.CHAINMAIL_CHESTPLATE,
+        Material.CHAINMAIL_LEGGINGS,
+        Material.CHAINMAIL_BOOTS,
+        Material.COPPER_HELMET,
+        Material.COPPER_CHESTPLATE,
+        Material.COPPER_LEGGINGS,
+        Material.COPPER_BOOTS,
+        Material.IRON_HELMET,
+        Material.IRON_CHESTPLATE,
+        Material.IRON_LEGGINGS,
+        Material.IRON_BOOTS,
+        Material.GOLDEN_HELMET,
+        Material.GOLDEN_CHESTPLATE,
+        Material.GOLDEN_LEGGINGS,
+        Material.GOLDEN_BOOTS,
+        Material.DIAMOND_HELMET,
+        Material.DIAMOND_CHESTPLATE,
+        Material.DIAMOND_LEGGINGS,
+        Material.DIAMOND_BOOTS,
+        Material.NETHERITE_HELMET,
+        Material.NETHERITE_CHESTPLATE,
+        Material.NETHERITE_LEGGINGS,
+        Material.NETHERITE_BOOTS,
+        Material.TURTLE_HELMET,
+        Material.SHIELD
     )
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -57,9 +76,6 @@ object CombatAbilityListener : Listener {
         }
     }
 
-    // ── Reaper's Fortune ──
-    // 0% → 20% chance to receive 2x drops from monsters
-    // Available from level 11
     private const val REAPERS_FORTUNE_MIN_LEVEL = 11
     private const val REAPERS_FORTUNE_MAX_VALUE = 0.20
 
@@ -83,9 +99,6 @@ object CombatAbilityListener : Listener {
         }
     }
 
-    // ── Strong Impact ──
-    // Deal 0% → 15% more damage to hostile creatures
-    // Available from level 21
     private const val STRONG_IMPACT_MIN_LEVEL = 21
     private const val STRONG_IMPACT_MAX_VALUE = 0.15
 
@@ -94,8 +107,7 @@ object CombatAbilityListener : Listener {
         val target = event.entity
         if (target !is Monster) return
 
-        val damager = event.damager
-        val player = when (damager) {
+        val player = when (val damager = event.damager) {
             is Player -> damager
             is Projectile -> damager.shooter as? Player
             else -> null

@@ -4,6 +4,7 @@ import dev.slne.surf.skill.api.SkillInstance
 import dev.slne.surf.skill.api.skills.ExplorationSkill
 import dev.slne.surf.skill.core.ability.AbilityUtil
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
@@ -14,19 +15,19 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.NamespacedKey
 
 object ExplorationAbilityListener : Listener {
-
-    // ── Wanderer's Endurance ──
-    // Boots lose 0% → 50% less durability
-    // Available from level 1
     private const val ENDURANCE_MIN_LEVEL = 1
     private const val ENDURANCE_MAX_VALUE = 0.50
 
     private val BOOT_TYPES = setOf(
-        Material.LEATHER_BOOTS, Material.CHAINMAIL_BOOTS, Material.IRON_BOOTS,
-        Material.GOLDEN_BOOTS, Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS
+        Material.LEATHER_BOOTS,
+        Material.CHAINMAIL_BOOTS,
+        Material.COPPER_BOOTS,
+        Material.IRON_BOOTS,
+        Material.GOLDEN_BOOTS,
+        Material.DIAMOND_BOOTS,
+        Material.NETHERITE_BOOTS
     )
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -46,9 +47,6 @@ object ExplorationAbilityListener : Listener {
         }
     }
 
-    // ── Swift Feet ──
-    // Gain 0% → 10% more movement speed
-    // Available from level 11
     private const val SWIFT_FEET_MIN_LEVEL = 11
     private const val SWIFT_FEET_MAX_VALUE = 0.10
 
@@ -56,7 +54,6 @@ object ExplorationAbilityListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        // Apply speed modifier after player data is loaded via coroutine dispatch
         SkillInstance.launch {
             val player = event.player
             if (!player.isOnline) return@launch
@@ -77,7 +74,6 @@ object ExplorationAbilityListener : Listener {
 
         val attribute = player.getAttribute(Attribute.MOVEMENT_SPEED) ?: return
 
-        // Remove existing modifier if present
         attribute.removeModifier(SPEED_MODIFIER_KEY)
 
         if (speedBonus > 0.0) {
@@ -96,9 +92,6 @@ object ExplorationAbilityListener : Listener {
         attribute.removeModifier(SPEED_MODIFIER_KEY)
     }
 
-    // ── Safe Landing ──
-    // Take 0% → 40% less fall damage
-    // Available from level 21
     private const val SAFE_LANDING_MIN_LEVEL = 21
     private const val SAFE_LANDING_MAX_VALUE = 0.40
 

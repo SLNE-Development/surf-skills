@@ -12,17 +12,11 @@ import org.bukkit.event.entity.EntityPotionEffectEvent
 import org.bukkit.event.player.PlayerItemConsumeEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 object AlchemyAbilityListener : Listener {
-
-    // Guard against re-entrant potion effect events
     private val processingPotency = ConcurrentHashMap.newKeySet<UUID>()
-
-    // ── Alchemist's Resilience ──
-    // Take 0% → 30% less damage from poison and wither effects
-    // Available from level 1
     private const val RESILIENCE_MIN_LEVEL = 1
     private const val RESILIENCE_MAX_VALUE = 0.30
 
@@ -46,9 +40,6 @@ object AlchemyAbilityListener : Listener {
         }
     }
 
-    // ── Potion Recycler ──
-    // 0% → 20% chance to keep the glass bottle when drinking a potion
-    // Available from level 11
     private const val RECYCLER_MIN_LEVEL = 11
     private const val RECYCLER_MAX_VALUE = 0.20
 
@@ -65,14 +56,10 @@ object AlchemyAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            // Keep the full potion instead of it being consumed - effectively "recycling" it
             event.replacement = item.clone()
         }
     }
 
-    // ── Brew Potency ──
-    // Potion effects applied to you last 0% → 50% longer (positive effects only)
-    // Available from level 21
     private const val POTENCY_MIN_LEVEL = 21
     private const val POTENCY_MAX_VALUE = 0.50
 
@@ -80,7 +67,6 @@ object AlchemyAbilityListener : Listener {
     fun onBrewPotency(event: EntityPotionEffectEvent) {
         val player = event.entity as? Player ?: return
 
-        // Prevent re-entrant calls when we apply the extended effect
         if (!processingPotency.add(player.uniqueId)) return
 
         try {
@@ -88,7 +74,6 @@ object AlchemyAbilityListener : Listener {
 
             val newEffect = event.newEffect ?: return
 
-            // Only extend positive effects
             if (!isPositiveEffect(newEffect.type)) return
 
             val level = AbilityUtil.getPlayerLevel<AlchemySkill>(player)

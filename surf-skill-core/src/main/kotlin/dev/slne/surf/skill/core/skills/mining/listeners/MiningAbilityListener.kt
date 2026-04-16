@@ -7,7 +7,6 @@ import dev.slne.surf.skill.core.ability.AbilityUtil
 import dev.slne.surf.skill.core.skills.utils.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.block.BlockType
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -18,10 +17,6 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object MiningAbilityListener : Listener {
-
-    // ── Skillful Extraction ──
-    // Pickaxes lose 0% → 50% less durability
-    // Available from level 1
     private const val SKILLFUL_EXTRACTION_MIN_LEVEL = 1
     private const val SKILLFUL_EXTRACTION_MAX_VALUE = 0.50
 
@@ -47,9 +42,6 @@ object MiningAbilityListener : Listener {
         }
     }
 
-    // ── Spelunking ──
-    // 0% → 20% chance to receive 2x drops from ores
-    // Available from level 11
     private const val SPELUNKING_MIN_LEVEL = 11
     private const val SPELUNKING_MAX_VALUE = 0.20
 
@@ -87,9 +79,6 @@ object MiningAbilityListener : Listener {
         }
     }
 
-    // ── Dynamic Mining ──
-    // 0% → 1% chance when mining stone or deepslate to receive Haste VIII for 3 → 12 seconds
-    // Available from level 21
     private const val DYNAMIC_MINING_MIN_LEVEL = 21
     private const val DYNAMIC_MINING_MAX_CHANCE = 0.01
     private const val DYNAMIC_MINING_MIN_DURATION_TICKS = 3 * 20

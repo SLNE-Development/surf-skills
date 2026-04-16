@@ -14,15 +14,12 @@ import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 
 object WoodcuttingAbilityListener : Listener {
-
-    // ── Craftsmanship ──
-    // Axes lose 0% → 50% less durability
-    // Available from level 1
     private const val CRAFTSMANSHIP_MIN_LEVEL = 1
     private const val CRAFTSMANSHIP_MAX_VALUE = 0.50
 
     private val AXE_TYPES = setOf(
         Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
+        Material.COPPER_AXE,
         Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE
     )
 
@@ -43,9 +40,6 @@ object WoodcuttingAbilityListener : Listener {
         }
     }
 
-    // ── Forest's Gift ──
-    // 0% → 20% chance to receive 2x drops from harvested wood
-    // Available from level 11
     private const val FORESTS_GIFT_MIN_LEVEL = 11
     private const val FORESTS_GIFT_MAX_VALUE = 0.20
 
@@ -93,11 +87,6 @@ object WoodcuttingAbilityListener : Listener {
         }
     }
 
-    // ── Master Lumberjack ──
-    // Reduces the cooldown of the Lumberjack enchantment by 0 → 15 seconds
-    // Available from level 21
-    // Note: This ability integrates with the surf-enchantment plugin's Lumberjack enchantment.
-    // The cooldown reduction value can be queried via getLumberjackCooldownReduction().
     private const val MASTER_LUMBERJACK_MIN_LEVEL = 21
     private const val MASTER_LUMBERJACK_MAX_VALUE = 15.0
 
@@ -114,4 +103,4 @@ object WoodcuttingAbilityListener : Listener {
             level, MASTER_LUMBERJACK_MIN_LEVEL, maxValue = MASTER_LUMBERJACK_MAX_VALUE
         )
     }
-}
+} // TODO: Surf enchantment

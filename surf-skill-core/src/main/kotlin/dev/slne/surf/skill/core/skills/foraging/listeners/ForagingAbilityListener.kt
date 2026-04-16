@@ -5,19 +5,15 @@ import dev.slne.surf.skill.core.ability.AbilityUtil
 import dev.slne.surf.skill.core.skills.utils.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.entity.Player
 
 object ForagingAbilityListener : Listener {
-
-    // ── Earthbound Durability ──
-    // Shovels and hoes lose 0% → 50% less durability
-    // Available from level 1
     private const val EARTHBOUND_DURABILITY_MIN_LEVEL = 1
     private const val EARTHBOUND_DURABILITY_MAX_VALUE = 0.50
 
@@ -45,9 +41,6 @@ object ForagingAbilityListener : Listener {
         }
     }
 
-    // ── Green Thumb ──
-    // 0% → 20% chance to receive 2x drops from crops
-    // Available from level 11
     private const val GREEN_THUMB_MIN_LEVEL = 11
     private const val GREEN_THUMB_MAX_VALUE = 0.20
 
@@ -71,9 +64,6 @@ object ForagingAbilityListener : Listener {
         }
     }
 
-    // ── Satiation ──
-    // Lose 0% → 60% less hunger
-    // Available from level 21
     private const val SATIATION_MIN_LEVEL = 21
     private const val SATIATION_MAX_VALUE = 0.60
 
@@ -84,7 +74,6 @@ object ForagingAbilityListener : Listener {
         val newFoodLevel = event.foodLevel
         val oldFoodLevel = player.foodLevel
 
-        // Only apply when hunger is decreasing
         if (newFoodLevel >= oldFoodLevel) return
 
         val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)

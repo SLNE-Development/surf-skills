@@ -2,7 +2,6 @@ package dev.slne.surf.skill.core.skills.enchanting.listeners
 
 import dev.slne.surf.skill.api.skills.EnchantingSkill
 import dev.slne.surf.skill.core.ability.AbilityUtil
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -11,10 +10,6 @@ import org.bukkit.event.player.PlayerExpChangeEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 
 object EnchantingAbilityListener : Listener {
-
-    // ── Enchanter's Insight ──
-    // Gain 0% → 50% more experience from XP orbs
-    // Available from level 1
     private const val INSIGHT_MIN_LEVEL = 1
     private const val INSIGHT_MAX_VALUE = 0.50
 
@@ -35,9 +30,6 @@ object EnchantingAbilityListener : Listener {
         }
     }
 
-    // ── Arcane Fortification ──
-    // Enchanted items have a 0% → 20% chance to not lose durability
-    // Available from level 11
     private const val FORTIFICATION_MIN_LEVEL = 11
     private const val FORTIFICATION_MAX_VALUE = 0.20
 
@@ -59,9 +51,6 @@ object EnchantingAbilityListener : Listener {
         }
     }
 
-    // ── Mana Pool ──
-    // Reduce the XP level cost of enchanting by 0% → 25%
-    // Available from level 21
     private const val MANA_POOL_MIN_LEVEL = 21
     private const val MANA_POOL_MAX_VALUE = 0.25
 
