@@ -28,7 +28,7 @@ class MiningSkillImpl : AbstractSkill(
     listeners = objectListOf(MiningBlockListener, MiningAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Geschicktes Extrahieren".toSmallCaps()) },
+            displayName = buildText { primary("Gefestigte Picke".toSmallCaps()) },
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
