@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
-import dev.slne.surf.skill.api.skills.CombatSkill
+import dev.slne.surf.skill.api.paper.Skills.CombatSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.Material
 import org.bukkit.entity.Monster

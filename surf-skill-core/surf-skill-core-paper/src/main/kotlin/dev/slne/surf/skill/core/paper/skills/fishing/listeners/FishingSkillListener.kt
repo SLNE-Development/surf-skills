@@ -2,10 +2,10 @@ package dev.slne.surf.skill.core.paper.skills.fishing.listeners
 
 import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
-import dev.slne.surf.skill.api.SkillInstance
+import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.Skills.FishingSkill
 import dev.slne.surf.skill.api.player.incrementExperience
 import dev.slne.surf.skill.api.player.skillPlayer
-import dev.slne.surf.skill.api.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.skills.enchanting.EnchantmentRarityMap
 import org.bukkit.Material
 import org.bukkit.entity.Item

@@ -1,9 +1,9 @@
 package dev.slne.surf.skill.core.paper.experience
 
-import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.SkillInstance
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.LevelState
+import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.SkillInstance
 import java.util.*
 
 data class SkillExperienceImpl(

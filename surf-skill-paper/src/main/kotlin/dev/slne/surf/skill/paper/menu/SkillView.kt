@@ -2,8 +2,7 @@
 
 package dev.slne.surf.skill.paper.menu
 
-import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.experience.SkillExperience
+import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
 import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
@@ -14,7 +13,8 @@ import dev.slne.surf.api.paper.inventory.framework.view.pagination.pagination
 import dev.slne.surf.api.paper.inventory.framework.view.settings.PaginationViewRows
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.skill.api.experience.SkillExperience
+import dev.slne.surf.skill.api.paper.Skill
 import io.papermc.paper.datacomponent.DataComponentTypes
 
 val skillView = paginatedSurfView("aaa") {

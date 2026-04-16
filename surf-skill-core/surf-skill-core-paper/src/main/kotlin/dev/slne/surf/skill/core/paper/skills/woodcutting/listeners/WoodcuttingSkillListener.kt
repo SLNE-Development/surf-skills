@@ -1,9 +1,9 @@
 package dev.slne.surf.skill.core.paper.skills.woodcutting.listeners
 
-import dev.slne.surf.skill.api.SkillInstance
+import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.Skills.WoodcuttingSkill
 import dev.slne.surf.skill.api.player.incrementExperience
 import dev.slne.surf.skill.api.player.skillPlayer
-import dev.slne.surf.skill.api.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.event.EventHandler

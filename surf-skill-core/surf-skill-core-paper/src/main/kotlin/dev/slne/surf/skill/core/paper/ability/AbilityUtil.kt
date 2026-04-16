@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.ability
 
-import dev.slne.surf.skill.api.Skill
+import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.player.SkillPlayerManager
 import org.bukkit.entity.Player
 import kotlin.random.Random

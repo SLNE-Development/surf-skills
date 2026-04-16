@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.fishing.listeners
 
-import dev.slne.surf.skill.api.skills.FishingSkill
+import dev.slne.surf.skill.api.paper.Skills.FishingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player

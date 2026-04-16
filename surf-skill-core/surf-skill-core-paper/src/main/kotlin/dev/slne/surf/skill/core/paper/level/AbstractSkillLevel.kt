@@ -2,17 +2,15 @@ package dev.slne.surf.skill.core.paper.level
 
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.builder.SurfComponentBuilder
-import dev.slne.surf.api.core.messages.builder.colors.PrimaryComponentBuilderColor.primary
-import dev.slne.surf.api.core.messages.builder.colors.SpacerComponentBuilderColor.spacer
 import dev.slne.surf.api.core.util.freeze
 import dev.slne.surf.api.core.util.mutableObjectListOf
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.api.core.util.toObjectList
 import dev.slne.surf.api.paper.builder.LoreBuilder
-import dev.slne.surf.skill.api.Skill
 import dev.slne.surf.skill.api.experience.SkillExperience
 import dev.slne.surf.skill.api.level.SkillLevel
 import dev.slne.surf.skill.api.level.reward.LevelReward
+import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.core.paper.level.explanation.ExplanationLoreBuilder
 import dev.slne.surf.skill.core.paper.level.explanation.PerLevelExplanationLoreBuilder
 import it.unimi.dsi.fastutil.objects.ObjectList

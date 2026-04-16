@@ -1,7 +1,7 @@
 package dev.slne.surf.skill.core.paper.skills.exploration.listeners
 
-import dev.slne.surf.skill.api.SkillInstance
-import dev.slne.surf.skill.api.skills.ExplorationSkill
+import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.Skills.ExplorationSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.Material
 import org.bukkit.NamespacedKey

@@ -1,0 +1,16 @@
+package dev.slne.surf.skill.api.paper.experience
+
+import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.level.LevelState
+import java.util.*
+
+interface SkillExperience {
+    val uuid: UUID
+    val skill: Skill
+
+    val currentExperience: Int
+    val currentLevel: Int
+
+    fun checkLevel(level: Int): LevelState
+    fun incrementExperience(amount: Int): SkillExperience
+}

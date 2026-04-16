@@ -2,7 +2,7 @@
 
 package dev.slne.surf.skill.core.paper.skills.woodcutting.listeners
 
-import dev.slne.surf.skill.api.skills.WoodcuttingSkill
+import dev.slne.surf.skill.api.paper.Skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material

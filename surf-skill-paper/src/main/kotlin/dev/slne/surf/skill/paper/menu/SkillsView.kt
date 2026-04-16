@@ -1,11 +1,6 @@
 package dev.slne.surf.skill.paper.menu
 
-import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.skill.api.manager.SkillManager
-import dev.slne.surf.skill.api.skills.*
-import dev.slne.surf.skill.core.experience.SkillExperienceImpl
-import dev.slne.surf.skill.paper.menu.utils.MenuHeads
+import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
 import dev.slne.surf.api.paper.inventory.framework.dsl.layoutSlot
@@ -18,7 +13,12 @@ import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.skill.api.experience.SkillExperience
+import dev.slne.surf.skill.api.manager.SkillManager
+import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.Skills.*
+import dev.slne.surf.skill.core.experience.SkillExperienceImpl
+import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import it.unimi.dsi.fastutil.objects.ObjectList
 import me.devnatan.inventoryframework.context.RenderContext
 import org.bukkit.inventory.ItemStack
