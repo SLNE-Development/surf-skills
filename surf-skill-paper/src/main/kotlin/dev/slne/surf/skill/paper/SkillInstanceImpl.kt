@@ -23,9 +23,16 @@ class SkillInstanceImpl : PaperSkillInstance, Services.Fallback {
         block: suspend CoroutineScope.() -> Unit
     ) = plugin.launch(context, start, block)
 
-    override val globalRegionDispatcher = plugin.globalRegionDispatcher
-    override val asyncDispatcher = plugin.asyncDispatcher
-    override val mainDispatcher = plugin.mainDispatcher
+    override val globalRegionDispatcher by lazy {
+        plugin.globalRegionDispatcher
+    }
+    override val asyncDispatcher by lazy {
+        plugin.asyncDispatcher
+    }
+    override val mainDispatcher by lazy {
+        plugin.mainDispatcher
+    }
+
     override fun entityDispatcher(entity: Entity) = plugin.entityDispatcher(entity)
     override fun regionDispatcher(location: Location) = plugin.regionDispatcher(location)
 
