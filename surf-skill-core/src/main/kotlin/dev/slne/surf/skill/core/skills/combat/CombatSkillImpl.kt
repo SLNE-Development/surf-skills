@@ -8,6 +8,7 @@ import dev.slne.surf.skill.api.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.skills.CombatSkill
 import dev.slne.surf.skill.core.AbstractSkill
 import dev.slne.surf.skill.core.level.skillLevel
+import dev.slne.surf.skill.core.skills.combat.listeners.CombatAbilityListener
 import dev.slne.surf.skill.core.skills.combat.listeners.CombatKillListener
 import dev.slne.surf.api.paper.builder.buildItem
 import dev.slne.surf.api.paper.builder.buildLore
@@ -47,7 +48,7 @@ class CombatSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Kampf zu verbessern.")
         }
     },
-    listeners = objectListOf(CombatKillListener)
+    listeners = objectListOf(CombatKillListener, CombatAbilityListener)
 ), CombatSkill {
     override fun getExtraLevels(): ObjectList<SkillLevel> {
         return objectListOf(

@@ -8,19 +8,25 @@ import dev.slne.surf.skill.api.player.SkillPlayerManager
 import dev.slne.surf.skill.core.experience.ExperienceService
 import net.kyori.adventure.util.Services
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 @AutoService(SkillPlayerManager::class)
 class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
+    private val syncCache = ConcurrentHashMap<UUID, SkillPlayer>()
+
     private val cache = Caffeine.newBuilder()
         .maximumSize(10_000)
         .asLoadingCache<UUID, SkillPlayer> { uuid ->
             val experiences = ExperienceService.fetchPlayerExperience(uuid)
 
-            SkillPlayerImpl(uuid, experiences)
+            SkillPlayerImpl(uuid, experiences).also { syncCache[uuid] = it }
         }
 
     override suspend fun fetchOrCreatePlayer(uuid: UUID): SkillPlayer =
         cache.get(uuid)
+
+    override fun getPlayerIfCached(uuid: UUID): SkillPlayer? =
+        syncCache[uuid]
 
     override suspend fun savePlayer(uuid: UUID) {
         val player = cache.getIfPresent(uuid) ?: return
@@ -34,5 +40,6 @@ class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
 
     override fun invalidatePlayer(uuid: UUID) {
         cache.invalidate(uuid)
+        syncCache.remove(uuid)
     }
 }
