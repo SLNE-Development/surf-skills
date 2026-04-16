@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    api(projects.surfSkillCore)
+    api(projects.surfSkillCore.surfSkillCorePaper)
 }
 
 surfPaperPluginApi {
