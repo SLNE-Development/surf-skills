@@ -14,6 +14,7 @@ import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
+import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatAbilityListener
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatKillListener
@@ -48,7 +49,27 @@ class CombatSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Kampf zu verbessern.")
         }
     },
-    listeners = objectListOf(CombatKillListener, CombatAbilityListener)
+    listeners = objectListOf(CombatKillListener, CombatAbilityListener),
+    abilities = objectListOf(
+        SkillAbility(
+            displayName = buildText { primary("Kampfgehärtet".toSmallCaps()) },
+            minLevel = 1,
+            maxValue = 0.50,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Schnitters Glück".toSmallCaps()) },
+            minLevel = 11,
+            maxValue = 0.20,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Starker Einschlag".toSmallCaps()) },
+            minLevel = 21,
+            maxValue = 0.15,
+            valueFormatter = SkillAbility.percentageFormatter()
+        )
+    )
 ), CombatSkill {
     override fun getExtraLevels(): ObjectList<SkillLevel> {
         return objectListOf(
