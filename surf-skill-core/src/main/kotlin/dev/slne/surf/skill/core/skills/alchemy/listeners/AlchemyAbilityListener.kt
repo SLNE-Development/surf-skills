@@ -65,7 +65,7 @@ object AlchemyAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            // Give back a potion of the same type (the original is consumed, so give a copy)
+            // Keep the full potion instead of it being consumed - effectively "recycling" it
             event.replacement = item.clone()
         }
     }

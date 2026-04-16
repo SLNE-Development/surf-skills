@@ -56,9 +56,8 @@ object ExplorationAbilityListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        // Delay speed modifier application to ensure player data is loaded
+        // Apply speed modifier after player data is loaded via coroutine dispatch
         SkillInstance.launch {
-            // Small delay to ensure SkillPlayerManager has loaded the player
             val player = event.player
             if (!player.isOnline) return@launch
             applySpeedModifier(player)
