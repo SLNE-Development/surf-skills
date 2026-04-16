@@ -5,6 +5,7 @@ package dev.slne.surf.skill.core.skills.alchemy
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.AlchemySkill
 import dev.slne.surf.skill.core.AbstractSkill
+import dev.slne.surf.skill.core.skills.alchemy.listeners.AlchemyAbilityListener
 import dev.slne.surf.skill.core.skills.alchemy.listeners.AlchemyListener
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
@@ -23,5 +24,5 @@ class AlchemySkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Alchemie zu verbessern.")
         }
     },
-    listeners = objectListOf(AlchemyListener)
+    listeners = objectListOf(AlchemyListener, AlchemyAbilityListener)
 ), AlchemySkill

@@ -5,6 +5,7 @@ package dev.slne.surf.skill.core.skills.mining
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.MiningSkill
 import dev.slne.surf.skill.core.AbstractSkill
+import dev.slne.surf.skill.core.skills.mining.listeners.MiningAbilityListener
 import dev.slne.surf.skill.core.skills.mining.listeners.MiningBlockListener
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
@@ -23,5 +24,5 @@ class MiningSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Bergbau zu verbessern.")
         }
     },
-    listeners = objectListOf(MiningBlockListener)
+    listeners = objectListOf(MiningBlockListener, MiningAbilityListener)
 ), MiningSkill

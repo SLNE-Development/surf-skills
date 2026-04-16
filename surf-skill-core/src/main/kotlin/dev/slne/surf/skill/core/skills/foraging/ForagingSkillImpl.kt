@@ -5,6 +5,7 @@ package dev.slne.surf.skill.core.skills.foraging
 import com.google.auto.service.AutoService
 import dev.slne.surf.skill.api.skills.ForagingSkill
 import dev.slne.surf.skill.core.AbstractSkill
+import dev.slne.surf.skill.core.skills.foraging.listeners.ForagingAbilityListener
 import dev.slne.surf.skill.core.skills.foraging.listeners.ForagingListener
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
@@ -23,5 +24,5 @@ class ForagingSkillImpl : AbstractSkill(
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Sammeln zu verbessern.")
         }
     },
-    listeners = objectListOf(ForagingListener)
+    listeners = objectListOf(ForagingListener, ForagingAbilityListener)
 ), ForagingSkill
