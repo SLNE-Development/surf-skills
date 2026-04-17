@@ -27,8 +27,8 @@ data class SkillAbility(
      */
     fun getValueAtLevel(level: Int): Double {
         if (level < minLevel) return 0.0
-        val effectiveLevel = level.coerceAtMost(maxLevel) + 1
-        return maxValue * (effectiveLevel - minLevel).toDouble() / (maxLevel - minLevel)
+        val effectiveLevel = (level + 1).coerceAtMost(maxLevel + 1)
+        return maxValue * (effectiveLevel - minLevel).toDouble() / (maxLevel + 1 - minLevel)
     }
 
     fun getFormattedValue(level: Int): String {
