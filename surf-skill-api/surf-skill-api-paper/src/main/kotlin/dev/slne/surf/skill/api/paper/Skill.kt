@@ -24,6 +24,7 @@ interface Skill : ComponentLike {
     val baseExperience: Int
     val maxExperience: Int
     val maxLevel: Int
+    val active: Boolean
 
     fun getLevels(): ObjectList<SkillLevel>
     fun displayItemStack(progress: SkillExperience): ItemStack

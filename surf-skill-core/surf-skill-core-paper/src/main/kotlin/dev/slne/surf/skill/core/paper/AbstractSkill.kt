@@ -38,6 +38,7 @@ abstract class AbstractSkill(
     override val baseExperience: Int = Skill.BASE_EXPERIENCE,
     override val maxLevel: Int = Skill.MAX_SKILL_LEVEL,
     override val maxExperience: Int = Skill.MAX_EXPERIENCE,
+    override val active: Boolean = true,
     listeners: ObjectList<Listener> = objectListOf(),
     val abilities: ObjectList<SkillAbility> = objectListOf()
 ) : Skill {
@@ -181,6 +182,13 @@ abstract class AbstractSkill(
             line {
                 variableKey("Level: ")
                 variableValue(currentLevel)
+            }
+
+            if (!active) {
+                emptyLine()
+                line {
+                    error("Diese Fähigkeit ist derzeit nicht verfügbar")
+                }
             }
         }
     }

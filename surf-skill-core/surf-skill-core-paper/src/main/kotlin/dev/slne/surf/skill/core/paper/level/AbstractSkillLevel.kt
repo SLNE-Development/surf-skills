@@ -47,7 +47,7 @@ open class AbstractSkillLevel(
             buildLevelExplanationLore(experience)
             buildRewardLore()
             emptyLine()
-            buildAbilityLore(experience)
+            buildAbilityLore()
         }.build().toObjectList()
     }
 
@@ -90,7 +90,7 @@ open class AbstractSkillLevel(
         }
     }
 
-    private fun LoreBuilder.buildAbilityLore(experience: SkillExperience) {
+    private fun LoreBuilder.buildAbilityLore() {
         val skill = skill as? AbstractSkill ?: return
         val activeAbilities = skill.abilities.filter { it.isActiveAtLevel(level) }
 
@@ -104,7 +104,7 @@ open class AbstractSkillLevel(
         emptyLine()
 
         activeAbilities.forEach { ability ->
-            val newValue = ability.getFormattedValue(experience.currentLevel)
+            val newValue = ability.getFormattedValue(level)
             val isNew = !ability.isActiveAtLevel(level - 1)
 
             line {

@@ -28,7 +28,7 @@ class SkillManagerImpl : SkillManager, Services.Fallback {
     }
 
     fun registerListeners() {
-        skills.forEach { it.registerListeners() }
+        skills.filter { it.active }.forEach { it.registerListeners() }
     }
 
     override fun registerSkill(skill: Skill): Boolean {
