@@ -33,21 +33,21 @@ class ForagingSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Earth-Bound Durability".toSmallCaps()) },
-            description = "Deine Verbindung zur Natur verleiht dir erhöhte Ausdauer und Widerstandsfähigkeit.",
+            description = "Schaufeln und Hacken verlieren 0% → 50% weniger Haltbarkeit",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Green Thumb".toSmallCaps()) },
-            description = "Erhöht die Menge der gesammelten Pflanzen und natürlichen Ressourcen.",
+            description = "Erhalte eine 0% → 20% Chance, 2x Drops von Nutzpflanzen zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Saturation".toSmallCaps()) },
-            description = "Gesammelte Nahrung gibt mehr Sättigungspunkte, sodass du länger durchhältst.",
+            description = "Verliere 0% → 60% weniger Hunger",
             minLevel = 21,
             maxValue = 0.60,
             valueFormatter = SkillAbility.percentageFormatter()

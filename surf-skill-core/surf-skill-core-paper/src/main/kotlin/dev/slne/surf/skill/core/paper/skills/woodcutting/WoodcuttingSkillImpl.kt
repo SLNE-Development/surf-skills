@@ -33,21 +33,21 @@ class WoodcuttingSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Craftsmanship".toSmallCaps()) },
-            description = "Deine Handwerkskunst steigert die Qualität der gefällten Hölzer.",
+            description = "Äxte verlieren 0% → 50% weniger Haltbarkeit",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Gift of the Forest".toSmallCaps()) },
-            description = "Der Wald selbst belohnt dich – Bäume hinterlassen beim Fällen mehr Ressourcen.",
+            description = "Erhalte eine 0% → 20% Chance, 2x Drops von geerntetem Holz zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Master Lumberjack".toSmallCaps()) },
-            description = "Als Meister-Holzfäller fällst du Bäume in Rekordzeit.",
+            description = "Verringert den Cooldown des Lumberjack Enchantments um 0 → 15 Sekunden",
             minLevel = 21,
             maxValue = 15.0,
             valueFormatter = SkillAbility.secondsFormatter()

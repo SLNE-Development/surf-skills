@@ -33,21 +33,21 @@ class FishingSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Magnetic Rod".toSmallCaps()) },
-            description = "Erhöht die Chance, beim Angeln Schätze und seltene Gegenstände zu finden.",
+            description = "Fische beißen 0% → 25% schneller an",
             minLevel = 1,
             maxValue = 0.25,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Neptune's Favor".toSmallCaps()) },
-            description = "Neptun selbst segnet deine Angel – Fische beißen öfter und schneller an.",
+            description = "Erhalte eine 0% → 20% Chance, 2x Drops von Meerestieren zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Bigger Lungs".toSmallCaps()) },
-            description = "Erhöht deine Atemzeit unter Wasser, um schwer erreichbare Angelplätze zu erkunden.",
+            description = "Du kannst unter Wasser 0% → 300% länger atmen",
             minLevel = 21,
             maxValue = 3.00,
             valueFormatter = { value -> "%.2f%%".format(value / (1.0 + value) * 100) }

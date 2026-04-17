@@ -33,21 +33,21 @@ class MiningSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Reinforced Pickaxe".toSmallCaps()) },
-            description = "Deine Erfahrung mit der Spitzhacke erhöht deren Haltbarkeit und Effizienz.",
+            description = "Spitzhacken verlieren 0% → 50% weniger Haltbarkeit",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Cave Exploration".toSmallCaps()) },
-            description = "Du findest häufiger seltene Erze und Mineralien in Höhlen und Minen.",
+            description = "Erhalte eine 0% → 20% Chance, 2x Drops von Erzen zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Dynamic Mining".toSmallCaps()) },
-            description = "Erhöht die Abbaugeschwindigkeit progressiv mit deinem Skill-Level.",
+            description = "Erhalte eine 0% → 1% Chance beim Abbauen von Stein oder Deepslate für 3 → 12 Sekunden Haste VIII zu erhalten",
             minLevel = 21,
             maxValue = 0.01,
             valueFormatter = SkillAbility.percentageFormatter()

@@ -57,21 +57,21 @@ class CombatSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Battle Hardened".toSmallCaps()) },
-            description = "Verringert den erlittenen Schaden durch langjährige Kampferfahrung.",
+            description = "Waffen und Rüstungen verlieren 0 % → 50 % weniger Haltbarkeit.",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Reaper's Fortune".toSmallCaps()) },
-            description = "Erhöht die Chance, zusätzliche Beute beim Töten von Gegnern zu erhalten.",
+            description = "Erhalte eine 0 % → 20 % Chance, 2x Drops von Monstern zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
             displayName = buildText { primary("Heavy Strike".toSmallCaps()) },
-            description = "Gibt deinen Angriffen eine Chance, kritischen Bonusschaden zu verursachen.",
+            description = "Verursache 0 % → 15 % mehr Schaden gegen feindliche Kreaturen",
             minLevel = 21,
             maxValue = 0.15,
             valueFormatter = SkillAbility.percentageFormatter()
