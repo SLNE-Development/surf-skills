@@ -45,5 +45,6 @@ class EnchantingSkillImpl : AbstractSkill(
             maxValue = 0.25,
             valueFormatter = SkillAbility.percentageFormatter()
         )
-    )
+    ),
+    active = false
 ), EnchantingSkill

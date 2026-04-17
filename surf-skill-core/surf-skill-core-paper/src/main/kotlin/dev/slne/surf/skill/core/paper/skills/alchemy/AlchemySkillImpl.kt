@@ -45,5 +45,6 @@ class AlchemySkillImpl : AbstractSkill(
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         )
-    )
+    ),
+    active = false
 ), AlchemySkill
