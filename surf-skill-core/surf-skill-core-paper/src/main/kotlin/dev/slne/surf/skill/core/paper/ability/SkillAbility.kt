@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component
  * Describes a skill ability and its scaling behavior for display purposes.
  *
  * @param displayName the localized display name of the ability
+ * @param description a short German description of what the ability does
  * @param minLevel the minimum skill level at which this ability activates
  * @param maxValue the maximum effect value at max level
  * @param maxLevel the maximum skill level (default 50)
@@ -14,6 +15,7 @@ import net.kyori.adventure.text.Component
  */
 data class SkillAbility(
     val displayName: Component,
+    val description: String = "",
     val minLevel: Int,
     val maxValue: Double,
     val maxLevel: Int = Skill.MAX_SKILL_LEVEL,

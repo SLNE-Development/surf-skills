@@ -184,6 +184,33 @@ abstract class AbstractSkill(
                 variableValue(currentLevel)
             }
 
+            if (abilities.isNotEmpty()) {
+                emptyLine()
+                line { variableKey("Fähigkeiten:") }
+
+                abilities.forEach { ability ->
+                    val isUnlocked = ability.isActiveAtLevel(currentLevel)
+                    emptyLine()
+                    line {
+                        if (isUnlocked) success("✔ ")
+                        else error("✘ ")
+                        append(ability.displayName)
+                        spacer(" (ab Lv. ${ability.minLevel})")
+                    }
+                    if (ability.description.isNotEmpty()) {
+                        line {
+                            spacer("  ${ability.description}")
+                        }
+                    }
+                    if (isUnlocked) {
+                        line {
+                            spacer("  Aktuell: ")
+                            variableValue(ability.getFormattedValue(currentLevel))
+                        }
+                    }
+                }
+            }
+
             if (!active) {
                 emptyLine()
                 line {

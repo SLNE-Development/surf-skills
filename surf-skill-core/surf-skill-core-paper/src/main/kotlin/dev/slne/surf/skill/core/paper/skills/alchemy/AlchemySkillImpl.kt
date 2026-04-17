@@ -18,29 +18,36 @@ class AlchemySkillImpl : AbstractSkill(
     name = "alchemy",
     material = ItemType.BREWING_STAND,
     displayName = buildText {
-        primary("Alchemie".toSmallCaps())
+        primary("Alchemy".toSmallCaps())
     },
     lore = {
         line {
             spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Alchemie zu verbessern.")
         }
+
+        line {
+            spacer("Braue mächtige Tränke und steigere ihre Wirkung mit jedem Level.")
+        }
     },
     listeners = objectListOf(AlchemyListener, AlchemyAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Widerstandsfähigkeit".toSmallCaps()) },
+            displayName = buildText { primary("Resilience".toSmallCaps()) },
+            description = "Erhöht deine Schadensresistenz durch alchemistische Behandlungen.",
             minLevel = 1,
             maxValue = 0.30,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Trankrecycler".toSmallCaps()) },
+            displayName = buildText { primary("Potion Recycler".toSmallCaps()) },
+            description = "Gibt dir eine Chance, leere Glasflaschen nach dem Trinken eines Tranks zurückzubekommen.",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Trankstärke".toSmallCaps()) },
+            displayName = buildText { primary("Potion Strength".toSmallCaps()) },
+            description = "Verstärkt die Wirkung aller gebrauten Tränke.",
             minLevel = 21,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()

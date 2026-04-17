@@ -16,11 +16,15 @@ class ExplorationSkillImpl : AbstractSkill(
     name = "exploration",
     material = ItemType.GLOBE_BANNER_PATTERN,
     displayName = buildText {
-        primary("Erkundung".toSmallCaps())
+        primary("Exploration".toSmallCaps())
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Erkundung zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Entdeckungsfähigkeiten zu verbessern.")
+        }
+
+        line {
+            spacer("Erkunde die Welt, entdecke neue Orte und werde zum unerschrockenen Abenteurer.")
         }
     },
     listeners = objectListOf(ExplorationAbilityListener),

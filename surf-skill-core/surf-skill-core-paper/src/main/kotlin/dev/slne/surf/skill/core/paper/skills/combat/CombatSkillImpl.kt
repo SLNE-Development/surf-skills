@@ -25,7 +25,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta
 
 private val enchantedBook = buildItem(ItemType.ENCHANTED_BOOK) {
     displayName {
-        primary("Tolles Buch der Verzauberung")
+        primary("Großes Buch der Verzauberung")
     }
     buildLore {
         line {
@@ -42,29 +42,36 @@ class CombatSkillImpl : AbstractSkill(
     name = "combat",
     material = ItemType.DIAMOND_SWORD,
     displayName = buildText {
-        primary("Kampf".toSmallCaps())
+        primary("Combat".toSmallCaps())
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Kampf zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Kampffähigkeiten zu verbessern.")
+        }
+
+        line {
+            spacer("Werde stärker, schneller und tödlicher im Kampf gegen Monster und Spieler.")
         }
     },
     listeners = objectListOf(CombatKillListener, CombatAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Kampfgehärtet".toSmallCaps()) },
+            displayName = buildText { primary("Battle Hardened".toSmallCaps()) },
+            description = "Verringert den erlittenen Schaden durch langjährige Kampferfahrung.",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Schnitters Glück".toSmallCaps()) },
+            displayName = buildText { primary("Reaper's Fortune".toSmallCaps()) },
+            description = "Erhöht die Chance, zusätzliche Beute beim Töten von Gegnern zu erhalten.",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Starker Einschlag".toSmallCaps()) },
+            displayName = buildText { primary("Heavy Strike".toSmallCaps()) },
+            description = "Gibt deinen Angriffen eine Chance, kritischen Bonusschaden zu verursachen.",
             minLevel = 21,
             maxValue = 0.15,
             valueFormatter = SkillAbility.percentageFormatter()

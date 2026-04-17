@@ -18,29 +18,36 @@ class MiningSkillImpl : AbstractSkill(
     name = "mining",
     material = ItemType.COBBLESTONE,
     displayName = buildText {
-        primary("Bergbau".toSmallCaps())
+        primary("Mining".toSmallCaps())
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Bergbau zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Bergbaukünste zu verbessern.")
+        }
+
+        line {
+            spacer("Baue schneller ab, finde wertvollere Erze und meistere die Tiefen der Erde.")
         }
     },
     listeners = objectListOf(MiningBlockListener, MiningAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Gefestigte Picke".toSmallCaps()) },
+            displayName = buildText { primary("Reinforced Pickaxe".toSmallCaps()) },
+            description = "Deine Erfahrung mit der Spitzhacke erhöht deren Haltbarkeit und Effizienz.",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Höhlenforschung".toSmallCaps()) },
+            displayName = buildText { primary("Cave Exploration".toSmallCaps()) },
+            description = "Du findest häufiger seltene Erze und Mineralien in Höhlen und Minen.",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Dynamischer Bergbau".toSmallCaps()) },
+            displayName = buildText { primary("Dynamic Mining".toSmallCaps()) },
+            description = "Erhöht die Abbaugeschwindigkeit progressiv mit deinem Skill-Level.",
             minLevel = 21,
             maxValue = 0.01,
             valueFormatter = SkillAbility.percentageFormatter()

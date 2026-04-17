@@ -18,29 +18,36 @@ class WoodcuttingSkillImpl : AbstractSkill(
     name = "woodcutting",
     material = ItemType.WOODEN_AXE,
     displayName = buildText {
-        primary("Holzfällen".toSmallCaps())
+        primary("Woodcutting".toSmallCaps())
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Holzfällen zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Holzfällerkünste zu verbessern.")
+        }
+
+        line {
+            spacer("Fälle Bäume schneller, erhalte mehr Ressourcen und beherrsche die Kunst des Holzfällens.")
         }
     },
     listeners = objectListOf(WoodcuttingAbilityListener, WoodcuttingSkillListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Handwerkskunst".toSmallCaps()) },
+            displayName = buildText { primary("Craftsmanship".toSmallCaps()) },
+            description = "Deine Handwerkskunst steigert die Qualität der gefällten Hölzer.",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Geschenk des Waldes".toSmallCaps()) },
+            displayName = buildText { primary("Gift of the Forest".toSmallCaps()) },
+            description = "Der Wald selbst belohnt dich – Bäume hinterlassen beim Fällen mehr Ressourcen.",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Meister-Holzfäller".toSmallCaps()) },
+            displayName = buildText { primary("Master Lumberjack".toSmallCaps()) },
+            description = "Als Meister-Holzfäller fällst du Bäume in Rekordzeit.",
             minLevel = 21,
             maxValue = 15.0,
             valueFormatter = SkillAbility.secondsFormatter()

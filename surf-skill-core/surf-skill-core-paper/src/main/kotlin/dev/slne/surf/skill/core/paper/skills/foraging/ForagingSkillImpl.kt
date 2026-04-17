@@ -18,29 +18,36 @@ class ForagingSkillImpl : AbstractSkill(
     name = "foraging",
     material = ItemType.SWEET_BERRIES,
     displayName = buildText {
-        primary("Sammeln".toSmallCaps())
+        primary("Foraging".toSmallCaps())
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten im Sammeln zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Sammelkünste zu verbessern.")
+        }
+
+        line {
+            spacer("Sammle Pflanzen, Beeren und Naturschätze effizienter und profitiere von der Natur.")
         }
     },
     listeners = objectListOf(ForagingListener, ForagingAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Erdverbundene Haltbarkeit".toSmallCaps()) },
+            displayName = buildText { primary("Earth-Bound Durability".toSmallCaps()) },
+            description = "Deine Verbindung zur Natur verleiht dir erhöhte Ausdauer und Widerstandsfähigkeit.",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Grüner Daumen".toSmallCaps()) },
+            displayName = buildText { primary("Green Thumb".toSmallCaps()) },
+            description = "Erhöht die Menge der gesammelten Pflanzen und natürlichen Ressourcen.",
             minLevel = 11,
             maxValue = 0.20,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Sättigung".toSmallCaps()) },
+            displayName = buildText { primary("Saturation".toSmallCaps()) },
+            description = "Gesammelte Nahrung gibt mehr Sättigungspunkte, sodass du länger durchhältst.",
             minLevel = 21,
             maxValue = 0.60,
             valueFormatter = SkillAbility.percentageFormatter()
