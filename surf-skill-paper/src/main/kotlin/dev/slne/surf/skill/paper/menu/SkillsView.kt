@@ -45,9 +45,9 @@ val skillsView = surfView("Skills") {
     onInit {
         layout {
             empty()
-            row(" M C F A ")
+            row(" C M W F ")
             empty()
-            row(" W E I N ")
+            row(" I E A N ")
             row("    X    ")
         }
     }

@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(MiningSkill::class)
 class MiningSkillImpl : AbstractSkill(
     name = "mining",
-    material = ItemType.COBBLESTONE,
+    material = ItemType.GOLDEN_PICKAXE,
     displayName = buildText {
         primary("Mining".toSmallCaps())
     },

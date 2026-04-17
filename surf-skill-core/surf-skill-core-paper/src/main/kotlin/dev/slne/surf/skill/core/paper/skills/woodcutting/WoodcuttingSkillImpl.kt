@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(WoodcuttingSkill::class)
 class WoodcuttingSkillImpl : AbstractSkill(
     name = "woodcutting",
-    material = ItemType.WOODEN_AXE,
+    material = ItemType.COPPER_AXE,
     displayName = buildText {
         primary("Woodcutting".toSmallCaps())
     },

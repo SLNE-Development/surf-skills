@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemType
 @AutoService(ForagingSkill::class)
 class ForagingSkillImpl : AbstractSkill(
     name = "foraging",
-    material = ItemType.SWEET_BERRIES,
+    material = ItemType.STONE_HOE,
     displayName = buildText {
-        primary("Foraging".toSmallCaps())
+        primary("Farming".toSmallCaps())
     },
     lore = {
         line {
