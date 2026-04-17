@@ -181,7 +181,7 @@ abstract class AbstractSkill(
 
             line {
                 variableKey("Level: ")
-                variableValue(currentLevel)
+                variableValue(currentLevel - 1)
             }
 
             if (abilities.isNotEmpty()) {
@@ -189,7 +189,7 @@ abstract class AbstractSkill(
                 line { variableKey("Fähigkeiten:") }
 
                 abilities.forEach { ability ->
-                    val isUnlocked = ability.isActiveAtLevel(currentLevel)
+                    val isUnlocked = ability.isActiveAtLevel(currentLevel - 1)
                     emptyLine()
                     line {
                         if (isUnlocked) success("✔ ")
@@ -205,7 +205,7 @@ abstract class AbstractSkill(
                     if (isUnlocked) {
                         line {
                             spacer("  Aktuell: ")
-                            variableValue(ability.getFormattedValue(currentLevel))
+                            variableValue(ability.getFormattedValue(currentLevel - 1))
                         }
                     }
                 }
