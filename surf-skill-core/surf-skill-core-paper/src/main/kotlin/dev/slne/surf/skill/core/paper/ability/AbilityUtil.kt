@@ -23,8 +23,8 @@ object AbilityUtil {
         maxValue: Double
     ): Double {
         if (currentLevel < minLevel) return 0.0
-        val effectiveLevel = currentLevel.coerceAtMost(maxLevel)
-        return maxValue * (effectiveLevel - minLevel).toDouble() / (maxLevel - minLevel)
+        val effectiveLevel = (currentLevel + 1).coerceAtMost(maxLevel + 1)
+        return maxValue * (effectiveLevel - minLevel).toDouble() / (maxLevel + 1 - minLevel)
     }
 
     /**
