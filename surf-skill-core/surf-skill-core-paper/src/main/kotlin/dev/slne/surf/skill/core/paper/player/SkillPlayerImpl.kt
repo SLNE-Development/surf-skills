@@ -87,11 +87,5 @@ class SkillPlayerImpl(
             appendSpace()
             spacer("«")
         })
-
-        player?.sendActionBar(buildText {
-            append(experience.skill.displayName)
-            appendSpace()
-            success("+$newValue XP")
-        })
     }
 }
