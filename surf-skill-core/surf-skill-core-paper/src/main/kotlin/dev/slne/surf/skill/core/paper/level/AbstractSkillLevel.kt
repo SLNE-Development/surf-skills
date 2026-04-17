@@ -10,6 +10,7 @@ import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.api.paper.level.reward.LevelReward
+import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.level.explanation.ExplanationLoreBuilder
 import dev.slne.surf.skill.core.paper.level.explanation.PerLevelExplanationLoreBuilder
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -46,6 +47,7 @@ open class AbstractSkillLevel(
             buildLevelExplanationLore(experience)
             buildRewardLore()
             emptyLine()
+            buildAbilityLore(experience)
         }.build().toObjectList()
     }
 
@@ -84,6 +86,43 @@ open class AbstractSkillLevel(
         if (rewards.isEmpty()) {
             line {
                 spacer("Keine Belohnungen".toSmallCaps())
+            }
+        }
+    }
+
+    private fun LoreBuilder.buildAbilityLore(experience: SkillExperience) {
+        val skill = skill as? AbstractSkill ?: return
+        val activeAbilities = skill.abilities.filter { it.isActiveAtLevel(level) }
+
+        if (activeAbilities.isEmpty()) {
+            return
+        }
+
+        line {
+            primary("Fähigkeiten:".toSmallCaps())
+        }
+        emptyLine()
+
+        activeAbilities.forEach { ability ->
+            val newValue = ability.getFormattedValue(experience.currentLevel)
+            val isNew = !ability.isActiveAtLevel(level - 1)
+
+            line {
+                spacer("- ")
+                append(ability.displayName)
+                info(": ")
+
+                if (isNew) {
+                    variableValue(newValue)
+                    spacer(" (")
+                    variableValue("NEU!")
+                    spacer(")")
+                } else {
+                    val oldValue = ability.getFormattedValue(level - 1)
+                    spacer(oldValue)
+                    info(" → ")
+                    variableValue(newValue)
+                }
             }
         }
     }
