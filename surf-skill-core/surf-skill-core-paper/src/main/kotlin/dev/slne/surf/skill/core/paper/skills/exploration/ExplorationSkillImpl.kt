@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(ExplorationSkill::class)
 class ExplorationSkillImpl : AbstractSkill(
     name = "exploration",
-    material = ItemType.GLOBE_BANNER_PATTERN,
+    material = ItemType.SPYGLASS,
     displayName = buildText {
         primary("Exploration".toSmallCaps())
     },
