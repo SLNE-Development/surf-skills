@@ -1,5 +1,7 @@
 package dev.slne.surf.skill.core.paper.player
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.messages.adventure.playSound
 import dev.slne.surf.api.core.util.freeze
@@ -14,6 +16,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.sound.Sound
 import java.util.*
 import kotlin.reflect.KClass
+import kotlin.time.Duration.Companion.seconds
 import org.bukkit.Sound as BukkitSound
 
 class SkillPlayerImpl(
@@ -25,6 +28,11 @@ class SkillPlayerImpl(
 
     override val player get() = server.getPlayer(uuid)
     override val offlinePlayer get() = server.getOfflinePlayer(uuid)
+
+    private val pickUpCache = Caffeine
+        .newBuilder()
+        .expireAfterWrite(3.seconds)
+        .build<Pair<UUID, Skill>, Int>()
 
     override fun <S : Skill> hasLevel(clazz: KClass<out S>, level: Int): Boolean =
         (findExperience(clazz)?.currentLevel ?: 0) >= level
@@ -64,10 +72,26 @@ class SkillPlayerImpl(
             source(Sound.Source.AMBIENT)
         }
 
+        val cachedValue = pickUpCache.getIfPresent(uuid to experience.skill) ?: 0
+        val newValue = cachedValue + amount
+        pickUpCache.put(uuid to experience.skill, newValue)
+
+        player?.sendActionBar(buildText {
+            spacer("»")
+            appendSpace()
+            append(experience.skill.displayName)
+            appendSpace()
+            spacer("‖")
+            appendSpace()
+            success("+$newValue XP")
+            appendSpace()
+            spacer("«")
+        })
+
         player?.sendActionBar(buildText {
             append(experience.skill.displayName)
             appendSpace()
-            success("+$amount XP")
+            success("+$newValue XP")
         })
     }
 }
