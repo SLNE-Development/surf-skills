@@ -195,7 +195,7 @@ abstract class AbstractSkill(
                         if (isUnlocked) success("✔ ")
                         else error("✘ ")
                         append(ability.displayName)
-                        spacer(" (ab Lv. ${ability.minLevel})")
+                        spacer(" (ab Lvl. ${ability.minLevel})")
                     }
                     if (ability.description.isNotEmpty()) {
                         line {
