@@ -46,7 +46,7 @@ class FishingSkillImpl : AbstractSkill(
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Larger Lungs".toSmallCaps()) },
+            displayName = buildText { primary("Bigger Lungs".toSmallCaps()) },
             description = "Erhöht deine Atemzeit unter Wasser, um schwer erreichbare Angelplätze zu erkunden.",
             minLevel = 21,
             maxValue = 3.00,

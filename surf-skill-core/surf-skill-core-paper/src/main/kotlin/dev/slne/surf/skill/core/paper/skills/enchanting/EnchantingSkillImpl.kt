@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(EnchantingSkill::class)
 class EnchantingSkillImpl : AbstractSkill(
     name = "enchanting",
-    material = ItemType.ENCHANTING_TABLE,
+    material = ItemType.ENCHANTED_BOOK,
     displayName = buildText {
         primary("Enchanting".toSmallCaps())
     },
