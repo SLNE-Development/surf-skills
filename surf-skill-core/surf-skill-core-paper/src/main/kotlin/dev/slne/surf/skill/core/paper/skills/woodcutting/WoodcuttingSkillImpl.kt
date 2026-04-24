@@ -6,11 +6,16 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
+import dev.slne.surf.api.core.util.toObjectList
+import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LumberjackUpgradeLevelReward
 import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
+import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingSkillListener
+import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.inventory.ItemType
 
 @AutoService(WoodcuttingSkill::class)
@@ -52,5 +57,24 @@ class WoodcuttingSkillImpl : AbstractSkill(
             maxValue = 15.0,
             valueFormatter = SkillAbility.secondsFormatter()
         )
-    )
-), WoodcuttingSkill
+    ),
+), WoodcuttingSkill {
+    override fun getExtraLevels(): ObjectList<SkillLevel> = buildList {
+        for (level in 21..50) {
+            add(
+                skillLevel(
+                    skill = this@WoodcuttingSkillImpl,
+                    level = level,
+                    rewards = {
+                        add(
+                            LumberjackUpgradeLevelReward(
+                                WoodcuttingAbilityListener.getLumberjackCooldownReduction(
+                                    level
+                                )
+                            )
+                        )
+                    }
+                ))
+        }
+    }.toObjectList()
+}

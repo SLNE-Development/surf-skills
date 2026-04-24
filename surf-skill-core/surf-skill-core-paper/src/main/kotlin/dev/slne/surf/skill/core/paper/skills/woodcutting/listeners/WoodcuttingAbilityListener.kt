@@ -90,17 +90,7 @@ object WoodcuttingAbilityListener : Listener {
     private const val MASTER_LUMBERJACK_MIN_LEVEL = 21
     private const val MASTER_LUMBERJACK_MAX_VALUE = 15.0
 
-    /**
-     * Calculates the Lumberjack enchantment cooldown reduction in seconds for a given player.
-     * This can be called by the enchantment plugin to apply the reduction.
-     *
-     * @param player the player to check
-     * @return the cooldown reduction in seconds
-     */
-    fun getLumberjackCooldownReduction(player: org.bukkit.entity.Player): Double {
-        val level = AbilityUtil.getPlayerLevel<WoodcuttingSkill>(player)
-        return AbilityUtil.calculateScaledValue(
-            level, MASTER_LUMBERJACK_MIN_LEVEL, maxValue = MASTER_LUMBERJACK_MAX_VALUE
-        )
-    }
-} // TODO: Surf enchantment
+    fun getLumberjackCooldownReduction(level: Int): Double = AbilityUtil.calculateScaledValue(
+        level, MASTER_LUMBERJACK_MIN_LEVEL, maxValue = MASTER_LUMBERJACK_MAX_VALUE
+    )
+}
