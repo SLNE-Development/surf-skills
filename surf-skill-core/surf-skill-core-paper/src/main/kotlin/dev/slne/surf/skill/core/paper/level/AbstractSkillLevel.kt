@@ -69,6 +69,10 @@ open class AbstractSkillLevel(
     }
 
     private fun LoreBuilder.buildRewardLore() {
+        if (rewards.isEmpty()) {
+            return
+        }
+
         line {
             primary("Belohnungen:".toSmallCaps())
         }
@@ -81,12 +85,6 @@ open class AbstractSkillLevel(
             }
 
             reward.description(this)
-        }
-
-        if (rewards.isEmpty()) {
-            line {
-                spacer("Keine Belohnungen".toSmallCaps())
-            }
         }
     }
 
