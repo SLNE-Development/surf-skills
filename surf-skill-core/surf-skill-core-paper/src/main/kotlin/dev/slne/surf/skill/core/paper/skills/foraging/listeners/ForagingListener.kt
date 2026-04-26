@@ -10,28 +10,59 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
-import dev.slne.surf.skill.core.paper.skills.utils.BlockExperienceHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
-import org.bukkit.block.BlockType
+import org.bukkit.Material
 import org.bukkit.block.data.Ageable
+import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
-import org.bukkit.inventory.ItemType
 
 object ForagingListener : Listener {
+
+    private object ForagingXp {
+        val mine: Map<Material, Int> = mapOf(
+            Material.BAMBOO to 1,
+
+            Material.CACTUS to 2,
+            Material.SUGAR_CANE to 2,
+
+            Material.COCOA to 3,
+            Material.CARROTS to 3,
+            Material.SWEET_BERRY_BUSH to 3,
+            Material.CAVE_VINES_PLANT to 3,
+
+            Material.WHEAT to 4,
+            Material.POTATOES to 4,
+            Material.BEETROOTS to 4,
+
+            Material.NETHER_WART to 20,
+            Material.PUMPKIN to 20,
+            Material.MELON to 20
+        )
+
+        val click: Map<Material, Int> = mapOf(
+            Material.SWEET_BERRY_BUSH to 3,
+            Material.CAVE_VINES_PLANT to 3
+        )
+
+        val shearEntity: Map<EntityType, Int> = mapOf(
+            EntityType.SHEEP to 20
+        )
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPostTelekinesis(event: PostTelekinesisItemEvent) {
         if (event.isCancelled) return
 
-        val totalExperience = event.itemStack.amount
-        if (totalExperience <= 0) return
+        val xp = event.itemStack.amount
+        if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -39,11 +70,11 @@ object ForagingListener : Listener {
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
 
-        val totalExperience = event.drops.sumOf { it.amount }
-        if (totalExperience <= 0) return
+        val xp = event.drops.sumOf { it.amount }
+        if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -51,11 +82,10 @@ object ForagingListener : Listener {
     fun onShearEntity(event: PlayerShearEntityEvent) {
         if (event.isCancelled) return
 
-        val totalExperience = event.drops.sumOf { it.amount }
-        if (totalExperience <= 0) return
+        val xp = ForagingXp.shearEntity[event.entity.type] ?: return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -63,11 +93,13 @@ object ForagingListener : Listener {
     fun onHarvestBlock(event: PlayerHarvestBlockEvent) {
         if (event.isCancelled) return
 
-        val totalExperience = event.itemsHarvested.sumOf { it.amount }
-        if (totalExperience <= 0) return
+        val xp = ForagingXp.click[event.harvestedBlock.type]
+            ?: event.itemsHarvested.sumOf { it.amount }
+
+        if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -81,11 +113,11 @@ object ForagingListener : Listener {
         val data = event.blockState.blockData
         if (data !is Ageable || data.age < data.maximumAge) return
 
-        val totalExperience = event.items.sumOf { it.itemStack.amount }
-        if (totalExperience <= 0) return
+        val xp = event.items.sumOf { it.itemStack.amount }
+        if (xp <= 0) return
 
         SkillInstance.launch {
-            player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
+            player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -93,104 +125,11 @@ object ForagingListener : Listener {
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
-        val totalExperience = event.items.sumOf { it.itemStack.amount }
-        if (totalExperience <= 0) return
+        val xp = event.items.sumOf { it.itemStack.amount }
+        if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(totalExperience)
-        }
-    }
-
-    private enum class ForagingMap(
-        val itemTypes: List<ItemType>,
-        val originBlocks: List<BlockType>,
-        val experience: Int,
-    ) {
-        FLOWERS(
-            itemTypes = listOf(
-                ItemType.DANDELION,
-                ItemType.POPPY,
-                ItemType.BLUE_ORCHID,
-                ItemType.ALLIUM,
-                ItemType.AZURE_BLUET,
-                ItemType.RED_TULIP,
-                ItemType.ORANGE_TULIP,
-                ItemType.WHITE_TULIP,
-                ItemType.PINK_TULIP,
-                ItemType.OXEYE_DAISY,
-                ItemType.CORNFLOWER,
-                ItemType.LILY_OF_THE_VALLEY,
-                ItemType.CACTUS_FLOWER,
-                ItemType.OPEN_EYEBLOSSOM,
-                ItemType.CLOSED_EYEBLOSSOM,
-                ItemType.SUNFLOWER,
-                ItemType.LILAC,
-                ItemType.ROSE_BUSH,
-                ItemType.PEONY,
-                ItemType.BIG_DRIPLEAF,
-                ItemType.SMALL_DRIPLEAF,
-                ItemType.LILY_PAD,
-                ItemType.SEA_PICKLE
-            ),
-            originBlocks = listOf(
-                BlockType.DANDELION,
-                BlockType.POPPY,
-                BlockType.BLUE_ORCHID,
-                BlockType.ALLIUM,
-                BlockType.AZURE_BLUET,
-                BlockType.RED_TULIP,
-                BlockType.ORANGE_TULIP,
-                BlockType.WHITE_TULIP,
-                BlockType.PINK_TULIP,
-                BlockType.OXEYE_DAISY,
-                BlockType.CORNFLOWER,
-                BlockType.LILY_OF_THE_VALLEY,
-                BlockType.CACTUS_FLOWER,
-                BlockType.OPEN_EYEBLOSSOM,
-                BlockType.CLOSED_EYEBLOSSOM,
-                BlockType.SUNFLOWER,
-                BlockType.LILAC,
-                BlockType.ROSE_BUSH,
-                BlockType.PEONY,
-                BlockType.BIG_DRIPLEAF,
-                BlockType.SMALL_DRIPLEAF,
-                BlockType.LILY_PAD,
-                BlockType.SEA_PICKLE
-            ),
-            experience = 1
-        ),
-        SHROOMS(
-            itemTypes = listOf(ItemType.RED_MUSHROOM, ItemType.BROWN_MUSHROOM),
-            originBlocks = listOf(
-                BlockType.BROWN_MUSHROOM,
-                BlockType.RED_MUSHROOM,
-                BlockType.MUSHROOM_STEM,
-                BlockType.RED_MUSHROOM_BLOCK,
-                BlockType.BROWN_MUSHROOM_BLOCK
-            ),
-            experience = 1
-        ),
-        PRODUCE(
-            itemTypes = listOf(
-                ItemType.PUMPKIN,
-                ItemType.MELON,
-                ItemType.MELON_SLICE
-            ),
-            originBlocks = listOf(
-                BlockType.PUMPKIN,
-                BlockType.MELON
-            ),
-            experience = 2,
-        ),
-        SEEDS(
-            itemTypes = listOf(ItemType.WHEAT_SEEDS),
-            originBlocks = listOf(BlockType.SHORT_GRASS, BlockType.TALL_GRASS),
-            experience = 1
-        );
-
-        companion object {
-            fun get(itemType: ItemType, originBlock: BlockType) = entries
-                .firstOrNull { itemType in it.itemTypes && originBlock in it.originBlocks }
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
@@ -198,8 +137,13 @@ object ForagingListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        BlockExperienceHandler.handleBlockDropItem<ForagingSkill>(event) { itemType, originBlock ->
-            ForagingMap.get(itemType, originBlock)?.experience ?: 0
+        val xp = ForagingXp.mine[event.block.type] ?: return
+        if (xp <= 0) return
+
+        val total = event.items.sumOf { it.itemStack.amount } * xp
+
+        SkillInstance.launch {
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(total)
         }
     }
 }

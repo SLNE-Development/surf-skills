@@ -4,6 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -13,6 +14,64 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 
 object CombatKillListener : Listener {
+    private val xpMap = mapOf(
+        EntityType.ENDER_DRAGON to 1000,
+        EntityType.WITHER to 500,
+        EntityType.ALLAY to 500,
+        EntityType.WARDEN to 400,
+
+        EntityType.EVOKER to 50,
+        EntityType.VINDICATOR to 50,
+        EntityType.ILLUSIONER to 50,
+        EntityType.RAVAGER to 50,
+        EntityType.WITHER_SKELETON to 50,
+        EntityType.PIGLIN_BRUTE to 50,
+        EntityType.ZOGLIN to 50,
+        EntityType.GHAST to 50,
+        EntityType.BLAZE to 50,
+        EntityType.BREEZE to 50,
+        EntityType.SHULKER to 50,
+        EntityType.ZOMBIE_HORSE to 50,
+
+        EntityType.ENDERMAN to 30,
+        EntityType.PHANTOM to 30,
+        EntityType.DROWNED to 30,
+        EntityType.HUSK to 30,
+        EntityType.STRAY to 30,
+        EntityType.PILLAGER to 30,
+        EntityType.CAVE_SPIDER to 30,
+        EntityType.ZOMBIE_VILLAGER to 30,
+        EntityType.ZOMBIFIED_PIGLIN to 30,
+        EntityType.PIGLIN to 30,
+        EntityType.HOGLIN to 30,
+        EntityType.VEX to 30,
+
+        EntityType.ZOMBIE to 20,
+        EntityType.SKELETON to 20,
+        EntityType.SPIDER to 20,
+        EntityType.WITCH to 20,
+
+        EntityType.GUARDIAN to 10,
+        EntityType.WOLF to 10,
+        EntityType.POLAR_BEAR to 10,
+        EntityType.FOX to 10,
+        EntityType.CAT to 10,
+        EntityType.SKELETON_HORSE to 10,
+        EntityType.PANDA to 10,
+        EntityType.STRIDER to 10,
+        EntityType.IRON_GOLEM to 10,
+        EntityType.SNOW_GOLEM to 10,
+        EntityType.CREEPER to 10,
+
+        EntityType.BAT to 5,
+        EntityType.VILLAGER to 5,
+
+        EntityType.MAGMA_CUBE to 1,
+        EntityType.SLIME to 1,
+        EntityType.ENDERMITE to 1,
+        EntityType.SILVERFISH to 1
+    )
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onKill(event: EntityDeathEvent) {
         var killer = event.entity.killer
@@ -37,7 +96,9 @@ object CombatKillListener : Listener {
         SkillInstance.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
 
-            skillPlayer.incrementExperience<CombatSkill>(1)
+            skillPlayer.incrementExperience<CombatSkill>(
+                xpMap.getOrDefault(entity.type, 1)
+            )
         }
     }
 

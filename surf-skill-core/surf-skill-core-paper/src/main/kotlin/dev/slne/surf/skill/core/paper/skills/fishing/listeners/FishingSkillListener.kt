@@ -50,12 +50,10 @@ object FishingSkillListener : Listener {
             }.sum()
         }
 
-
         SkillInstance.launch {
             event.player.skillPlayer().incrementExperience<FishingSkill>(expToGive)
         }
     }
-
 
     private val fishingDropExpMap = mapOf(
         Material.BOW to 3,

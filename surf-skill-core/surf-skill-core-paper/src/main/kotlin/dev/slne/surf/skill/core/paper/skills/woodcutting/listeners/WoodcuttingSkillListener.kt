@@ -33,16 +33,35 @@ object WoodcuttingSkillListener : Listener {
 
 
     private val logExpMap = mapOf(
-        Material.OAK_LOG to 1,
-        Material.SPRUCE_LOG to 2,
-        Material.BIRCH_LOG to 2,
-        Material.JUNGLE_LOG to 3,
-        Material.ACACIA_LOG to 3,
-        Material.DARK_OAK_LOG to 4,
-        Material.MANGROVE_LOG to 10,
-        Material.CHERRY_LOG to 7,
-        Material.PALE_OAK_LOG to 10,
-        Material.CRIMSON_HYPHAE to 5,
-        Material.WARPED_HYPHAE to 5
+
+        // --- BASIC WOODS ---
+        Material.OAK_LOG to 30,
+        Material.BIRCH_LOG to 30,
+        Material.SPRUCE_LOG to 30,
+        Material.JUNGLE_LOG to 30,
+        Material.ACACIA_LOG to 30,
+        Material.DARK_OAK_LOG to 30,
+        Material.PALE_OAK_LOG to 30,
+
+        Material.OAK_WOOD to 30,
+        Material.BIRCH_WOOD to 30,
+        Material.SPRUCE_WOOD to 30,
+        Material.JUNGLE_WOOD to 30,
+        Material.ACACIA_WOOD to 30,
+        Material.DARK_OAK_WOOD to 30,
+        Material.PALE_OAK_WOOD to 30,
+
+        // --- SPECIAL WOODS ---
+        Material.MANGROVE_LOG to 40,
+        Material.CHERRY_LOG to 40,
+        Material.MANGROVE_WOOD to 40,
+        Material.CHERRY_WOOD to 40,
+
+        // --- NETHER WOODS ---
+        Material.CRIMSON_STEM to 50,
+        Material.WARPED_STEM to 50,
+        
+        Material.CRIMSON_HYPHAE to 50,
+        Material.WARPED_HYPHAE to 50
     )
 }

@@ -13,7 +13,8 @@ import dev.slne.surf.api.paper.event.register
 import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.api.paper.util.BukkitSound
 import dev.slne.surf.skill.api.common.InternalSkillApi
-import dev.slne.surf.skill.api.common.curve.curves.ExponentialExperienceCurve
+import dev.slne.surf.skill.api.common.curve.ExperienceCurve
+import dev.slne.surf.skill.api.common.curve.curves.StaticExperienceCurve
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
@@ -39,17 +40,13 @@ abstract class AbstractSkill(
     override val maxLevel: Int = Skill.MAX_SKILL_LEVEL,
     override val maxExperience: Int = Skill.MAX_EXPERIENCE,
     override val active: Boolean = true,
+    override val experienceCurve: ExperienceCurve = StaticExperienceCurve(),
     listeners: ObjectList<Listener> = objectListOf(),
     val abilities: ObjectList<SkillAbility> = objectListOf()
 ) : Skill {
     private val _listeners = mutableObjectListOf<Listener>(listeners)
     override val listeners get() = _listeners.freeze()
 
-    override val experienceCurve = ExponentialExperienceCurve(
-        maxLevel = maxLevel,
-        maxExperience = maxExperience,
-        baseExperience = baseExperience
-    )
 
     open fun getExtraLevels(): ObjectList<SkillLevel> {
         return objectListOf()

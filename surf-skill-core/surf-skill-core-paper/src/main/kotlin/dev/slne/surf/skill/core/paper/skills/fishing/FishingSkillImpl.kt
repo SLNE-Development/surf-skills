@@ -6,6 +6,7 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
+import dev.slne.surf.skill.api.common.curve.curves.StaticExperienceCurveSmall
 import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
@@ -52,5 +53,6 @@ class FishingSkillImpl : AbstractSkill(
             maxValue = 3.00,
             valueFormatter = { value -> "%.2f%%".format(value / (1.0 + value) * 100) }
         )
-    )
+    ),
+    experienceCurve = StaticExperienceCurveSmall()
 ), FishingSkill

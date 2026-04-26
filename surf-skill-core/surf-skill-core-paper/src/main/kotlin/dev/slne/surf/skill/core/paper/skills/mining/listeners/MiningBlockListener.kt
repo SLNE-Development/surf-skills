@@ -33,106 +33,71 @@ object MiningBlockListener : Listener {
 
     private val blockExpMap = mapOf(
 
-        // --- OVERWORLD BASIC (0–2) ---
-        Material.DIRT to 1,
-        Material.GRASS_BLOCK to 1,
-        Material.COARSE_DIRT to 1,
-        Material.ROOTED_DIRT to 1,
-        Material.PODZOL to 1,
-        Material.MYCELIUM to 1,
-        Material.SAND to 1,
-        Material.RED_SAND to 1,
-        Material.GRAVEL to 1,
-        Material.CLAY to 2,
-        Material.MUD to 1,
-        Material.PACKED_MUD to 1,
+        // --- BASIC NETHER STONES ---
+        Material.NETHERRACK to 3,
+        Material.WARPED_NYLIUM to 3,
+        Material.CRIMSON_NYLIUM to 3,
 
-        // --- STONE TYPES (1–3) ---
-        Material.STONE to 1,
-        Material.COBBLESTONE to 1,
-        Material.DEEPSLATE to 2,
-        Material.COBBLED_DEEPSLATE to 1,
-        Material.TUFF to 2,
-        Material.CALCITE to 2,
-        Material.ANDESITE to 1,
-        Material.DIORITE to 1,
-        Material.GRANITE to 1,
+        // --- STONE BASE ---
+        Material.STONE to 4,
+        Material.COBBLESTONE to 4,
+        Material.SANDSTONE to 4,
 
-        // --- CAVE / NATURE (2–4) ---
-        Material.DRIPSTONE_BLOCK to 3,
-        Material.POINTED_DRIPSTONE to 2,
-        Material.MOSS_BLOCK to 2,
-        Material.MOSS_CARPET to 1,
-        Material.GLOW_LICHEN to 1,
-        Material.SPORE_BLOSSOM to 3,
-        Material.AZALEA to 2,
-        Material.FLOWERING_AZALEA to 2,
+        // --- MID STONE VARIANTS ---
+        Material.DIORITE to 5,
+        Material.GRANITE to 5,
+        Material.ANDESITE to 5,
 
-        // --- OVERWORLD ORES (5–10) ---
-        Material.COAL_ORE to 5,
-        Material.DEEPSLATE_COAL_ORE to 5,
-        Material.COPPER_ORE to 5,
-        Material.DEEPSLATE_COPPER_ORE to 5,
-        Material.IRON_ORE to 6,
-        Material.DEEPSLATE_IRON_ORE to 6,
-        Material.GOLD_ORE to 6,
-        Material.DEEPSLATE_GOLD_ORE to 6,
-        Material.REDSTONE_ORE to 6,
-        Material.DEEPSLATE_REDSTONE_ORE to 6,
-        Material.LAPIS_ORE to 7,
-        Material.DEEPSLATE_LAPIS_ORE to 7,
-        Material.DIAMOND_ORE to 9,
-        Material.DEEPSLATE_DIAMOND_ORE to 9,
-        Material.EMERALD_ORE to 10,
-        Material.DEEPSLATE_EMERALD_ORE to 10,
+        // --- DEEP STONE / NETHER HARD ---
+        Material.TUFF to 6,
+        Material.BLACKSTONE to 6,
+        Material.DEEPSLATE to 6,
+        Material.CALCITE to 6,
 
-        // --- AMETHYST (7–9) ---
-        Material.AMETHYST_BLOCK to 7,
-        Material.BUDDING_AMETHYST to 9,
-        Material.SMALL_AMETHYST_BUD to 7,
-        Material.MEDIUM_AMETHYST_BUD to 8,
-        Material.LARGE_AMETHYST_BUD to 8,
-        Material.AMETHYST_CLUSTER to 9,
+        Material.END_STONE to 6,
+        Material.BASALT to 6,
+        Material.SMOOTH_BASALT to 6,
 
-        // --- NETHER BASIC (1–3) ---
-        Material.NETHERRACK to 1,
-        Material.SOUL_SAND to 2,
-        Material.SOUL_SOIL to 2,
-        Material.BASALT to 2,
-        Material.SMOOTH_BASALT to 2,
-        Material.BLACKSTONE to 3,
-        Material.GILDED_BLACKSTONE to 5,
+        // --- RARE NETHER BLOCKS ---
+        Material.GILDED_BLACKSTONE to 14,
 
-        // --- NETHER VEGETATION / LIGHT (2–4) ---
-        Material.GLOWSTONE to 4,
-        Material.SHROOMLIGHT to 3,
-        Material.NETHER_WART_BLOCK to 2,
-        Material.WARPED_WART_BLOCK to 2,
-        Material.CRIMSON_STEM to 2,
-        Material.WARPED_STEM to 2,
+        // --- LOW ORES ---
+        Material.COAL_ORE to 40,
+        Material.COPPER_ORE to 40,
+        Material.NETHER_QUARTZ_ORE to 40,
+        Material.NETHER_GOLD_ORE to 40,
+        Material.GLOWSTONE to 40,
 
-        // --- NETHER ORES (5–10) ---
-        Material.NETHER_QUARTZ_ORE to 5,
-        Material.NETHER_GOLD_ORE to 6,
-        Material.ANCIENT_DEBRIS to 10,
+        // --- MID ORES ---
+        Material.IRON_ORE to 75,
+        Material.DEEPSLATE_IRON_ORE to 75,
+        Material.DEEPSLATE_COPPER_ORE to 75,
+        Material.AMETHYST_BLOCK to 75,
 
-        // --- END BASIC (2–4) ---
-        Material.END_STONE to 2,
-        Material.END_STONE_BRICKS to 1,
+        // --- SPECIAL MID ---
+        Material.OBSIDIAN to 100,
+        Material.RAW_COPPER_BLOCK to 100,
 
-        // --- END VEGETATION (3–5) ---
-        Material.CHORUS_PLANT to 3,
-        Material.CHORUS_FLOWER to 4,
+        // --- HIGH ORES ---
+        Material.LAPIS_ORE to 125,
+        Material.DEEPSLATE_LAPIS_ORE to 125,
+        Material.REDSTONE_ORE to 125,
+        Material.DEEPSLATE_REDSTONE_ORE to 125,
 
-        // --- END STRUCTURES (3–5) ---
-        Material.PURPUR_BLOCK to 4,
-        Material.PURPUR_PILLAR to 4,
-        Material.PURPUR_STAIRS to 3,
-        Material.PURPUR_SLAB to 3,
-        Material.END_ROD to 5,
+        // --- VERY HIGH ---
+        Material.GOLD_ORE to 200,
+        Material.DEEPSLATE_GOLD_ORE to 200,
+        Material.DIAMOND_ORE to 200,
+        Material.DEEPSLATE_DIAMOND_ORE to 200,
+        Material.BUDDING_AMETHYST to 200,
+        Material.RAW_IRON_BLOCK to 200,
 
-        // --- END RARE (7–10) ---
-        Material.OBSIDIAN to 7,
-        Material.CRYING_OBSIDIAN to 8
+        // --- EXTREME ---
+        Material.ANCIENT_DEBRIS to 750,
+
+        // --- END RARE ---
+        Material.EMERALD_ORE to 1000,
+        Material.DEEPSLATE_COAL_ORE to 2000,
+        Material.DEEPSLATE_EMERALD_ORE to 20000
     )
 }
