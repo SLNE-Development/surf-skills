@@ -35,6 +35,10 @@ object FishingSkillListener : Listener {
         val item = caught.itemStack
         val meta = item.itemMeta ?: return
 
+        if (!event.player.hasPermission("surf.skill.fishing")) {
+            return
+        }
+
         var expToGive = fishingDropExpMap[item.type] ?: 1
 
         if (meta is EnchantmentStorageMeta) {

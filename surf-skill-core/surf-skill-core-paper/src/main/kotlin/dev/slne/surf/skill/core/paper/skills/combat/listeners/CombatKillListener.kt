@@ -93,6 +93,10 @@ object CombatKillListener : Listener {
         if (killer == null) return
         val uuid = killer.uniqueId
 
+        if (!killer.hasPermission("surf.skill.combat")) {
+            return
+        }
+
         SkillInstance.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
 

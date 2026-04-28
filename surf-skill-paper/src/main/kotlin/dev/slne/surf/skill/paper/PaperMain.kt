@@ -20,10 +20,10 @@ class PaperMain : SuspendingJavaPlugin() {
     }
 
     override suspend fun onEnableAsync() {
-        skillCommand()
-
         skillManagerImpl.registerAllSkills()
         ListenerManager.register()
+
+        skillCommand()
     }
 
     override suspend fun onDisableAsync() {

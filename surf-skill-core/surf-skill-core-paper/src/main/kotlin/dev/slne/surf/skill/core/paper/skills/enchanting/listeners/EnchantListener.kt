@@ -21,7 +21,13 @@ object EnchantListener : Listener {
     fun onEnchant(event: EnchantItemEvent) {
         if (event.isCancelled) return
 
+
         val player = event.enchanter
+
+        if (!player.hasPermission("surf.skill.enchanting")) {
+            return
+        }
+
         val enchantments = event.enchantsToAdd.toList().associateWith {
             EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: Rarity.COMMON
         }
@@ -53,6 +59,10 @@ object EnchantListener : Listener {
 
         val clickedItem = event.currentItem ?: event.cursor
         if (clickedItem.type == Material.AIR) return
+
+        if (!player.hasPermission("surf.skill.enchanting")) {
+            return
+        }
 
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<EnchantingSkill>(1)

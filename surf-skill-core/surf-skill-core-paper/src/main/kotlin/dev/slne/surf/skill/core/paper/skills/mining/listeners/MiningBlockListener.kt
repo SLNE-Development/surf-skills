@@ -25,6 +25,10 @@ object MiningBlockListener : Listener {
             return
         }
 
+        if (!event.player.hasPermission("surf.skill.mining")) {
+            return
+        }
+
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<MiningSkill>(exp)
         }

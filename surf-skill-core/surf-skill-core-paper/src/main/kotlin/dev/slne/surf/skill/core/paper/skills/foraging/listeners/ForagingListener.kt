@@ -61,6 +61,10 @@ object ForagingListener : Listener {
         val xp = event.itemStack.amount
         if (xp <= 0) return
 
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
+
         SkillInstance.launch {
             event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
@@ -69,6 +73,10 @@ object ForagingListener : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
+
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
 
         val xp = event.drops.sumOf { it.amount }
         if (xp <= 0) return
@@ -82,6 +90,10 @@ object ForagingListener : Listener {
     fun onShearEntity(event: PlayerShearEntityEvent) {
         if (event.isCancelled) return
 
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
+
         val xp = ForagingXp.shearEntity[event.entity.type] ?: return
 
         SkillInstance.launch {
@@ -92,6 +104,10 @@ object ForagingListener : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onHarvestBlock(event: PlayerHarvestBlockEvent) {
         if (event.isCancelled) return
+
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
 
         val xp = ForagingXp.click[event.harvestedBlock.type]
             ?: event.itemsHarvested.sumOf { it.amount }
@@ -106,6 +122,10 @@ object ForagingListener : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onFarmlandHarvest(event: BlockDropItemEvent) {
         if (event.isCancelled) return
+
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
 
         val player = event.player
         if (player.inventory.itemInMainHand.hasCustomEnchantment<ReplenishEnchantment>()) return
@@ -125,6 +145,10 @@ object ForagingListener : Listener {
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
+
         val xp = event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
 
@@ -136,6 +160,10 @@ object ForagingListener : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
+
+        if (!event.player.hasPermission("surf.skill.foraging")) {
+            return
+        }
 
         val xp = ForagingXp.mine[event.block.type] ?: return
         if (xp <= 0) return

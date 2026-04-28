@@ -30,6 +30,10 @@ object AlchemyListener : Listener {
         val clickedSlot = event.slotType
         if (clickedSlot != InventoryType.SlotType.CRAFTING) return
 
+        if (!event.whoClicked.hasPermission("surf.skill.alchemy")) {
+            return
+        }
+
         val clickedItem = event.currentItem ?: event.cursor
         val itemType = clickedItem.type
 
@@ -73,6 +77,10 @@ object AlchemyListener : Listener {
 
         val shooter = event.entity.shooter as? Player ?: return
 
+        if (!shooter.hasPermission("surf.skill.alchemy")) {
+            return
+        }
+
         SkillInstance.launch {
             val skillPlayer = shooter.skillPlayer()
 
@@ -87,6 +95,10 @@ object AlchemyListener : Listener {
         val potion = event.entity
         val shooter = potion.shooter as? Player ?: return
 
+        if (!shooter.hasPermission("surf.skill.alchemy")) {
+            return
+        }
+
         handlePotionHit(shooter, event.affectedEntities.toList())
     }
 
@@ -96,6 +108,10 @@ object AlchemyListener : Listener {
 
         val shooter = event.entity.source as? Player ?: return
         val affectedEntities = event.affectedEntities
+
+        if (!shooter.hasPermission("surf.skill.alchemy")) {
+            return
+        }
 
         handlePotionHit(shooter, affectedEntities)
     }
@@ -108,6 +124,10 @@ object AlchemyListener : Listener {
         val player = event.player
 
         if (item.type != Material.POTION) return
+
+        if (!player.hasPermission("surf.skill.alchemy")) {
+            return
+        }
 
         SkillInstance.launch {
             val skillPlayer = player.skillPlayer()

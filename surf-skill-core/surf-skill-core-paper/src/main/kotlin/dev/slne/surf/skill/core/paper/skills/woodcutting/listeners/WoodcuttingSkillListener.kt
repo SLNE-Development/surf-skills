@@ -26,6 +26,10 @@ object WoodcuttingSkillListener : Listener {
             return
         }
 
+        if (!event.player.hasPermission("surf.skill.woodcutting")) {
+            return
+        }
+
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<WoodcuttingSkill>(exp)
         }
@@ -60,7 +64,7 @@ object WoodcuttingSkillListener : Listener {
         // --- NETHER WOODS ---
         Material.CRIMSON_STEM to 50,
         Material.WARPED_STEM to 50,
-        
+
         Material.CRIMSON_HYPHAE to 50,
         Material.WARPED_HYPHAE to 50
     )
