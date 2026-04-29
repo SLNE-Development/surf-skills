@@ -44,7 +44,7 @@ class WoodcuttingSkillImpl : AbstractSkill(
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Gift of the Forest".toSmallCaps()) },
+            displayName = buildText { primary("Forest's Gift".toSmallCaps()) },
             description = "Erhalte eine 0% → 20% Chance, 2x Drops von geerntetem Holz zu erhalten",
             minLevel = 11,
             maxValue = 0.20,

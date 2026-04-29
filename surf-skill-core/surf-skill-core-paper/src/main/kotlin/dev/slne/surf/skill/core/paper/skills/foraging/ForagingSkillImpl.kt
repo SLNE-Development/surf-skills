@@ -46,7 +46,7 @@ class ForagingSkillImpl : AbstractSkill(
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Saturation".toSmallCaps()) },
+            displayName = buildText { primary("Satiation".toSmallCaps()) },
             description = "Verliere 0% → 60% weniger Hunger",
             minLevel = 21,
             maxValue = 0.60,

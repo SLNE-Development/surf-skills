@@ -70,7 +70,7 @@ class CombatSkillImpl : AbstractSkill(
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Heavy Strike".toSmallCaps()) },
+            displayName = buildText { primary("Strong Impact".toSmallCaps()) },
             description = "Verursache 0% → 15% mehr Schaden gegen feindliche Kreaturen",
             minLevel = 21,
             maxValue = 0.15,

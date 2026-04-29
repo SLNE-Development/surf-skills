@@ -32,14 +32,14 @@ class MiningSkillImpl : AbstractSkill(
     listeners = objectListOf(MiningBlockListener, MiningAbilityListener),
     abilities = objectListOf(
         SkillAbility(
-            displayName = buildText { primary("Reinforced Pickaxe".toSmallCaps()) },
+            displayName = buildText { primary("Skillful Extraction".toSmallCaps()) },
             description = "Spitzhacken verlieren 0% → 50% weniger Haltbarkeit",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
         ),
         SkillAbility(
-            displayName = buildText { primary("Cave Exploration".toSmallCaps()) },
+            displayName = buildText { primary("Spelunking".toSmallCaps()) },
             description = "Erhalte eine 0% → 20% Chance, 2x Drops von Erzen zu erhalten",
             minLevel = 11,
             maxValue = 0.20,
