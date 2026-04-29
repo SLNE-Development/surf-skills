@@ -7,6 +7,7 @@ import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.EnchantingSkill
 import dev.slne.surf.skill.core.paper.skills.enchanting.EnchantmentRarityMap
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -24,9 +25,10 @@ object EnchantListener : Listener {
 
         val player = event.enchanter
 
-        if (!player.hasPermission("surf.skill.enchanting")) {
+        if (!SkillLevelingHandler.canCollectExperience(player, EnchantingSkill)) {
             return
         }
+
 
         val enchantments = event.enchantsToAdd.toList().associateWith {
             EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: Rarity.COMMON
@@ -60,7 +62,7 @@ object EnchantListener : Listener {
         val clickedItem = event.currentItem ?: event.cursor
         if (clickedItem.type == Material.AIR) return
 
-        if (!player.hasPermission("surf.skill.enchanting")) {
+        if (!SkillLevelingHandler.canCollectExperience(player, EnchantingSkill)) {
             return
         }
 

@@ -4,6 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.AlchemySkill
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.LivingEntity
@@ -30,10 +31,6 @@ object AlchemyListener : Listener {
         val clickedSlot = event.slotType
         if (clickedSlot != InventoryType.SlotType.CRAFTING) return
 
-        if (!event.whoClicked.hasPermission("surf.skill.alchemy")) {
-            return
-        }
-
         val clickedItem = event.currentItem ?: event.cursor
         val itemType = clickedItem.type
 
@@ -45,6 +42,10 @@ object AlchemyListener : Listener {
         }
 
         val player = event.whoClicked as? Player ?: return
+
+        if (!SkillLevelingHandler.canCollectExperience(player, AlchemySkill)) {
+            return
+        }
 
         SkillInstance.launch {
             val skillPlayer = player.skillPlayer()
@@ -77,7 +78,7 @@ object AlchemyListener : Listener {
 
         val shooter = event.entity.shooter as? Player ?: return
 
-        if (!shooter.hasPermission("surf.skill.alchemy")) {
+        if (!SkillLevelingHandler.canCollectExperience(shooter, AlchemySkill)) {
             return
         }
 
@@ -95,7 +96,7 @@ object AlchemyListener : Listener {
         val potion = event.entity
         val shooter = potion.shooter as? Player ?: return
 
-        if (!shooter.hasPermission("surf.skill.alchemy")) {
+        if (!SkillLevelingHandler.canCollectExperience(shooter, AlchemySkill)) {
             return
         }
 
@@ -109,7 +110,7 @@ object AlchemyListener : Listener {
         val shooter = event.entity.source as? Player ?: return
         val affectedEntities = event.affectedEntities
 
-        if (!shooter.hasPermission("surf.skill.alchemy")) {
+        if (!SkillLevelingHandler.canCollectExperience(shooter, AlchemySkill)) {
             return
         }
 
@@ -125,7 +126,8 @@ object AlchemyListener : Listener {
 
         if (item.type != Material.POTION) return
 
-        if (!player.hasPermission("surf.skill.alchemy")) {
+
+        if (!SkillLevelingHandler.canCollectExperience(player, AlchemySkill)) {
             return
         }
 

@@ -4,6 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
@@ -93,7 +94,7 @@ object CombatKillListener : Listener {
         if (killer == null) return
         val uuid = killer.uniqueId
 
-        if (!killer.hasPermission("surf.skill.combat")) {
+        if (!SkillLevelingHandler.canCollectExperience(killer, CombatSkill)) {
             return
         }
 

@@ -10,6 +10,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
@@ -61,7 +62,7 @@ object ForagingListener : Listener {
         val xp = event.itemStack.amount
         if (xp <= 0) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -74,7 +75,7 @@ object ForagingListener : Listener {
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -90,7 +91,7 @@ object ForagingListener : Listener {
     fun onShearEntity(event: PlayerShearEntityEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -105,7 +106,7 @@ object ForagingListener : Listener {
     fun onHarvestBlock(event: PlayerHarvestBlockEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -123,7 +124,7 @@ object ForagingListener : Listener {
     fun onFarmlandHarvest(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -145,7 +146,7 @@ object ForagingListener : Listener {
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 
@@ -161,7 +162,7 @@ object ForagingListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!event.player.hasPermission("surf.skill.foraging")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
 

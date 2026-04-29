@@ -4,6 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -26,7 +27,7 @@ object WoodcuttingSkillListener : Listener {
             return
         }
 
-        if (!event.player.hasPermission("surf.skill.woodcutting")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, WoodcuttingSkill)) {
             return
         }
 

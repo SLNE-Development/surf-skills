@@ -7,6 +7,7 @@ import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.skills.enchanting.EnchantmentRarityMap
+import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import org.bukkit.Material
 import org.bukkit.entity.Item
 import org.bukkit.event.EventHandler
@@ -35,7 +36,7 @@ object FishingSkillListener : Listener {
         val item = caught.itemStack
         val meta = item.itemMeta ?: return
 
-        if (!event.player.hasPermission("surf.skill.fishing")) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FishingSkill)) {
             return
         }
 
