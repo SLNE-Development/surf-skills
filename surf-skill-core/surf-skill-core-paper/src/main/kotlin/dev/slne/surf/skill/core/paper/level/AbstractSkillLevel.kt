@@ -84,6 +84,8 @@ open class AbstractSkillLevel(
                 append(reward.displayName)
             }
 
+            emptyLine()
+
             reward.description(this)
         }
     }

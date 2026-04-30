@@ -8,7 +8,7 @@ import java.util.*
 object SettingsHook {
     private val levelUpMessagesKey = SettingKey.ofBoolean(namespacedKey("level-up-messages"), true)
     private val levelUpSoundsKey = SettingKey.ofBoolean(namespacedKey("levle-up-sounds"), true)
-    private val gainXpSound = SettingKey.ofBoolean(namespacedKey("gain-xp-sound"))
+    private val gainXpSound = SettingKey.ofBoolean(namespacedKey("gain-xp-sound"), true)
 
     fun hasLevelUpMessagesEnabled(playerUuid: UUID) =
         SurfSettingsApi.getSettingValue(playerUuid, levelUpMessagesKey)
@@ -28,4 +28,11 @@ object SettingsHook {
 
     suspend fun setGainXpSoundEnabled(playerUuid: UUID, enabled: Boolean) =
         SurfSettingsApi.saveSetting(playerUuid, gainXpSound, enabled)
+
+
+    suspend fun registerSettings() {
+        SurfSettingsApi.createSetting(levelUpMessagesKey)
+        SurfSettingsApi.createSetting(levelUpSoundsKey)
+        SurfSettingsApi.createSetting(gainXpSound)
+    }
 }

@@ -5,6 +5,8 @@ import dev.slne.surf.api.paper.inventory.framework.register
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.PaperSkillInstance
 import dev.slne.surf.skill.core.paper.manager.skillManagerImpl
+import dev.slne.surf.skill.core.paper.settings.SettingsHook
+import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
@@ -24,6 +26,10 @@ class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onEnableAsync() {
         skillManagerImpl.registerAllSkills()
         ListenerManager.register()
+
+        if (hasSettingsApi()) {
+            SettingsHook.registerSettings()
+        }
 
         skillCommand()
     }

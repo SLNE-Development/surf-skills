@@ -27,7 +27,7 @@ import java.util.*
 import kotlin.reflect.KClass
 
 
-val skillsView = surfView("Skills") {
+val skillsView: AbstractSurfView = surfView("Skills") {
     val playerUuidState = initialState<UUID>("player_uuid")
     val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
 
@@ -111,7 +111,13 @@ val skillsView = surfView("Skills") {
                 primary("Einstellungen".toSmallCaps())
             }
         }).onItemClick {
-            openForPlayer(skillSettingsView)
+            openForPlayer(
+                skillSettingsView,
+                mapOf(
+                    "player_uuid" to playerUuidState[this],
+                    "skill_progress" to skillExperienceState[this]
+                )
+            )
         }
 
         layoutSlot('X', viewIcon(ViewIconType.CROSS, ViewIconColor.RED) {

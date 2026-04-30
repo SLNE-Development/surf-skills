@@ -9,6 +9,7 @@ import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
 import dev.slne.surf.api.paper.inventory.framework.dsl.withItem
 import dev.slne.surf.api.paper.inventory.framework.view.*
 import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.header
+import dev.slne.surf.api.paper.inventory.framework.view.pagination.AbstractPaginatedSurfView
 import dev.slne.surf.api.paper.inventory.framework.view.pagination.pagination
 import dev.slne.surf.api.paper.inventory.framework.view.settings.PaginationViewRows
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
@@ -17,7 +18,7 @@ import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import io.papermc.paper.datacomponent.DataComponentTypes
 
-val skillView = paginatedSurfView("aaa") {
+val skillView: AbstractPaginatedSurfView = paginatedSurfView("aaa") {
     val skillExperienceState = initialState<SkillExperience>("skill_progress")
 
     layoutTarget('L')

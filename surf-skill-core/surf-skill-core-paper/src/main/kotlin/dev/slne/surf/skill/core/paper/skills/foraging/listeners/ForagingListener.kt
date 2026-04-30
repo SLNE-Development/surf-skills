@@ -59,7 +59,9 @@ object ForagingListener : Listener {
         if (event.isCancelled) return
 
         val xp = event.itemStack.amount
-        if (xp <= 0) return
+        if (xp <= 0) {
+            return
+        }
 
         if (event.itemStack.type !in ForagingXp.mine && event.itemStack.type !in ForagingXp.click) {
             return

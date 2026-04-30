@@ -20,7 +20,12 @@ class LevelItemRewards(
     val itemStacks: ObjectList<ItemStack>
 ) : AbstractLevelReward(
     displayName = buildText {
-        primary("Items:".toSmallCaps())
+        primary("Items: ".toSmallCaps())
+        appendCollection(itemStacks) { itemStack ->
+            buildText {
+                append(itemStack.displayName())
+            }
+        }
     },
     description = {
         buildItemDescription(itemStacks)

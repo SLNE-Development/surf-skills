@@ -13,14 +13,21 @@ import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconColor
 import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
+import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
 import dev.slne.surf.api.paper.inventory.framework.view.state.mutableState
 import dev.slne.surf.api.paper.inventory.framework.view.state.set
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.core.paper.settings.SettingsHook
 import dev.slne.surf.skill.paper.menu.skillsView
 import dev.slne.surf.skill.paper.plugin
+import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.Material
+import java.util.*
 
-val skillSettingsView = surfView("Einstellungen") {
+val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
+    val playerUuidState = initialState<UUID>("player_uuid")
+    val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
+
     val aState = mutableState(false)
     val bState = mutableState(false)
     val cState = mutableState(false)
@@ -86,7 +93,13 @@ val skillSettingsView = surfView("Einstellungen") {
                 primary("Zurück".toSmallCaps())
             }
         }).onItemClick {
-            openForPlayer(skillsView)
+            openForPlayer(
+                skillsView,
+                mapOf(
+                    "player_uuid" to playerUuidState[this],
+                    "skill_progress" to skillExperienceState[this]
+                )
+            )
         }
     }
 

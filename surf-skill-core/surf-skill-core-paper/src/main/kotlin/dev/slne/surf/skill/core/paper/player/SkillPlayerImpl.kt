@@ -86,8 +86,9 @@ class SkillPlayerImpl(
         val curve = experience.skill.experienceCurve
 
         val currentLevel = curve.getLevelForExperience(totalXp)
-        val xpForCurrentLevel = curve.getExperienceForLevel(currentLevel - 1)
-        val xpForNextLevel = curve.getExperienceForLevel(currentLevel)
+
+        val xpForCurrentLevel = curve.getTotalExperienceForLevel(currentLevel - 1)
+        val xpForNextLevel = curve.getTotalExperienceForLevel(currentLevel)
 
         val xpInLevel = totalXp - xpForCurrentLevel
         val xpNeeded = xpForNextLevel - xpForCurrentLevel
