@@ -3,8 +3,8 @@ package dev.slne.surf.skill.api.paper.skills
 import dev.slne.surf.api.core.util.requiredService
 import dev.slne.surf.skill.api.paper.Skill
 
-private val impl = requiredService<ForagingSkill>()
+private val impl = requiredService<FarmingSkill>()
 
-interface ForagingSkill : Skill {
-    companion object : ForagingSkill by impl
+interface FarmingSkill : Skill {
+    companion object : FarmingSkill by impl
 }

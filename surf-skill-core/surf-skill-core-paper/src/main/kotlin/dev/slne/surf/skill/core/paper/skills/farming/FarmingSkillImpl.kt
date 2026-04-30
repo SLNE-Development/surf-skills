@@ -1,21 +1,21 @@
 @file:Suppress("UnstableApiUsage")
 
-package dev.slne.surf.skill.core.paper.skills.foraging
+package dev.slne.surf.skill.core.paper.skills.farming
 
 import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
-import dev.slne.surf.skill.api.paper.skills.ForagingSkill
+import dev.slne.surf.skill.api.paper.skills.FarmingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
-import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingAbilityListener
-import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingListener
+import dev.slne.surf.skill.core.paper.skills.farming.listeners.FarmingAbilityListener
+import dev.slne.surf.skill.core.paper.skills.farming.listeners.FarmingListener
 import org.bukkit.inventory.ItemType
 
-@AutoService(ForagingSkill::class)
-class ForagingSkillImpl : AbstractSkill(
-    name = "foraging",
+@AutoService(FarmingSkill::class)
+class FarmingSkillImpl : AbstractSkill(
+    name = "farming",
     material = ItemType.STONE_HOE,
     displayName = buildText {
         primary("Farming".toSmallCaps())
@@ -29,7 +29,7 @@ class ForagingSkillImpl : AbstractSkill(
             spacer("Sammle Pflanzen, Beeren und Naturschätze effizienter und profitiere von der Natur.")
         }
     },
-    listeners = objectListOf(ForagingListener, ForagingAbilityListener),
+    listeners = objectListOf(FarmingListener, FarmingAbilityListener),
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Earth-Bound Durability".toSmallCaps()) },
@@ -53,4 +53,4 @@ class ForagingSkillImpl : AbstractSkill(
             valueFormatter = SkillAbility.percentageFormatter()
         )
     )
-), ForagingSkill
+), FarmingSkill

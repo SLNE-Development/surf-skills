@@ -22,7 +22,7 @@ class SkillManagerImpl : SkillManager, Services.Fallback {
         registerSkill(EnchantingSkill)
         registerSkill(FishingSkill)
         registerSkill(ExplorationSkill)
-        registerSkill(ForagingSkill)
+        registerSkill(FarmingSkill)
         registerSkill(MiningSkill)
         registerSkill(WoodcuttingSkill)
     }

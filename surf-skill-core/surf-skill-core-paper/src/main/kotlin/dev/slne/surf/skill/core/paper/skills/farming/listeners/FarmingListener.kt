@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-package dev.slne.surf.skill.core.paper.skills.foraging.listeners
+package dev.slne.surf.skill.core.paper.skills.farming.listeners
 
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishBlockEvent
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
@@ -9,7 +9,7 @@ import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
-import dev.slne.surf.skill.api.paper.skills.ForagingSkill
+import dev.slne.surf.skill.api.paper.skills.FarmingSkill
 import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
@@ -22,9 +22,9 @@ import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 
-object ForagingListener : Listener {
+object FarmingListener : Listener {
 
-    private object ForagingXp {
+    private object FarmingXp {
         val mine: Map<Material, Int> = mapOf(
             Material.BAMBOO to 1,
 
@@ -62,12 +62,12 @@ object ForagingListener : Listener {
         val xp = event.itemStack.amount
         if (xp <= 0) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -75,7 +75,7 @@ object ForagingListener : Listener {
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
@@ -83,7 +83,7 @@ object ForagingListener : Listener {
         if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -91,14 +91,14 @@ object ForagingListener : Listener {
     fun onShearEntity(event: PlayerShearEntityEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
-        val xp = ForagingXp.shearEntity[event.entity.type] ?: return
+        val xp = FarmingXp.shearEntity[event.entity.type] ?: return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -106,17 +106,17 @@ object ForagingListener : Listener {
     fun onHarvestBlock(event: PlayerHarvestBlockEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
-        val xp = ForagingXp.click[event.harvestedBlock.type]
+        val xp = FarmingXp.click[event.harvestedBlock.type]
             ?: event.itemsHarvested.sumOf { it.amount }
 
         if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -124,7 +124,7 @@ object ForagingListener : Listener {
     fun onFarmlandHarvest(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
@@ -138,7 +138,7 @@ object ForagingListener : Listener {
         if (xp <= 0) return
 
         SkillInstance.launch {
-            player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -146,7 +146,7 @@ object ForagingListener : Listener {
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
@@ -154,7 +154,7 @@ object ForagingListener : Listener {
         if (xp <= 0) return
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(xp)
         }
     }
 
@@ -162,17 +162,17 @@ object ForagingListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+        if (!SkillLevelingHandler.canCollectExperience(event.player, FarmingSkill)) {
             return
         }
 
-        val xp = ForagingXp.mine[event.block.type] ?: return
+        val xp = FarmingXp.mine[event.block.type] ?: return
         if (xp <= 0) return
 
         val total = event.items.sumOf { it.itemStack.amount } * xp
 
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(total)
+            event.player.skillPlayer().incrementExperience<FarmingSkill>(total)
         }
     }
 }

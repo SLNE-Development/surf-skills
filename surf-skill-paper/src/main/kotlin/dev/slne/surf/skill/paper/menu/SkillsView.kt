@@ -97,7 +97,7 @@ val skillsView = surfView("Skills") {
 
         renderSlot(MiningSkill::class, 'M')
         renderSlot(CombatSkill::class, 'C')
-        renderSlot(ForagingSkill::class, 'F')
+        renderSlot(FarmingSkill::class, 'F')
         renderSlot(AlchemySkill::class, 'A')
 
         renderSlot(WoodcuttingSkill::class, 'W')
