@@ -25,7 +25,7 @@ class AlchemySkillImpl : AbstractSkill(
         }
 
         line {
-            spacer("Braue mächtige Tränke und steigere ihre Wirkung mit jedem Level.")
+            spacer("Braue mächtige Tränke und steigere deine Erfahrung mit jedem Level.")
         }
     },
     listeners = objectListOf(AlchemyListener, AlchemyAbilityListener),

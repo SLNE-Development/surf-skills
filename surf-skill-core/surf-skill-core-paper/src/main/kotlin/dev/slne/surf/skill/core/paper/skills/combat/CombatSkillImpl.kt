@@ -50,7 +50,7 @@ class CombatSkillImpl : AbstractSkill(
         }
 
         line {
-            spacer("Werde stärker, schneller und tödlicher im Kampf gegen Monster und Spieler.")
+            spacer("Werde stärker, schneller und tödlicher im Kampf gegen Monster.")
         }
     },
     listeners = objectListOf(CombatKillListener, CombatAbilityListener),

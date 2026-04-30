@@ -25,7 +25,7 @@ class EnchantingSkillImpl : AbstractSkill(
         }
 
         line {
-            spacer("Entfalte die Macht arkaner Runen und verleihe deiner Ausrüstung übermenschliche Kräfte.")
+            spacer("Entfalte die Macht der Zaubersprache und werde zum Meister der Verzauberungen.")
         }
     },
     listeners = objectListOf(EnchantListener, EnchantingAbilityListener),
