@@ -1,4 +1,4 @@
-package dev.slne.surf.skill.core.paper.skills.utils
+package dev.slne.surf.skill.core.paper.util
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.sksamuel.aedile.core.expireAfterWrite

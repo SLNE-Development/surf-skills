@@ -16,6 +16,7 @@ import java.util.*
 
 interface Skill : ComponentLike {
     val name: String
+    val niceName: String
     val displayName: Component
     val lore: LoreBuilder.() -> Unit
     val material: ItemType

@@ -4,7 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
-import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
+import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
@@ -63,6 +63,12 @@ object CombatKillListener : Listener {
         EntityType.IRON_GOLEM to 10,
         EntityType.SNOW_GOLEM to 10,
         EntityType.CREEPER to 10,
+        EntityType.PARCHED to 20,
+        EntityType.ZOMBIE_HORSE to 50,
+        EntityType.CAMEL_HUSK to 40,
+        EntityType.NAUTILUS to 5,
+        EntityType.ZOMBIE_NAUTILUS to 10,
+        
 
         EntityType.BAT to 5,
         EntityType.VILLAGER to 5,

@@ -7,6 +7,7 @@ import dev.slne.surf.skill.core.paper.PaperSkillInstance
 import dev.slne.surf.skill.core.paper.manager.skillManagerImpl
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
+import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
 import dev.slne.surf.skill.paper.menu.skillView
 import dev.slne.surf.skill.paper.menu.skillsView
 import org.bukkit.plugin.java.JavaPlugin
@@ -17,6 +18,7 @@ class PaperMain : SuspendingJavaPlugin() {
 
         skillsView.register()
         skillView.register()
+        skillSettingsView.register()
     }
 
     override suspend fun onEnableAsync() {

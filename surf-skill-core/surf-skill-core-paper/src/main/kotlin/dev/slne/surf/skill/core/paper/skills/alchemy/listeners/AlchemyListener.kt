@@ -4,7 +4,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.AlchemySkill
-import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
+import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.LivingEntity

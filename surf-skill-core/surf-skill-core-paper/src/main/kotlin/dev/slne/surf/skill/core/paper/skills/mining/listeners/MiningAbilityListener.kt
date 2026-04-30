@@ -4,7 +4,7 @@ package dev.slne.surf.skill.core.paper.skills.mining.listeners
 
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
-import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.block.BlockType
 import org.bukkit.event.EventHandler

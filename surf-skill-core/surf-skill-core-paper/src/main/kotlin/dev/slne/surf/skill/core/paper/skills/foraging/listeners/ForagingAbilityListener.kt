@@ -2,7 +2,7 @@ package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
-import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.entity.Player

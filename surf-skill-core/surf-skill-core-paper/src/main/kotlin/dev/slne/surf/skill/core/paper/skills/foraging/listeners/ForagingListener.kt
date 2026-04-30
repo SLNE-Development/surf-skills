@@ -10,7 +10,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
-import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
+import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
@@ -23,7 +23,6 @@ import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 
 object ForagingListener : Listener {
-
     private object ForagingXp {
         val mine: Map<Material, Int> = mapOf(
             Material.BAMBOO to 1,
@@ -61,6 +60,10 @@ object ForagingListener : Listener {
 
         val xp = event.itemStack.amount
         if (xp <= 0) return
+
+        if (event.itemStack.type !in ForagingXp.mine && event.itemStack.type !in ForagingXp.click) {
+            return
+        }
 
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return

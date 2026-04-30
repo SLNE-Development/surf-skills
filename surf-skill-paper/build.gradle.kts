@@ -1,4 +1,5 @@
 import dev.slne.surf.api.gradle.util.registerRequired
+import dev.slne.surf.api.gradle.util.registerSoft
 import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
@@ -22,5 +23,6 @@ surfPaperPluginApi {
             loadOrder = PaperPluginDescription.RelativeLoadOrder.BEFORE
         )
         registerRequired("surf-rabbitmq-paper")
+        registerSoft("surf-settings-paper")
     }
 }

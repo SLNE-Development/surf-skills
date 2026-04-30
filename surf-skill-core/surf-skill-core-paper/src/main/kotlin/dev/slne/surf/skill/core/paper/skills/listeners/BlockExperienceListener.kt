@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.listeners
 
-import dev.slne.surf.skill.core.paper.skills.utils.BlockExperienceHandler
+import dev.slne.surf.skill.core.paper.util.BlockExperienceHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener

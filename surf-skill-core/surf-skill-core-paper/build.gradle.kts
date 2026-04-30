@@ -13,4 +13,5 @@ dependencies {
     api(projects.surfSkillCore.surfSkillCoreCommon)
     api(projects.surfSkillApi.surfSkillApiPaper)
     compileOnly(libs.surf.enchantment.api)
+    compileOnlyApi("dev.slne.surf.settings:surf-settings-api:+")
 }

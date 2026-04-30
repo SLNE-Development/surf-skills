@@ -12,6 +12,8 @@ import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.manager.SkillManager
 import dev.slne.surf.skill.api.paper.player.SkillPlayer
 import dev.slne.surf.skill.core.paper.experience.SkillExperienceImpl
+import dev.slne.surf.skill.core.paper.settings.SettingsHook
+import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
 import it.unimi.dsi.fastutil.objects.ObjectList
 import net.kyori.adventure.sound.Sound
 import java.util.*
@@ -65,16 +67,30 @@ class SkillPlayerImpl(
 
         val experience = findOrCreateExperience(clazz).incrementExperience(amount)
 
-        player?.playSound(true) {
-            type(BukkitSound.ENTITY_EXPERIENCE_ORB_PICKUP)
-            volume(.25f)
-            pitch(1.25f)
-            source(Sound.Source.AMBIENT)
+        val player = player
+
+        if (hasSettingsApi() && player != null && SettingsHook.hasGainXpSoundEnabled(player.uniqueId)) {
+            player.playSound(true) {
+                type(BukkitSound.ENTITY_EXPERIENCE_ORB_PICKUP)
+                volume(.25f)
+                pitch(1.25f)
+                source(Sound.Source.AMBIENT)
+            }
         }
 
         val cachedValue = pickUpCache.getIfPresent(uuid to experience.skill) ?: 0
         val newValue = cachedValue + amount
         pickUpCache.put(uuid to experience.skill, newValue)
+
+        val totalXp = experience.currentExperience
+        val curve = experience.skill.experienceCurve
+
+        val currentLevel = curve.getLevelForExperience(totalXp)
+        val xpForCurrentLevel = curve.getExperienceForLevel(currentLevel - 1)
+        val xpForNextLevel = curve.getExperienceForLevel(currentLevel)
+
+        val xpInLevel = totalXp - xpForCurrentLevel
+        val xpNeeded = xpForNextLevel - xpForCurrentLevel
 
         player?.sendActionBar(buildText {
             spacer("»")
@@ -84,6 +100,12 @@ class SkillPlayerImpl(
             spacer("‖")
             appendSpace()
             success("+$newValue XP")
+            appendSpace()
+            spacer("(")
+            variableValue(xpInLevel)
+            spacer("/")
+            variableValue(xpNeeded)
+            spacer(")")
             appendSpace()
             spacer("«")
         })

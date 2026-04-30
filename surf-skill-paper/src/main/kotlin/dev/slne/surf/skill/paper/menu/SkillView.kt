@@ -62,7 +62,7 @@ val skillView = paginatedSurfView("aaa") {
 
     onOpen {
         modifyContainer {
-            header(skillExperienceState[this].skill.name)
+            header(skillExperienceState[this].skill.niceName)
         }
     }
 }

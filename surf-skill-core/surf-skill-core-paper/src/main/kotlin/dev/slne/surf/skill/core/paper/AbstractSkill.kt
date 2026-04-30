@@ -21,6 +21,8 @@ import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.EmptySkillLevel
+import dev.slne.surf.skill.core.paper.settings.SettingsHook
+import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
 import it.unimi.dsi.fastutil.objects.ObjectList
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
@@ -33,6 +35,7 @@ import java.util.*
 @OptIn(InternalSkillApi::class)
 abstract class AbstractSkill(
     override val name: String,
+    override val niceName: String = name,
     override val material: ItemType,
     override val displayName: Component,
     override val lore: LoreBuilder.() -> Unit,
@@ -58,88 +61,91 @@ abstract class AbstractSkill(
 
         val activeAbilities = abilities.filter { it.isActiveAtLevel(level) }
 
-        player.sendText {
-            appendInfoPrefix()
-            spacer("-".repeat(15))
-            variableValue("LEVELUP", TextDecoration.BOLD)
-            spacer("-".repeat(15))
+        if (hasSettingsApi() && SettingsHook.hasLevelUpMessagesEnabled(uuid)) {
+            player.sendText {
+                appendInfoPrefix()
+                spacer("-".repeat(15))
+                variableValue("LEVELUP", TextDecoration.BOLD)
+                spacer("-".repeat(15))
 
-            appendNewInfoPrefixedLine()
-
-            appendNewInfoPrefixedLine()
-            info("Du hast Level ")
-            variableValue(level)
-            info(" in ")
-            append(displayName)
-            info(" erreicht!")
-
-            if (activeAbilities.isNotEmpty()) {
                 appendNewInfoPrefixedLine()
+
                 appendNewInfoPrefixedLine()
-                info("Fähigkeiten:")
+                info("Du hast Level ")
+                variableValue(level)
+                info(" in ")
+                append(displayName)
+                info(" erreicht!")
 
-                activeAbilities.forEach { ability ->
-                    val newValue = ability.getFormattedValue(level)
-                    val isNew = !ability.isActiveAtLevel(level - 1)
-
+                if (activeAbilities.isNotEmpty()) {
                     appendNewInfoPrefixedLine()
-                    info("  - ")
-                    append(ability.displayName)
-                    info(": ")
+                    appendNewInfoPrefixedLine()
+                    info("Fähigkeiten:")
 
-                    if (isNew) {
-                        variableValue(newValue)
-                        spacer(" (")
-                        variableValue("NEU!")
-                        spacer(")")
-                    } else {
-                        val oldValue = ability.getFormattedValue(level - 1)
-                        spacer(oldValue)
-                        info(" → ")
-                        variableValue(newValue)
+                    activeAbilities.forEach { ability ->
+                        val newValue = ability.getFormattedValue(level)
+                        val isNew = !ability.isActiveAtLevel(level - 1)
+
+                        appendNewInfoPrefixedLine()
+                        info("  - ")
+                        append(ability.displayName)
+                        info(": ")
+
+                        if (isNew) {
+                            variableValue(newValue)
+                            spacer(" (")
+                            variableValue("NEU!")
+                            spacer(")")
+                        } else {
+                            val oldValue = ability.getFormattedValue(level - 1)
+                            spacer(oldValue)
+                            info(" → ")
+                            variableValue(newValue)
+                        }
                     }
                 }
-            }
 
-            if (levelRewards.isNotEmpty()) {
-                appendNewInfoPrefixedLine()
-                appendNewInfoPrefixedLine()
-                info("Belohnungen:")
-
-                levelRewards.forEach { reward ->
+                if (levelRewards.isNotEmpty()) {
                     appendNewInfoPrefixedLine()
-                    info("  - ")
-                    append(reward.displayName)
+                    appendNewInfoPrefixedLine()
+                    info("Belohnungen:")
+
+                    levelRewards.forEach { reward ->
+                        appendNewInfoPrefixedLine()
+                        info("  - ")
+                        append(reward.displayName)
+                    }
                 }
+
+                appendNewInfoPrefixedLine()
+
+                appendNewInfoPrefixedLine()
+                spacer("-".repeat(15))
+                variableValue("LEVELUP", TextDecoration.BOLD)
+                spacer("-".repeat(15))
+            }
+        }
+
+        if (hasSettingsApi() && SettingsHook.hasLevelUpSoundsEnabled(uuid)) {
+            player.playSound(true) {
+                type(BukkitSound.ENTITY_PLAYER_LEVELUP)
+                source(Sound.Source.AMBIENT)
+                volume(.5f)
+                pitch(.25f)
             }
 
-            appendNewInfoPrefixedLine()
+            player.playSound(true) {
+                type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
+                source(Sound.Source.AMBIENT)
+                volume(.5f)
+            }
 
-            appendNewInfoPrefixedLine()
-            spacer("-".repeat(15))
-            variableValue("LEVELUP", TextDecoration.BOLD)
-            spacer("-".repeat(15))
+            player.playSound(true) {
+                type(BukkitSound.ENTITY_FIREWORK_ROCKET_TWINKLE)
+                source(Sound.Source.AMBIENT)
+                volume(.5f)
+            }
         }
-
-        player.playSound(true) {
-            type(BukkitSound.ENTITY_PLAYER_LEVELUP)
-            source(Sound.Source.AMBIENT)
-            volume(.5f)
-            pitch(.25f)
-        }
-
-        player.playSound(true) {
-            type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
-            source(Sound.Source.AMBIENT)
-            volume(.5f)
-        }
-
-        player.playSound(true) {
-            type(BukkitSound.ENTITY_FIREWORK_ROCKET_TWINKLE)
-            source(Sound.Source.AMBIENT)
-            volume(.5f)
-        }
-
 
         if (levelRewards.isEmpty()) {
             return

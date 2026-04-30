@@ -4,8 +4,8 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
-import dev.slne.surf.skill.core.paper.skills.utils.SkillLevelingHandler
-import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
+import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

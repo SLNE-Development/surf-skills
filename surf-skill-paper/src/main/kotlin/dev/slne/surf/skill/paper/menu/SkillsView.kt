@@ -18,6 +18,7 @@ import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.manager.SkillManager
 import dev.slne.surf.skill.api.paper.skills.*
 import dev.slne.surf.skill.core.paper.experience.SkillExperienceImpl
+import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
 import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import it.unimi.dsi.fastutil.objects.ObjectList
 import me.devnatan.inventoryframework.context.RenderContext
@@ -48,7 +49,7 @@ val skillsView = surfView("Skills") {
             row(" C M W F ")
             empty()
             row(" I E A N ")
-            row("    X    ")
+            row("    X   S")
         }
     }
 
@@ -104,6 +105,14 @@ val skillsView = surfView("Skills") {
         renderSlot(ExplorationSkill::class, 'E')
         renderSlot(FishingSkill::class, 'I')
         renderSlot(EnchantingSkill::class, 'N')
+
+        layoutSlot('S', viewIcon(ViewIconType.COG, ViewIconColor.YELLOW) {
+            displayName {
+                primary("Einstellungen".toSmallCaps())
+            }
+        }).onItemClick {
+            openForPlayer(skillSettingsView)
+        }
 
         layoutSlot('X', viewIcon(ViewIconType.CROSS, ViewIconColor.RED) {
             displayName {
