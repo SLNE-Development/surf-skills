@@ -31,10 +31,12 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
     val aState = mutableState(false)
     val bState = mutableState(false)
     val cState = mutableState(false)
+    val dState = mutableState(false)
 
     val aInitialState = mutableState(false)
     val bInitialState = mutableState(false)
     val cInitialState = mutableState(false)
+    val dInitialState = mutableState(false)
 
     settings {
         rows(3)
@@ -44,7 +46,7 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
     onInit {
         layout(
             "         ",
-            "  A B C  ",
+            " A D B C ",
             "    X    "
         )
     }
@@ -53,10 +55,12 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
         aInitialState[this] = SettingsHook.hasGainXpSoundEnabled(this.player.uniqueId)
         bInitialState[this] = SettingsHook.hasLevelUpSoundsEnabled(this.player.uniqueId)
         cInitialState[this] = SettingsHook.hasLevelUpMessagesEnabled(this.player.uniqueId)
+        dInitialState[this] = SettingsHook.hasGainXpMessagesEnabled(this.player.uniqueId)
 
         aState[this] = aInitialState[this]
         bState[this] = bInitialState[this]
         cState[this] = cInitialState[this]
+        dState[this] = dInitialState[this]
 
         layoutSlot('A').renderWith { gainXpSoundItem(aState[this]) }.onClick { click ->
             aState[click] = !aState[click]
@@ -88,6 +92,16 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
             }
         }
 
+        layoutSlot('D').renderWith { gainXpMessageItem(dState[this]) }.onClick { click ->
+            dState[click] = !dState[click]
+            update()
+
+            this.player.sendText {
+                appendSuccessPrefix()
+                success("Du hast die Skill XP Nachrichten " + if (dState[click]) "aktiviert." else "deaktiviert.")
+            }
+        }
+
         layoutSlot('X', viewIcon(ViewIconType.HOME, ViewIconColor.RED) {
             displayName {
                 primary("Zurück".toSmallCaps())
@@ -109,10 +123,12 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
         val aState = aState[this]
         val bState = bState[this]
         val cState = cState[this]
+        val dState = dState[this]
 
         val aInitialState = aInitialState[this]
         val bInitialState = bInitialState[this]
         val cInitialState = cInitialState[this]
+        val dInitialState = dInitialState[this]
 
         plugin.launch {
             if (aState != aInitialState) {
@@ -126,6 +142,10 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
             if (cState != cInitialState) {
                 SettingsHook.setLevelUpMessagesEnabled(playerUuid, cState)
             }
+
+            if (dState != dInitialState) {
+                SettingsHook.setGainXpMessagesEnabled(playerUuid, dState)
+            }
         }
     }
 }
@@ -133,7 +153,28 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
 private fun gainXpSoundItem(enabled: Boolean) =
     buildItem(if (enabled) Material.LIME_CANDLE else Material.RED_CANDLE) {
         displayName {
-            primary("Skill XP Sound")
+            variableValue("Skill XP Sound")
+        }
+
+        buildLore {
+            emptyLine()
+            line {
+                spacer("»")
+                appendSpace()
+
+                if (enabled) {
+                    success("✔ Aktiviert")
+                } else {
+                    error("✘ Deaktiviert")
+                }
+            }
+        }
+    }
+
+private fun gainXpMessageItem(enabled: Boolean) =
+    buildItem(if (enabled) Material.LIME_CANDLE else Material.RED_CANDLE) {
+        displayName {
+            variableValue("Skill XP Nachrichten")
         }
 
         buildLore {
@@ -154,7 +195,7 @@ private fun gainXpSoundItem(enabled: Boolean) =
 private fun levelUpSoundItem(enabled: Boolean) =
     buildItem(if (enabled) Material.LIME_CANDLE else Material.RED_CANDLE) {
         displayName {
-            primary("Level Up Sound")
+            variableValue("Level Up Sound")
         }
 
         buildLore {
@@ -175,7 +216,7 @@ private fun levelUpSoundItem(enabled: Boolean) =
 private fun levelUpMessageItem(enabled: Boolean) =
     buildItem(if (enabled) Material.LIME_CANDLE else Material.RED_CANDLE) {
         displayName {
-            primary("Level Up Nachrichten")
+            variableValue("Level Up Nachrichten")
         }
 
         buildLore {

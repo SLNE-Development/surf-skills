@@ -8,7 +8,8 @@ import java.util.*
 object SettingsHook {
     private val levelUpMessagesKey = SettingKey.ofBoolean(namespacedKey("level-up-messages"), true)
     private val levelUpSoundsKey = SettingKey.ofBoolean(namespacedKey("levle-up-sounds"), true)
-    private val gainXpSound = SettingKey.ofBoolean(namespacedKey("gain-xp-sound"), true)
+    private val gainXpSoundKey = SettingKey.ofBoolean(namespacedKey("gain-xp-sound"), true)
+    private val gainXpMessageKey = SettingKey.ofBoolean(namespacedKey("gain-xp-messages"), true)
 
     fun hasLevelUpMessagesEnabled(playerUuid: UUID) =
         SurfSettingsApi.getSettingValue(playerUuid, levelUpMessagesKey)
@@ -17,7 +18,10 @@ object SettingsHook {
         SurfSettingsApi.getSettingValue(playerUuid, levelUpSoundsKey)
 
     fun hasGainXpSoundEnabled(playerUuid: UUID) =
-        SurfSettingsApi.getSettingValue(playerUuid, gainXpSound)
+        SurfSettingsApi.getSettingValue(playerUuid, gainXpSoundKey)
+
+    fun hasGainXpMessagesEnabled(playerUuid: UUID) =
+        SurfSettingsApi.getSettingValue(playerUuid, gainXpMessageKey)
 
 
     suspend fun setLevelUpMessagesEnabled(playerUuid: UUID, enabled: Boolean) =
@@ -27,12 +31,16 @@ object SettingsHook {
         SurfSettingsApi.saveSetting(playerUuid, levelUpSoundsKey, enabled)
 
     suspend fun setGainXpSoundEnabled(playerUuid: UUID, enabled: Boolean) =
-        SurfSettingsApi.saveSetting(playerUuid, gainXpSound, enabled)
+        SurfSettingsApi.saveSetting(playerUuid, gainXpSoundKey, enabled)
+
+    suspend fun setGainXpMessagesEnabled(playerUuid: UUID, enabled: Boolean) =
+        SurfSettingsApi.saveSetting(playerUuid, gainXpMessageKey, enabled)
 
 
     suspend fun registerSettings() {
         SurfSettingsApi.createSetting(levelUpMessagesKey)
         SurfSettingsApi.createSetting(levelUpSoundsKey)
-        SurfSettingsApi.createSetting(gainXpSound)
+        SurfSettingsApi.createSetting(gainXpSoundKey)
+        SurfSettingsApi.createSetting(gainXpMessageKey)
     }
 }

@@ -81,34 +81,36 @@ class SkillPlayerImpl(
         val cachedValue = pickUpCache.getIfPresent(uuid to experience.skill) ?: 0
         val newValue = cachedValue + amount
         pickUpCache.put(uuid to experience.skill, newValue)
+        
+        if (hasSettingsApi() && player != null && SettingsHook.hasGainXpMessagesEnabled(player.uniqueId)) {
+            val totalXp = experience.currentExperience
+            val curve = experience.skill.experienceCurve
 
-        val totalXp = experience.currentExperience
-        val curve = experience.skill.experienceCurve
+            val currentLevel = curve.getLevelForExperience(totalXp)
 
-        val currentLevel = curve.getLevelForExperience(totalXp)
+            val xpForCurrentLevel = curve.getTotalExperienceForLevel(currentLevel - 1)
+            val xpForNextLevel = curve.getTotalExperienceForLevel(currentLevel)
 
-        val xpForCurrentLevel = curve.getTotalExperienceForLevel(currentLevel - 1)
-        val xpForNextLevel = curve.getTotalExperienceForLevel(currentLevel)
+            val xpInLevel = totalXp - xpForCurrentLevel
+            val xpNeeded = xpForNextLevel - xpForCurrentLevel
 
-        val xpInLevel = totalXp - xpForCurrentLevel
-        val xpNeeded = xpForNextLevel - xpForCurrentLevel
-
-        player?.sendActionBar(buildText {
-            spacer("»")
-            appendSpace()
-            append(experience.skill.displayName)
-            appendSpace()
-            spacer("‖")
-            appendSpace()
-            success("+$newValue XP")
-            appendSpace()
-            spacer("(")
-            variableValue(xpInLevel)
-            spacer("/")
-            variableValue(xpNeeded)
-            spacer(")")
-            appendSpace()
-            spacer("«")
-        })
+            player.sendActionBar(buildText {
+                spacer("»")
+                appendSpace()
+                append(experience.skill.displayName)
+                appendSpace()
+                spacer("‖")
+                appendSpace()
+                success("+$newValue XP")
+                appendSpace()
+                spacer("(")
+                variableValue(xpInLevel)
+                spacer("/")
+                variableValue(xpNeeded)
+                spacer(")")
+                appendSpace()
+                spacer("«")
+            })
+        }
     }
 }
