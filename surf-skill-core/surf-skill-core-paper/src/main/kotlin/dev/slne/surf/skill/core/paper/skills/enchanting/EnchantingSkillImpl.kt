@@ -8,7 +8,6 @@ import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.skill.api.paper.skills.EnchantingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
-import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.skills.enchanting.listeners.EnchantListener
 import dev.slne.surf.skill.core.paper.skills.enchanting.listeners.EnchantingAbilityListener
 import org.bukkit.inventory.ItemType
@@ -30,28 +29,6 @@ class EnchantingSkillImpl : AbstractSkill(
         }
     },
     listeners = objectListOf(EnchantListener, EnchantingAbilityListener),
-    abilities = objectListOf(
-        SkillAbility(
-            displayName = buildText { primary("Enchanter's Insight".toSmallCaps()) },
-            description = "Senkt die benötigten Erfahrungslevel beim Verzaubern von Gegenständen.",
-            minLevel = 1,
-            maxValue = 0.50,
-            valueFormatter = SkillAbility.percentageFormatter()
-        ),
-        SkillAbility(
-            displayName = buildText { primary("Arcane Amplification".toSmallCaps()) },
-            description = "Erhöht die Stärke von Verzauberungen, die auf Gegenstände angewendet werden.",
-            minLevel = 11,
-            maxValue = 0.20,
-            valueFormatter = SkillAbility.percentageFormatter()
-        ),
-        SkillAbility(
-            displayName = buildText { primary("Mana Pool".toSmallCaps()) },
-            description = "Vergrößert den Manapool, sodass stärkere Verzauberungen möglich werden.",
-            minLevel = 21,
-            maxValue = 0.25,
-            valueFormatter = SkillAbility.percentageFormatter()
-        )
-    ),
+    abilities = objectListOf(),
     active = false
 ), EnchantingSkill
