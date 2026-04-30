@@ -18,18 +18,12 @@ object WoodcuttingAbilityListener : Listener {
     private const val CRAFTSMANSHIP_MIN_LEVEL = 1
     private const val CRAFTSMANSHIP_MAX_VALUE = 0.50
 
-    private val AXE_TYPES = setOf(
-        Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
-        Material.COPPER_AXE,
-        Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE
-    )
-
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onCraftsmanship(event: PlayerItemDamageEvent) {
         val player = event.player
         val itemType = event.item.type
 
-        if (itemType !in AXE_TYPES) return
+        if (!Tag.ITEMS_AXES.isTagged(itemType)) return
 
         val level = AbilityUtil.getPlayerLevel<WoodcuttingSkill>(player)
         val reductionChance = AbilityUtil.calculateScaledValue(
