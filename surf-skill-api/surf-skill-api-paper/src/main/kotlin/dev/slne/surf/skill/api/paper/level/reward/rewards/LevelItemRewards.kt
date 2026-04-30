@@ -50,6 +50,7 @@ class LevelItemRewards(
                 appendErrorPrefix()
 
                 error("Dein Inventar ist voll!", TextDecoration.BOLD)
+                appendSpace()
                 error("Die Belohnungen, die nicht in dein Inventar gelegt werden konnten, wurden auf den Boden vor dir fallen gelassen.")
             }
 
