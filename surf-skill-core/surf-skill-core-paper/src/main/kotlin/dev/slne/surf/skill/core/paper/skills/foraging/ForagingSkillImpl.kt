@@ -23,7 +23,7 @@ class ForagingSkillImpl : AbstractSkill(
     },
     lore = {
         line {
-            spacer("Dieser Skill ermöglicht es dir, deine Sammelkünste zu verbessern.")
+            spacer("Dieser Skill ermöglicht es dir, deine Sammel und Erntekünste zu verbessern.")
         }
 
         line {
