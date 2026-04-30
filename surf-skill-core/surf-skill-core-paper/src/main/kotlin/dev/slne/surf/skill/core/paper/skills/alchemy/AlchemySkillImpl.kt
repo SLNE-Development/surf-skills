@@ -15,19 +15,12 @@ import org.bukkit.inventory.ItemType
 @AutoService(AlchemySkill::class)
 class AlchemySkillImpl : AbstractSkill(
     name = "alchemy",
+    niceName = "???",
     material = ItemType.BREWING_STAND,
     displayName = buildText {
-        primary("Alchemy".toSmallCaps())
+        primary("???".toSmallCaps())
     },
-    lore = {
-        line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Alchemie zu verbessern.")
-        }
-
-        line {
-            spacer("Braue mächtige Tränke und steigere deine Erfahrung mit jedem Level.")
-        }
-    },
+    lore = {},
     listeners = objectListOf(AlchemyListener, AlchemyAbilityListener),
     abilities = objectListOf(),
     active = false

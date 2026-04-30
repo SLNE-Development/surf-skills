@@ -14,19 +14,12 @@ import org.bukkit.inventory.ItemType
 @AutoService(ExplorationSkill::class)
 class ExplorationSkillImpl : AbstractSkill(
     name = "exploration",
+    niceName = "???",
     material = ItemType.SPYGLASS,
     displayName = buildText {
-        primary("Exploration".toSmallCaps())
+        primary("???".toSmallCaps())
     },
-    lore = {
-        line {
-            spacer("Dieser Skill ermöglicht es dir, deine Entdeckungsfähigkeiten zu verbessern.")
-        }
-
-        line {
-            spacer("Erkunde die Welt, entdecke neue Orte und werde zum unerschrockenen Abenteurer.")
-        }
-    },
+    lore = {},
     listeners = objectListOf(ExplorationAbilityListener),
     active = false
 ), ExplorationSkill

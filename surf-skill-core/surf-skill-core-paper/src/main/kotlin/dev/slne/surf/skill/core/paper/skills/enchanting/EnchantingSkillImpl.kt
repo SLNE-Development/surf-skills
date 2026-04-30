@@ -15,19 +15,12 @@ import org.bukkit.inventory.ItemType
 @AutoService(EnchantingSkill::class)
 class EnchantingSkillImpl : AbstractSkill(
     name = "enchanting",
+    niceName = "???",
     material = ItemType.ENCHANTED_BOOK,
     displayName = buildText {
-        primary("Enchanting".toSmallCaps())
+        primary("???".toSmallCaps())
     },
-    lore = {
-        line {
-            spacer("Dieser Skill ermöglicht es dir, deine Fähigkeiten in der Verzauberungskunst zu verbessern.")
-        }
-
-        line {
-            spacer("Entfalte die Macht der Zaubersprache und werde zum Meister der Verzauberungen.")
-        }
-    },
+    lore = {},
     listeners = objectListOf(EnchantListener, EnchantingAbilityListener),
     abilities = objectListOf(),
     active = false
