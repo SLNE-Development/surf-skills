@@ -1,6 +1,6 @@
-package dev.slne.surf.skill.core.paper.skills.farming.listeners
+package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
-import dev.slne.surf.skill.api.paper.skills.FarmingSkill
+import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.skills.utils.isEligibleForExperience
 import org.bukkit.Material
@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 
-object FarmingAbilityListener : Listener {
+object ForagingAbilityListener : Listener {
     private const val EARTHBOUND_DURABILITY_MIN_LEVEL = 1
     private const val EARTHBOUND_DURABILITY_MAX_VALUE = 0.50
 
@@ -31,7 +31,7 @@ object FarmingAbilityListener : Listener {
 
         if (itemType !in SHOVEL_HOE_TYPES) return
 
-        val level = AbilityUtil.getPlayerLevel<FarmingSkill>(player)
+        val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)
         val reductionChance = AbilityUtil.calculateScaledValue(
             level, EARTHBOUND_DURABILITY_MIN_LEVEL, maxValue = EARTHBOUND_DURABILITY_MAX_VALUE
         )
@@ -51,7 +51,7 @@ object FarmingAbilityListener : Listener {
         if (!event.block.isEligibleForExperience()) return
 
         val player = event.player
-        val level = AbilityUtil.getPlayerLevel<FarmingSkill>(player)
+        val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
             level, GREEN_THUMB_MIN_LEVEL, maxValue = GREEN_THUMB_MAX_VALUE
         )
@@ -76,7 +76,7 @@ object FarmingAbilityListener : Listener {
 
         if (newFoodLevel >= oldFoodLevel) return
 
-        val level = AbilityUtil.getPlayerLevel<FarmingSkill>(player)
+        val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)
         val reductionFactor = AbilityUtil.calculateScaledValue(
             level, SATIATION_MIN_LEVEL, maxValue = SATIATION_MAX_VALUE
         )
