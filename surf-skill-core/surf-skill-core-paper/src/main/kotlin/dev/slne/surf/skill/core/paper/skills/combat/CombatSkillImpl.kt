@@ -6,10 +6,6 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
-import dev.slne.surf.api.paper.builder.buildItem
-import dev.slne.surf.api.paper.builder.buildLore
-import dev.slne.surf.api.paper.builder.displayName
-import dev.slne.surf.api.paper.builder.meta
 import dev.slne.surf.skill.api.paper.level.SkillLevel
 import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
@@ -18,24 +14,16 @@ import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatAbilityListener
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatKillListener
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedItem
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemType
-import org.bukkit.inventory.meta.EnchantmentStorageMeta
-
-private val enchantedBook = buildItem(ItemType.ENCHANTED_BOOK) {
-    displayName {
-        primary("Großes Buch der Verzauberung")
-    }
-    buildLore {
-        line {
-            spacer("Dieses Buch enthält eine mächtige Verzauberung, die dir im Kampf helfen wird.")
-        }
-    }
-    meta<EnchantmentStorageMeta> {
-        addStoredEnchant(Enchantment.FORTUNE, 5, true)
-    }
-}
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(CombatSkill::class)
 class CombatSkillImpl : AbstractSkill(
@@ -84,7 +72,57 @@ class CombatSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook)))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Resistance Potion",
+                        color = 10329495,
+                        effectType = PotionEffectType.RESISTANCE,
+                        amplifier = 3,
+                        duration = 24000
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.TOTEM_OF_UNDYING))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 30,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("experience"),
+                        level = 4,
+                        special = true,
+                        hideEnchantments = true
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 40,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.LOOTING,
+                        level = 5,
+                        special = true
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 50,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedItem(
+                        type = ItemType.BOW,
+                        Enchantment.INFINITY to 1,
+                        Enchantment.MENDING to 1,
+                        rarity = ItemRarity.EPIC,
+                        special = true,
+                        hideEnchantments = true
+                    ))))
                 }
             )
         )

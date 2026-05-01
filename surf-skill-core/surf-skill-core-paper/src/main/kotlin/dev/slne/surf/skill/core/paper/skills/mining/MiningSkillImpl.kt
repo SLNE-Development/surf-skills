@@ -6,12 +6,22 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
+import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
+import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningAbilityListener
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningBlockListener
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
+import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(MiningSkill::class)
 class MiningSkillImpl : AbstractSkill(
@@ -58,6 +68,63 @@ class MiningSkillImpl : AbstractSkill(
         )
     )
 ), MiningSkill {
+    override fun getExtraLevels(): ObjectList<SkillLevel> {
+        return objectListOf(
+            skillLevel(
+                skill = this,
+                level = 10,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.NETHERITE_INGOT))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Haste Potion",
+                        color = 16701501,
+                        effectType = PotionEffectType.HASTE,
+                        amplifier = 9,
+                        duration = 24000
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 30,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("soulbound"),
+                        level = 1
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 40,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 6,
+                        special = true
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 50,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 7,
+                        special = true
+                    ))))
+                }
+            )
+        )
+    }
+
     companion object {
         private const val DYNAMIC_MINING_DURATION_SCALE = 1200.0 // maxDurationSeconds / maxChance
     }
