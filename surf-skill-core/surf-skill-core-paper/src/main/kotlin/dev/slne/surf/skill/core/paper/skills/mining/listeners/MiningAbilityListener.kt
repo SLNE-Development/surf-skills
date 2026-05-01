@@ -6,7 +6,6 @@ import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
-import org.bukkit.block.BlockType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -30,7 +29,9 @@ object MiningAbilityListener : Listener {
         val player = event.player
         val itemType = event.item.type
 
-        if (itemType !in PICKAXE_TYPES) return
+        if (itemType !in PICKAXE_TYPES) {
+            return
+        }
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val reductionChance = AbilityUtil.calculateScaledValue(
@@ -45,26 +46,13 @@ object MiningAbilityListener : Listener {
     private const val SPELUNKING_MIN_LEVEL = 11
     private const val SPELUNKING_MAX_VALUE = 0.20
 
-    private val ORE_BLOCKS = setOf(
-        BlockType.COAL_ORE, BlockType.DEEPSLATE_COAL_ORE,
-        BlockType.IRON_ORE, BlockType.DEEPSLATE_IRON_ORE,
-        BlockType.COPPER_ORE, BlockType.DEEPSLATE_COPPER_ORE,
-        BlockType.GOLD_ORE, BlockType.DEEPSLATE_GOLD_ORE,
-        BlockType.REDSTONE_ORE, BlockType.DEEPSLATE_REDSTONE_ORE,
-        BlockType.EMERALD_ORE, BlockType.DEEPSLATE_EMERALD_ORE,
-        BlockType.LAPIS_ORE, BlockType.DEEPSLATE_LAPIS_ORE,
-        BlockType.DIAMOND_ORE, BlockType.DEEPSLATE_DIAMOND_ORE,
-        BlockType.NETHER_GOLD_ORE, BlockType.NETHER_QUARTZ_ORE,
-        BlockType.ANCIENT_DEBRIS
-    )
-
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
-        val blockType = event.blockState.type.asBlockType() ?: return
 
-        if (blockType !in ORE_BLOCKS) return
-        if (!event.block.isEligibleForExperience()) return
+        if (!event.block.isEligibleForExperience()) {
+            return
+        }
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
