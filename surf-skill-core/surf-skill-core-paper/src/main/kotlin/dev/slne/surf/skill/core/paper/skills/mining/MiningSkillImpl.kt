@@ -14,12 +14,14 @@ import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningAbilityListener
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningBlockListener
-import dev.slne.surf.skill.core.paper.skills.rewards.efficiencyBook
-import dev.slne.surf.skill.core.paper.skills.rewards.hastePotion
-import dev.slne.surf.skill.core.paper.skills.rewards.netheriteIngot
-import dev.slne.surf.skill.core.paper.skills.rewards.soulboundBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(MiningSkill::class)
 class MiningSkillImpl : AbstractSkill(
@@ -72,35 +74,52 @@ class MiningSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(netheriteIngot())))
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.NETHERITE_INGOT))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(hastePotion())))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Haste Potion",
+                        color = 16701501,
+                        effectType = PotionEffectType.HASTE,
+                        amplifier = 9,
+                        duration = 24000
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(soulboundBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("soulbound"),
+                        level = 1
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(efficiencyBook(6))))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 6,
+                        special = true
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(efficiencyBook(7))))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 7,
+                        special = true
+                    ))))
                 }
             )
         )
