@@ -26,97 +26,16 @@ import org.bukkit.potion.PotionEffectType
 
 private val SPECIAL_ITEM_KEY = NamespacedKey("surf-freebuild-paper", "special_item")
 
-fun combatResistancePotion() = customPotion(
-    name = "Resistance Potion",
-    color = Color.fromRGB(10329495),
-    effect = PotionEffect(PotionEffectType.RESISTANCE, 24000, 3, false, true, true)
-)
-
-fun hastePotion() = customPotion(
-    name = "Haste Potion",
-    color = Color.fromRGB(16701501),
-    effect = PotionEffect(PotionEffectType.HASTE, 24000, 9, false, true, true)
-)
-
-fun dolphinsGracePotion() = customPotion(
-    name = "Dolphin's Grace Potion",
-    color = Color.fromRGB(3847130),
-    effect = PotionEffect(PotionEffectType.DOLPHINS_GRACE, 24000, 3, false, true, true)
-)
-
-fun saturationStew() = buildItem(ItemType.SUSPICIOUS_STEW) {
-    meta<SuspiciousStewMeta> {
-        setRarity(ItemRarity.RARE)
-        addCustomEffect(PotionEffect(PotionEffectType.SATURATION, 1, 0, false, true, true), true)
-    }
-
-    lore(
-        Component.text("Saturation (02:00:00)", NamedTextColor.BLUE)
-            .decoration(TextDecoration.ITALIC, false)
-    )
+fun rewardItem(type: ItemType, amount: Int = 1): ItemStack {
+    return type.createItemStack(amount)
 }
 
-fun totemOfUndying() = ItemType.TOTEM_OF_UNDYING.createItemStack()
-fun netheriteIngot() = ItemType.NETHERITE_INGOT.createItemStack()
-fun heartOfTheSea() = ItemType.HEART_OF_THE_SEA.createItemStack()
-fun ironBlocks() = ItemType.IRON_BLOCK.createItemStack(16)
-
-fun experienceBook() = specialStoredEnchantedBook(
-    enchantment = enchantment("surf", "experience"),
-    level = 4,
-    hideEnchantments = true
-)
-
-fun soulboundBook() = storedEnchantedBook(
-    enchantment = enchantment("surf", "soulbound"),
-    level = 1
-)
-
-fun surfMendingBook() = storedEnchantedBook(
-    enchantment = enchantment("surf", "mending"),
-    level = 1
-)
-
-fun lootingBook() = specialStoredEnchantedBook(
-    enchantment = Enchantment.LOOTING,
-    level = 5
-)
-
-fun efficiencyBook(level: Int) = specialStoredEnchantedBook(
-    enchantment = Enchantment.EFFICIENCY,
-    level = level
-)
-
-fun featherFallingBook() = specialStoredEnchantedBook(
-    enchantment = Enchantment.FEATHER_FALLING,
-    level = 7
-)
-
-fun lureBook() = specialStoredEnchantedBook(
-    enchantment = Enchantment.LURE,
-    level = 4
-)
-
-fun riptideBook() = specialStoredEnchantedBook(
-    enchantment = Enchantment.RIPTIDE,
-    level = 6,
-    hideEnchantments = true
-)
-
-fun combatBow() = buildItem(ItemType.BOW) {
-    meta {
-        setRarity(ItemRarity.EPIC)
-        addEnchant(Enchantment.INFINITY, 1, true)
-        addEnchant(Enchantment.MENDING, 1, true)
-        addItemFlags(ItemFlag.HIDE_ENCHANTS)
-        markSpecialItem()
-    }
-}
-
-private fun customPotion(
+fun potionReward(
     name: String,
-    color: Color,
-    effect: PotionEffect,
+    color: Int,
+    effectType: PotionEffectType,
+    amplifier: Int,
+    duration: Int,
 ): ItemStack {
     return buildItem(ItemType.POTION) {
         meta<PotionMeta> {
@@ -125,20 +44,44 @@ private fun customPotion(
                 Component.text(name)
                     .decoration(TextDecoration.ITALIC, false)
             )
-            setColor(color)
-            addCustomEffect(effect, true)
+            setColor(Color.fromRGB(color))
+            addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
         }
     }
 }
 
-private fun storedEnchantedBook(
+fun suspiciousStewReward(
+    loreText: String,
+    effectType: PotionEffectType,
+    duration: Int,
+    amplifier: Int = 0,
+): ItemStack {
+    return buildItem(ItemType.SUSPICIOUS_STEW) {
+        meta<SuspiciousStewMeta> {
+            setRarity(ItemRarity.RARE)
+            addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
+        }
+
+        lore(
+            Component.text(loreText, NamedTextColor.BLUE)
+                .decoration(TextDecoration.ITALIC, false)
+        )
+    }
+}
+
+fun enchantedBook(
     enchantment: Enchantment,
     level: Int,
+    special: Boolean = false,
     hideEnchantments: Boolean = false,
 ): ItemStack {
     return buildItem(ItemType.ENCHANTED_BOOK) {
         meta<EnchantmentStorageMeta> {
             addStoredEnchant(enchantment, level, true)
+
+            if (special) {
+                markSpecialItem()
+            }
 
             if (hideEnchantments) {
                 addItemFlags(ItemFlag.HIDE_ENCHANTS)
@@ -147,16 +90,33 @@ private fun storedEnchantedBook(
     }
 }
 
-private fun specialStoredEnchantedBook(
-    enchantment: Enchantment,
-    level: Int,
+fun enchantedItem(
+    type: ItemType,
+    vararg enchantments: Pair<Enchantment, Int>,
+    rarity: ItemRarity? = null,
+    special: Boolean = false,
     hideEnchantments: Boolean = false,
 ): ItemStack {
-    return storedEnchantedBook(enchantment, level, hideEnchantments).apply {
+    return buildItem(type) {
         meta {
-            markSpecialItem()
+            rarity?.let(::setRarity)
+            enchantments.forEach { (enchantment, level) ->
+                addEnchant(enchantment, level, true)
+            }
+
+            if (special) {
+                markSpecialItem()
+            }
+
+            if (hideEnchantments) {
+                addItemFlags(ItemFlag.HIDE_ENCHANTS)
+            }
         }
     }
+}
+
+fun surfEnchantment(key: String): Enchantment {
+    return enchantment("surf", key)
 }
 
 private fun ItemMeta.markSpecialItem() {
