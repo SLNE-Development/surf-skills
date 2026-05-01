@@ -5,6 +5,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -27,6 +28,12 @@ internal object RewardGrantLogger {
         JavaPlugin.getProvidingPlugin(RewardGrantLogger::class.java).dataFolder.toPath() / "reward-grants.log"
     }
 
+    fun createAuxProtectHookIfAvailable() {
+        if (Bukkit.getPluginManager().isPluginEnabled("AuxProtect")) {
+            AuxProtectRewardGrantHook.create()
+        }
+    }
+
     fun log(player: Player, itemStack: ItemStack, delivery: RewardDelivery) {
         val line = buildLogLine(
             timestamp = Instant.now(),
@@ -38,6 +45,10 @@ internal object RewardGrantLogger {
 
         SkillInstance.launch(SkillInstance.asyncDispatcher) {
             writeLine(line)
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("AuxProtect")) {
+            AuxProtectRewardGrantHook.log(player, itemStack, delivery)
         }
     }
 
