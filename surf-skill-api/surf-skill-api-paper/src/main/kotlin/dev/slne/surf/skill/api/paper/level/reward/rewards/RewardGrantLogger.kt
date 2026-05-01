@@ -16,6 +16,7 @@ import java.nio.file.StandardOpenOption.APPEND
 import java.nio.file.StandardOpenOption.CREATE
 import java.nio.file.StandardOpenOption.WRITE
 import java.time.Instant
+import java.util.Locale
 import kotlin.io.path.div
 
 internal object RewardGrantLogger {
@@ -71,6 +72,7 @@ internal object RewardGrantLogger {
             "timestamp=${timestamp}",
             "player=${escape(player.name)}",
             "uuid=${player.uniqueId}",
+            "rewardType=LevelItemRewards",
             "delivery=${delivery.name}",
             "item=${escape(itemStack.type.key.asString())}",
             "amount=${itemStack.amount}",
@@ -100,7 +102,7 @@ internal object RewardGrantLogger {
         return enchantments.joinToString(",")
     }
 
-    private fun formatCoordinate(value: Double) = "%.2f".format(value)
+    private fun formatCoordinate(value: Double) = "%.2f".format(Locale.ROOT, value)
 
     private fun escape(value: String) = value
         .replace("\\", "\\\\")
