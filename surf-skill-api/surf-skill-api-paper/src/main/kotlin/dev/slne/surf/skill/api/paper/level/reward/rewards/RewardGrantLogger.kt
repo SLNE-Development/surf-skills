@@ -2,6 +2,7 @@ package dev.slne.surf.skill.api.paper.level.reward.rewards
 
 import dev.slne.surf.api.core.util.logger
 import dev.slne.surf.skill.api.paper.SkillInstance
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
@@ -64,9 +65,11 @@ object RewardGrantLogger {
                     WRITE,
                     APPEND
                 )
-            } catch (throwable: Throwable) {
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (exception: Exception) {
                 log.atWarning()
-                    .withCause(throwable)
+                    .withCause(exception)
                     .log("Failed to write skill reward grant log entry")
             }
         }
@@ -100,14 +103,18 @@ object RewardGrantLogger {
 
     private fun formatEnchantments(itemStack: ItemStack): String {
         val enchantments = buildList {
-            itemStack.enchantments.forEach { (enchantment, level) ->
-                add("${enchantment.key.asString()}:$level")
-            }
+            itemStack.enchantments.entries
+                .sortedBy { it.key.key.asString() }
+                .forEach { (enchantment, level) ->
+                    add("${enchantment.key.asString()}:$level")
+                }
 
             val storageMeta = itemStack.itemMeta as? EnchantmentStorageMeta ?: return@buildList
-            storageMeta.storedEnchants.forEach { (enchantment, level) ->
-                add("stored:${enchantment.key.asString()}:$level")
-            }
+            storageMeta.storedEnchants.entries
+                .sortedBy { it.key.key.asString() }
+                .forEach { (enchantment, level) ->
+                    add("stored:${enchantment.key.asString()}:$level")
+                }
         }
 
         return enchantments.joinToString(",")
