@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(EnchantingSkill::class)
 class EnchantingSkillImpl : AbstractSkill(
     name = "enchanting",
-    niceName = "???",
+    niceName = "Unbekannt",
     material = ItemType.ENCHANTED_BOOK,
     displayName = buildText {
         primary("???".toSmallCaps())

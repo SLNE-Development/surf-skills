@@ -1,33 +1,20 @@
 package dev.slne.surf.skill.paper.menu.settings
 
 import com.github.shynixn.mccoroutine.folia.launch
-import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.api.paper.builder.buildItem
 import dev.slne.surf.api.paper.builder.buildLore
 import dev.slne.surf.api.paper.builder.displayName
-import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
-import dev.slne.surf.api.paper.inventory.framework.dsl.openForPlayer
 import dev.slne.surf.api.paper.inventory.framework.view.*
-import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconColor
-import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
-import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
+import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.blockRow
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
-import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
 import dev.slne.surf.api.paper.inventory.framework.view.state.mutableState
 import dev.slne.surf.api.paper.inventory.framework.view.state.set
-import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.core.paper.settings.SettingsHook
-import dev.slne.surf.skill.paper.menu.skillsView
 import dev.slne.surf.skill.paper.plugin
-import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.Material
-import java.util.*
 
 val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
-    val playerUuidState = initialState<UUID>("player_uuid")
-    val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
-
     val aState = mutableState(false)
     val bState = mutableState(false)
     val cState = mutableState(false)
@@ -43,11 +30,17 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
         cancelAllInteractions()
     }
 
+    containerDefaults {
+        blockRow(1)
+        blockRow(2, exemptColumns = intArrayOf(1, 3, 5, 7))
+        blockRow(3)
+    }
+
     onInit {
         layout(
             "         ",
             " A D B C ",
-            "    X    "
+            "         "
         )
     }
 
@@ -100,20 +93,6 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
                 appendSuccessPrefix()
                 success("Du hast die Skill XP Nachrichten " + if (dState[click]) "aktiviert." else "deaktiviert.")
             }
-        }
-
-        layoutSlot('X', viewIcon(ViewIconType.HOME, ViewIconColor.RED) {
-            displayName {
-                primary("Zurück".toSmallCaps())
-            }
-        }).onItemClick {
-            openForPlayer(
-                skillsView,
-                mapOf(
-                    "player_uuid" to playerUuidState[this],
-                    "skill_progress" to skillExperienceState[this]
-                )
-            )
         }
     }
 

@@ -32,7 +32,7 @@ object MiningBlockListener : Listener {
             return
         }
 
-        if (event.block.type in DEEPSLATE_INSTABREAK_MATERIALS) {
+        if (event.block.type == Material.DEEPSLATE) {
             val destroySpeed = event.block.getDestroySpeed(player.inventory.itemInMainHand, true)
             val hardness = event.block.type.hardness
             if (destroySpeed >= hardness * 30) {
@@ -44,11 +44,6 @@ object MiningBlockListener : Listener {
             player.skillPlayer().incrementExperience<MiningSkill>(exp)
         }
     }
-
-    private val DEEPSLATE_INSTABREAK_MATERIALS = setOf(
-        Material.DEEPSLATE,
-        Material.COBBLED_DEEPSLATE
-    )
 
     private val blockExpMap = mapOf(
 

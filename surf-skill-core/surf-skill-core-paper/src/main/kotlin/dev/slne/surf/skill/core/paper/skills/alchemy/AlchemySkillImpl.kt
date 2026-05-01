@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(AlchemySkill::class)
 class AlchemySkillImpl : AbstractSkill(
     name = "alchemy",
-    niceName = "???",
+    niceName = "Unbekannt",
     material = ItemType.BREWING_STAND,
     displayName = buildText {
         primary("???".toSmallCaps())
