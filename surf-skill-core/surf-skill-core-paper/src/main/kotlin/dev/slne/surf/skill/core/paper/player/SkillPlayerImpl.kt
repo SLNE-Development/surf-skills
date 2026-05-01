@@ -61,13 +61,16 @@ class SkillPlayerImpl(
     }
 
     override fun <S : Skill> incrementExperience(clazz: KClass<out S>, amount: Int) {
+        val experience = findOrCreateExperience(clazz).incrementExperience(amount)
+        val player = player
+
+        val cachedValue = pickUpCache.getIfPresent(uuid to experience.skill) ?: 0
+        val newValue = cachedValue + amount
+        pickUpCache.put(uuid to experience.skill, newValue)
+
         if (amount < 1) {
             return
         }
-
-        val experience = findOrCreateExperience(clazz).incrementExperience(amount)
-
-        val player = player
 
         if (hasSettingsApi() && player != null && SettingsHook.hasGainXpSoundEnabled(player.uniqueId)) {
             player.playSound(true) {
@@ -78,10 +81,6 @@ class SkillPlayerImpl(
             }
         }
 
-        val cachedValue = pickUpCache.getIfPresent(uuid to experience.skill) ?: 0
-        val newValue = cachedValue + amount
-        pickUpCache.put(uuid to experience.skill, newValue)
-        
         if (hasSettingsApi() && player != null && SettingsHook.hasGainXpMessagesEnabled(player.uniqueId)) {
             val totalXp = experience.currentExperience
             val curve = experience.skill.experienceCurve

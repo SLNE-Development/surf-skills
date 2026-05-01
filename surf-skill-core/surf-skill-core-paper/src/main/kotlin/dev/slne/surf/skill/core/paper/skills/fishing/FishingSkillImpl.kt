@@ -51,7 +51,7 @@ class FishingSkillImpl : AbstractSkill(
             description = "Du kannst unter Wasser 0% → 300% länger atmen",
             minLevel = 21,
             maxValue = 3.00,
-            valueFormatter = { value -> "%.2f%%".format(value / (1.0 + value) * 100) }
+            valueFormatter = SkillAbility.percentageFormatter()
         )
     ),
     experienceCurve = StaticExperienceCurveSmall()

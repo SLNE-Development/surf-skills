@@ -38,6 +38,6 @@ open class StaticExperienceCurveSmall : ExperienceCurve {
         for (level in 1 until totalExperience.size) {
             if (experience < totalExperience[level]) return level
         }
-        return experiencePerLevel.lastIndex
+        return experiencePerLevel.size
     }
 }

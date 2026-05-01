@@ -10,6 +10,7 @@ object SkillPermissionRegistry : PermissionRegistry() {
     val COMMAND_SKILL = create("$COMMAND_PREFIX.skill")
     val COMMAND_SKILL_OTHER = create("$COMMAND_SKILL.other")
     val COMMAND_SKILL_STATS = create("$COMMAND_SKILL.stats")
+    val COMMAND_SKILL_ADMIN = create("$COMMAND_SKILL.admin")
 
 
     init {

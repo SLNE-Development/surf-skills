@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemType
 @AutoService(ExplorationSkill::class)
 class ExplorationSkillImpl : AbstractSkill(
     name = "exploration",
-    niceName = "???",
+    niceName = "Unbekannt",
     material = ItemType.SPYGLASS,
     displayName = buildText {
         primary("???".toSmallCaps())
