@@ -16,7 +16,6 @@ import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingAbilityL
 import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingListener
 import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
 import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
-import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import dev.slne.surf.skill.core.paper.skills.rewards.suspiciousStewReward
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.enchantments.Enchantment
@@ -111,7 +110,7 @@ class ForagingSkillImpl : AbstractSkill(
                         LevelItemRewards(
                             objectListOf(
                                 enchantedBook(
-                                    enchantment = surfEnchantment("mending"),
+                                    enchantment = Enchantment.MENDING,
                                     level = 1
                                 )
                             )

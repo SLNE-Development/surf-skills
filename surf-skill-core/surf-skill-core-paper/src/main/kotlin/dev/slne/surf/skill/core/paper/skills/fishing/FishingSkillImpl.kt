@@ -18,7 +18,6 @@ import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingSkillListe
 import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
 import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
 import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
-import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
@@ -72,13 +71,19 @@ class FishingSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(potionReward(
-                        name = "Dolphin's Grace Potion",
-                        color = 3847130,
-                        effectType = PotionEffectType.DOLPHINS_GRACE,
-                        amplifier = 3,
-                        duration = 24000
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                potionReward(
+                                    name = "Dolphin's Grace Potion",
+                                    color = 3847130,
+                                    effectType = PotionEffectType.DOLPHINS_GRACE,
+                                    amplifier = 3,
+                                    duration = 24000
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
@@ -92,33 +97,51 @@ class FishingSkillImpl : AbstractSkill(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = surfEnchantment("mending"),
-                        level = 1
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = Enchantment.MENDING,
+                                    level = 1
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = Enchantment.LURE,
-                        level = 4,
-                        special = true
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = Enchantment.LURE,
+                                    level = 4,
+                                    special = true
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = Enchantment.RIPTIDE,
-                        level = 6,
-                        special = true,
-                        hideEnchantments = true
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = Enchantment.RIPTIDE,
+                                    level = 6,
+                                    special = true,
+                                    hideEnchantments = true
+                                )
+                            )
+                        )
+                    )
                 }
             )
         )
