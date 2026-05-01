@@ -15,13 +15,14 @@ import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingSkillListener
-import dev.slne.surf.skill.core.paper.skills.rewards.dolphinsGracePotion
-import dev.slne.surf.skill.core.paper.skills.rewards.heartOfTheSea
-import dev.slne.surf.skill.core.paper.skills.rewards.lureBook
-import dev.slne.surf.skill.core.paper.skills.rewards.riptideBook
-import dev.slne.surf.skill.core.paper.skills.rewards.surfMendingBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(FishingSkill::class)
 class FishingSkillImpl : AbstractSkill(
@@ -71,35 +72,53 @@ class FishingSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(dolphinsGracePotion())))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Dolphin's Grace Potion",
+                        color = 3847130,
+                        effectType = PotionEffectType.DOLPHINS_GRACE,
+                        amplifier = 3,
+                        duration = 24000
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(heartOfTheSea())))
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.HEART_OF_THE_SEA))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(surfMendingBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("mending"),
+                        level = 1
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(lureBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.LURE,
+                        level = 4,
+                        special = true
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(riptideBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.RIPTIDE,
+                        level = 6,
+                        special = true,
+                        hideEnchantments = true
+                    ))))
                 }
             )
         )
