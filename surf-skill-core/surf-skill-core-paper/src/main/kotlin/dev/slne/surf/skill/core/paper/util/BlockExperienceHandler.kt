@@ -7,15 +7,17 @@ import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
-import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.BlockType
-import org.bukkit.event.block.*
+import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockDropItemEvent
+import org.bukkit.event.block.BlockFertilizeEvent
+import org.bukkit.event.block.BlockGrowEvent
+import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.world.StructureGrowEvent
 import org.bukkit.inventory.ItemType
 import org.bukkit.persistence.PersistentDataType
-import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
 object BlockExperienceHandler {
@@ -94,30 +96,7 @@ object BlockExperienceHandler {
         .entries
         .firstOrNull { it.key.block.location == block.location }
 
-    private val ORES = EnumSet.of(
-        Material.COAL_ORE,
-        Material.DEEPSLATE_COAL_ORE,
-        Material.IRON_ORE,
-        Material.DEEPSLATE_IRON_ORE,
-        Material.COPPER_ORE,
-        Material.DEEPSLATE_COPPER_ORE,
-        Material.GOLD_ORE,
-        Material.DEEPSLATE_GOLD_ORE,
-        Material.REDSTONE_ORE,
-        Material.DEEPSLATE_REDSTONE_ORE,
-        Material.LAPIS_ORE,
-        Material.DEEPSLATE_LAPIS_ORE,
-        Material.DIAMOND_ORE,
-        Material.DEEPSLATE_DIAMOND_ORE,
-        Material.EMERALD_ORE,
-        Material.DEEPSLATE_EMERALD_ORE,
-        Material.NETHER_QUARTZ_ORE,
-        Material.NETHER_GOLD_ORE,
-        Material.ANCIENT_DEBRIS
-    )
-
-    fun isEligibleForExperience(block: Block) =
-        block.type in ORES || !block.pdc().has(MODIFIED_BLOCK_KEY)
+    fun isEligibleForExperience(block: Block) = !block.pdc().has(MODIFIED_BLOCK_KEY)
 
     fun setEligibleForExperience(block: Block) {
         block.pdc().remove(MODIFIED_BLOCK_KEY)
