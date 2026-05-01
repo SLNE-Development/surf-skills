@@ -35,7 +35,7 @@ object RewardGrantLogger {
         }
     }
 
-    fun log(player: Player, itemStack: ItemStack, delivery: RewardDelivery) {
+    internal fun log(player: Player, itemStack: ItemStack, delivery: RewardDelivery) {
         val line = buildLogLine(
             timestamp = Instant.now(),
             player = player,
