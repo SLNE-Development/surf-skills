@@ -82,7 +82,7 @@ object FishingSkillListener : Listener {
         SkillInstance.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
 
-            skillPlayer.incrementExperience<ForagingSkill>(
+            skillPlayer.incrementExperience<FishingSkill>(
                 xp
             )
         }

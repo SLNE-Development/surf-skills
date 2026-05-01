@@ -12,7 +12,7 @@ enum class EnchantmentRarityMap(
     RARE(Rarity.RARE, 2),
     EPIC(Rarity.EPIC, 3),
     LEGENDARY(Rarity.LEGENDARY, 4),
-    MYTHIC(Rarity.MYTHIC, 5);
+    MYTHIC(Rarity.MYTHIC, 100);
 
     companion object {
         private val map = entries.associateBy { it.rarity }
