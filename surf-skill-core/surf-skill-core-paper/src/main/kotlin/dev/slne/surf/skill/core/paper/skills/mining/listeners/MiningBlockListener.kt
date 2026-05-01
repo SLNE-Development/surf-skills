@@ -17,12 +17,11 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDamageEvent
-import java.util.UUID
+import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
 object MiningBlockListener : Listener {
-
-    private val deepslateInstaBreakCache = Caffeine.newBuilder()
+    private val instantBreakCache = Caffeine.newBuilder()
         .maximumSize(10_000)
         .expireAfterWrite(2.seconds)
         .build<BlockBreakKey, Boolean>()
@@ -35,7 +34,7 @@ object MiningBlockListener : Listener {
             return
         }
 
-        deepslateInstaBreakCache.put(
+        instantBreakCache.put(
             BlockBreakKey.of(event.player.uniqueId, block),
             event.instaBreak
         )
@@ -46,9 +45,9 @@ object MiningBlockListener : Listener {
         val player = event.player
         val block = event.block
 
-        val wasDeepslateInstaBroken =
+        val gotInstantBroken =
             block.type == Material.DEEPSLATE &&
-                    consumeDeepslateInstaBreak(player.uniqueId, block)
+                    handleInstantBreak(player.uniqueId, block)
 
         var exp = blockExpMap[block.type] ?: return
 
@@ -60,7 +59,7 @@ object MiningBlockListener : Listener {
             return
         }
 
-        if (wasDeepslateInstaBroken) {
+        if (gotInstantBroken) {
             exp /= 2
         }
 
@@ -69,13 +68,12 @@ object MiningBlockListener : Listener {
         }
     }
 
-    private fun consumeDeepslateInstaBreak(playerUuid: UUID, block: Block): Boolean {
+    private fun handleInstantBreak(playerUuid: UUID, block: Block): Boolean {
         val key = BlockBreakKey.of(playerUuid, block)
-        val instaBreak = deepslateInstaBreakCache.getIfPresent(key) == true
+        val instantBreak = instantBreakCache.getIfPresent(key) == true
 
-        deepslateInstaBreakCache.invalidate(key)
-
-        return instaBreak
+        instantBreakCache.invalidate(key)
+        return instantBreak
     }
 
     private data class BlockBreakKey(
