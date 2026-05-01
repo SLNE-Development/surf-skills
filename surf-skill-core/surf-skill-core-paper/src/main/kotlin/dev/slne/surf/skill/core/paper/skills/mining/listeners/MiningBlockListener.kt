@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 package dev.slne.surf.skill.core.paper.skills.mining.listeners
 
 import dev.slne.surf.skill.api.paper.SkillInstance
@@ -20,7 +22,7 @@ object MiningBlockListener : Listener {
             return
         }
 
-        val exp = blockExpMap[event.block.type] ?: return
+        var exp = blockExpMap[event.block.type] ?: return
 
         if (!event.block.isEligibleForExperience()) {
             return
@@ -30,11 +32,23 @@ object MiningBlockListener : Listener {
             return
         }
 
+        if (event.block.type in DEEPSLATE_INSTABREAK_MATERIALS) {
+            val destroySpeed = event.block.getDestroySpeed(player.inventory.itemInMainHand, true)
+            val hardness = event.block.type.hardness
+            if (destroySpeed >= hardness * 30) {
+                exp /= 2
+            }
+        }
+
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<MiningSkill>(exp)
         }
     }
 
+    private val DEEPSLATE_INSTABREAK_MATERIALS = setOf(
+        Material.DEEPSLATE,
+        Material.COBBLED_DEEPSLATE
+    )
 
     private val blockExpMap = mapOf(
 

@@ -50,7 +50,15 @@ class MiningSkillImpl : AbstractSkill(
             description = "Erhalte eine 0% → 1% Chance beim Abbauen von Stein oder Deepslate für 3 → 12 Sekunden Haste VIII zu erhalten",
             minLevel = 21,
             maxValue = 0.01,
-            valueFormatter = SkillAbility.percentageFormatter()
+            valueFormatter = { value ->
+                // scale: maxDurationSeconds / maxChance = 12.0 / 0.01 = 1200.0
+                val durationSeconds = (value * DYNAMIC_MINING_DURATION_SCALE).coerceAtLeast(3.0)
+                "%.2f%% / %.1fs".format(value * 100, durationSeconds)
+            }
         )
     )
-), MiningSkill
+), MiningSkill {
+    companion object {
+        private const val DYNAMIC_MINING_DURATION_SCALE = 1200.0 // maxDurationSeconds / maxChance
+    }
+}
