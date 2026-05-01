@@ -6,11 +6,19 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
+import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
+import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningAbilityListener
 import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningBlockListener
+import dev.slne.surf.skill.core.paper.skills.rewards.efficiencyBook
+import dev.slne.surf.skill.core.paper.skills.rewards.hastePotion
+import dev.slne.surf.skill.core.paper.skills.rewards.netheriteIngot
+import dev.slne.surf.skill.core.paper.skills.rewards.soulboundBook
+import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.inventory.ItemType
 
 @AutoService(MiningSkill::class)
@@ -58,6 +66,46 @@ class MiningSkillImpl : AbstractSkill(
         )
     )
 ), MiningSkill {
+    override fun getExtraLevels(): ObjectList<SkillLevel> {
+        return objectListOf(
+            skillLevel(
+                skill = this,
+                level = 10,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(netheriteIngot())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(hastePotion())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 30,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(soulboundBook())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 40,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(efficiencyBook(6))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 50,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(efficiencyBook(7))))
+                }
+            )
+        )
+    }
+
     companion object {
         private const val DYNAMIC_MINING_DURATION_SCALE = 1200.0 // maxDurationSeconds / maxChance
     }
