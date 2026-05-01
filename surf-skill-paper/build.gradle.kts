@@ -24,5 +24,6 @@ surfPaperPluginApi {
         )
         registerRequired("surf-rabbitmq-paper")
         registerSoft("surf-settings-paper")
+        registerSoft("AuxProtect")
     }
 }
