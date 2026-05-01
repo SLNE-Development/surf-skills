@@ -14,14 +14,16 @@ import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
-import dev.slne.surf.skill.core.paper.skills.rewards.efficiencyBook
-import dev.slne.surf.skill.core.paper.skills.rewards.hastePotion
-import dev.slne.surf.skill.core.paper.skills.rewards.ironBlocks
-import dev.slne.surf.skill.core.paper.skills.rewards.soulboundBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingSkillListener
 import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(WoodcuttingSkill::class)
 class WoodcuttingSkillImpl : AbstractSkill(
@@ -70,7 +72,7 @@ class WoodcuttingSkillImpl : AbstractSkill(
                 skill = this@WoodcuttingSkillImpl,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(ironBlocks())))
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.IRON_BLOCK, 16))))
                 }
             )
         )
@@ -80,7 +82,13 @@ class WoodcuttingSkillImpl : AbstractSkill(
                 skill = this@WoodcuttingSkillImpl,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(hastePotion())))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Haste Potion",
+                        color = 16701501,
+                        effectType = PotionEffectType.HASTE,
+                        amplifier = 9,
+                        duration = 24000
+                    ))))
                 }
             )
         )
@@ -100,9 +108,20 @@ class WoodcuttingSkillImpl : AbstractSkill(
                         )
 
                         when (level) {
-                            30 -> add(LevelItemRewards(objectListOf(soulboundBook())))
-                            40 -> add(LevelItemRewards(objectListOf(efficiencyBook(6))))
-                            50 -> add(LevelItemRewards(objectListOf(efficiencyBook(7))))
+                            30 -> add(LevelItemRewards(objectListOf(enchantedBook(
+                                enchantment = surfEnchantment("soulbound"),
+                                level = 1
+                            ))))
+                            40 -> add(LevelItemRewards(objectListOf(enchantedBook(
+                                enchantment = Enchantment.EFFICIENCY,
+                                level = 6,
+                                special = true
+                            ))))
+                            50 -> add(LevelItemRewards(objectListOf(enchantedBook(
+                                enchantment = Enchantment.EFFICIENCY,
+                                level = 7,
+                                special = true
+                            ))))
                         }
                     }
                 ))
