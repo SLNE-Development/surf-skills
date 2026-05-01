@@ -14,7 +14,6 @@ import org.bukkit.Registry
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemRarity
-import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ItemType
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
 import org.bukkit.inventory.meta.ItemMeta
@@ -26,9 +25,7 @@ import org.bukkit.potion.PotionEffectType
 
 private val SPECIAL_ITEM_KEY = NamespacedKey("surf-freebuild-paper", "special_item")
 
-fun rewardItem(type: ItemType, amount: Int = 1): ItemStack {
-    return type.createItemStack(amount)
-}
+fun rewardItem(type: ItemType, amount: Int = 1) = type.createItemStack(amount)
 
 fun potionReward(
     name: String,
@@ -36,17 +33,15 @@ fun potionReward(
     effectType: PotionEffectType,
     amplifier: Int,
     duration: Int,
-): ItemStack {
-    return buildItem(ItemType.POTION) {
-        meta<PotionMeta> {
-            setRarity(ItemRarity.RARE)
-            displayName(
-                Component.text(name)
-                    .decoration(TextDecoration.ITALIC, false)
-            )
-            setColor(Color.fromRGB(color))
-            addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
-        }
+) = buildItem(ItemType.POTION) {
+    meta<PotionMeta> {
+        setRarity(ItemRarity.RARE)
+        displayName(
+            Component.text(name)
+                .decoration(TextDecoration.ITALIC, false)
+        )
+        setColor(Color.fromRGB(color))
+        addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
     }
 }
 
@@ -55,18 +50,16 @@ fun suspiciousStewReward(
     effectType: PotionEffectType,
     duration: Int,
     amplifier: Int = 0,
-): ItemStack {
-    return buildItem(ItemType.SUSPICIOUS_STEW) {
-        meta<SuspiciousStewMeta> {
-            setRarity(ItemRarity.RARE)
-            addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
-        }
-
-        lore(
-            Component.text(loreText, NamedTextColor.BLUE)
-                .decoration(TextDecoration.ITALIC, false)
-        )
+) = buildItem(ItemType.SUSPICIOUS_STEW) {
+    meta<SuspiciousStewMeta> {
+        setRarity(ItemRarity.RARE)
+        addCustomEffect(PotionEffect(effectType, duration, amplifier, false, true, true), true)
     }
+
+    lore(
+        Component.text(loreText, NamedTextColor.BLUE)
+            .decoration(TextDecoration.ITALIC, false)
+    )
 }
 
 fun enchantedBook(
@@ -74,18 +67,16 @@ fun enchantedBook(
     level: Int,
     special: Boolean = false,
     hideEnchantments: Boolean = false,
-): ItemStack {
-    return buildItem(ItemType.ENCHANTED_BOOK) {
-        meta<EnchantmentStorageMeta> {
-            addStoredEnchant(enchantment, level, true)
+) = buildItem(ItemType.ENCHANTED_BOOK) {
+    meta<EnchantmentStorageMeta> {
+        addStoredEnchant(enchantment, level, true)
 
-            if (special) {
-                markSpecialItem()
-            }
+        if (special) {
+            markSpecialItem()
+        }
 
-            if (hideEnchantments) {
-                addItemFlags(ItemFlag.HIDE_ENCHANTS)
-            }
+        if (hideEnchantments) {
+            addItemFlags(ItemFlag.HIDE_ENCHANTS)
         }
     }
 }
@@ -96,35 +87,29 @@ fun enchantedItem(
     rarity: ItemRarity? = null,
     special: Boolean = false,
     hideEnchantments: Boolean = false,
-): ItemStack {
-    return buildItem(type) {
-        meta {
-            rarity?.let(::setRarity)
-            enchantments.forEach { (enchantment, level) ->
-                addEnchant(enchantment, level, true)
-            }
+) = buildItem(type) {
+    meta {
+        rarity?.let(::setRarity)
+        enchantments.forEach { (enchantment, level) ->
+            addEnchant(enchantment, level, true)
+        }
 
-            if (special) {
-                markSpecialItem()
-            }
+        if (special) {
+            markSpecialItem()
+        }
 
-            if (hideEnchantments) {
-                addItemFlags(ItemFlag.HIDE_ENCHANTS)
-            }
+        if (hideEnchantments) {
+            addItemFlags(ItemFlag.HIDE_ENCHANTS)
         }
     }
 }
 
-fun surfEnchantment(key: String): Enchantment {
-    return enchantment("surf", key)
-}
-
-private fun ItemMeta.markSpecialItem() {
+fun surfEnchantment(key: String) = enchantment("surf", key)
+private fun ItemMeta.markSpecialItem() =
     persistentDataContainer.set(SPECIAL_ITEM_KEY, PersistentDataType.BYTE, 1)
-}
 
-private fun enchantment(namespace: String, key: String): Enchantment {
-    return requireNotNull(Registry.ENCHANTMENT.get(NamespacedKey(namespace, key))) {
+@Suppress("SameParameterValue")
+private fun enchantment(namespace: String, key: String) =
+    requireNotNull(Registry.ENCHANTMENT.get(NamespacedKey(namespace, key))) {
         "Unknown enchantment $namespace:$key"
     }
-}
