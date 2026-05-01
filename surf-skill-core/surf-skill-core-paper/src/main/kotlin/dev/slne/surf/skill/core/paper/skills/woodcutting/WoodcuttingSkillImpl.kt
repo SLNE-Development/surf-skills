@@ -8,11 +8,16 @@ import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.api.core.util.toObjectList
 import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.level.reward.rewards.LumberjackUpgradeLevelReward
 import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
+import dev.slne.surf.skill.core.paper.skills.rewards.efficiencyBook
+import dev.slne.surf.skill.core.paper.skills.rewards.hastePotion
+import dev.slne.surf.skill.core.paper.skills.rewards.ironBlocks
+import dev.slne.surf.skill.core.paper.skills.rewards.soulboundBook
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.woodcutting.listeners.WoodcuttingSkillListener
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -60,6 +65,26 @@ class WoodcuttingSkillImpl : AbstractSkill(
     ),
 ), WoodcuttingSkill {
     override fun getExtraLevels(): ObjectList<SkillLevel> = buildList {
+        add(
+            skillLevel(
+                skill = this@WoodcuttingSkillImpl,
+                level = 10,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(ironBlocks())))
+                }
+            )
+        )
+
+        add(
+            skillLevel(
+                skill = this@WoodcuttingSkillImpl,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(hastePotion())))
+                }
+            )
+        )
+
         for (level in 21..50) {
             add(
                 skillLevel(
@@ -73,6 +98,12 @@ class WoodcuttingSkillImpl : AbstractSkill(
                                 )
                             )
                         )
+
+                        when (level) {
+                            30 -> add(LevelItemRewards(objectListOf(soulboundBook())))
+                            40 -> add(LevelItemRewards(objectListOf(efficiencyBook(6))))
+                            50 -> add(LevelItemRewards(objectListOf(efficiencyBook(7))))
+                        }
                     }
                 ))
         }
