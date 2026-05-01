@@ -7,6 +7,7 @@ import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.skill.api.paper.SkillInstance
+import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
@@ -19,6 +20,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
+import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 
@@ -52,6 +54,53 @@ object ForagingListener : Listener {
         val shearEntity: Map<EntityType, Int> = mapOf(
             EntityType.SHEEP to 20
         )
+
+        val killEntities = mapOf(
+            EntityType.COW to 5,
+            EntityType.PIG to 5,
+            EntityType.SHEEP to 5,
+            EntityType.CHICKEN to 5,
+            EntityType.RABBIT to 5,
+            EntityType.OCELOT to 5,
+            EntityType.BEE to 5,
+            EntityType.AXOLOTL to 5,
+            EntityType.TADPOLE to 5,
+            EntityType.FROG to 5,
+            EntityType.CAMEL to 5,
+            EntityType.SNIFFER to 5,
+            EntityType.ARMADILLO to 5,
+            EntityType.LLAMA to 10,
+            EntityType.TRADER_LLAMA to 10,
+            EntityType.MULE to 10,
+            EntityType.HORSE to 10,
+            EntityType.DONKEY to 10,
+            EntityType.PARROT to 10,
+            EntityType.TURTLE to 10,
+            EntityType.GOAT to 10,
+            EntityType.MOOSHROOM to 10
+        )
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onKill(event: EntityDeathEvent) {
+        val killer = event.entity.killer ?: return
+        val entity = event.entity
+
+        val uuid = killer.uniqueId
+
+        if (!SkillLevelingHandler.canCollectExperience(killer, ForagingSkill)) {
+            return
+        }
+
+        val xp = ForagingXp.killEntities[entity.type] ?: return
+
+        SkillInstance.launch {
+            val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
+
+            skillPlayer.incrementExperience<ForagingSkill>(
+                xp
+            )
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

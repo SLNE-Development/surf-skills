@@ -95,7 +95,6 @@ object MiningBlockListener : Listener {
     }
 
     private val blockExpMap = mapOf(
-
         // --- BASIC NETHER STONES ---
         Material.NETHERRACK to 3,
         Material.WARPED_NYLIUM to 3,
