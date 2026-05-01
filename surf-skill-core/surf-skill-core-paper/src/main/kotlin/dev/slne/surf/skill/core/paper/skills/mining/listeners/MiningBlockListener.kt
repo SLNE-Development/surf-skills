@@ -2,6 +2,8 @@
 
 package dev.slne.surf.skill.core.paper.skills.mining.listeners
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
@@ -9,39 +11,88 @@ import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockDamageEvent
+import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
 
 object MiningBlockListener : Listener {
-    @EventHandler
+
+    private val deepslateInstaBreakCache = Caffeine.newBuilder()
+        .maximumSize(10_000)
+        .expireAfterWrite(2.seconds)
+        .build<BlockBreakKey, Boolean>()
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    fun onBlockDamage(event: BlockDamageEvent) {
+        val block = event.block
+
+        if (block.type != Material.DEEPSLATE) {
+            return
+        }
+
+        deepslateInstaBreakCache.put(
+            BlockBreakKey.of(event.player.uniqueId, block),
+            event.instaBreak
+        )
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
+        val block = event.block
 
-        if (event.isCancelled) {
+        val wasDeepslateInstaBroken =
+            block.type == Material.DEEPSLATE &&
+                    consumeDeepslateInstaBreak(player.uniqueId, block)
+
+        var exp = blockExpMap[block.type] ?: return
+
+        if (!block.isEligibleForExperience()) {
             return
         }
 
-        var exp = blockExpMap[event.block.type] ?: return
-
-        if (!event.block.isEligibleForExperience()) {
+        if (!SkillLevelingHandler.canCollectExperience(player, MiningSkill)) {
             return
         }
 
-        if (!SkillLevelingHandler.canCollectExperience(event.player, MiningSkill)) {
-            return
-        }
-
-        if (event.block.type == Material.DEEPSLATE) {
-            val destroySpeed = event.block.getDestroySpeed(player.inventory.itemInMainHand, true)
-            val hardness = event.block.type.hardness
-            if (destroySpeed >= hardness * 30) {
-                exp /= 2
-            }
+        if (wasDeepslateInstaBroken) {
+            exp /= 2
         }
 
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<MiningSkill>(exp)
+        }
+    }
+
+    private fun consumeDeepslateInstaBreak(playerUuid: UUID, block: Block): Boolean {
+        val key = BlockBreakKey.of(playerUuid, block)
+        val instaBreak = deepslateInstaBreakCache.getIfPresent(key) == true
+
+        deepslateInstaBreakCache.invalidate(key)
+
+        return instaBreak
+    }
+
+    private data class BlockBreakKey(
+        val playerUuid: UUID,
+        val worldUuid: UUID,
+        val x: Int,
+        val y: Int,
+        val z: Int
+    ) {
+        companion object {
+            fun of(playerUuid: UUID, block: Block) = BlockBreakKey(
+                playerUuid = playerUuid,
+                worldUuid = block.world.uid,
+                x = block.x,
+                y = block.y,
+                z = block.z
+            )
         }
     }
 
