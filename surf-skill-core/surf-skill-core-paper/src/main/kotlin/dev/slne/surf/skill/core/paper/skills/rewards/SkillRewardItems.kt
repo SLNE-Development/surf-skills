@@ -113,11 +113,3 @@ private fun enchantment(namespace: String, key: String) =
     requireNotNull(Registry.ENCHANTMENT.get(NamespacedKey(namespace, key))) {
         "Unknown enchantment $namespace:$key"
     }
-
-
-
-
-
-
-
-    persistentDataContainer.set(SPECIAL_ITEM_KEY, PersistentDataType.BYTE, 1.toByte())
