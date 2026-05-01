@@ -65,7 +65,7 @@ object ForagingAbilityListener : Listener {
     }
 
     private const val SATIATION_MIN_LEVEL = 21
-    private const val SATIATION_MAX_VALUE = 0.60
+    private const val SATIATION_MAX_CHANCE = 0.60
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSatiation(event: FoodLevelChangeEvent) {
@@ -77,15 +77,14 @@ object ForagingAbilityListener : Listener {
         if (newFoodLevel >= oldFoodLevel) return
 
         val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)
-        val reductionFactor = AbilityUtil.calculateScaledValue(
-            level, SATIATION_MIN_LEVEL, maxValue = SATIATION_MAX_VALUE
+        val chance = AbilityUtil.calculateScaledValue(
+            level, SATIATION_MIN_LEVEL, maxValue = SATIATION_MAX_CHANCE
         )
 
-        if (reductionFactor <= 0.0) return
+        if (chance <= 0.0) return
 
-        val hungerLoss = oldFoodLevel - newFoodLevel
-        val reducedLoss = hungerLoss * (1.0 - reductionFactor)
-
-        event.foodLevel = (oldFoodLevel - reducedLoss).toInt()
+        if (Math.random() <= chance) {
+            event.foodLevel = oldFoodLevel
+        }
     }
 }
