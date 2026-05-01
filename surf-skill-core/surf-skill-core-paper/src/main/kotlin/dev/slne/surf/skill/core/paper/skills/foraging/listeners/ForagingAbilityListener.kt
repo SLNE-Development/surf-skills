@@ -84,7 +84,8 @@ object ForagingAbilityListener : Listener {
         if (reductionFactor <= 0.0) return
 
         val hungerLoss = oldFoodLevel - newFoodLevel
-        val reducedLoss = (hungerLoss * (1.0 - reductionFactor)).toInt().coerceAtLeast(0)
-        event.foodLevel = oldFoodLevel - reducedLoss
+        val reducedLoss = hungerLoss * (1.0 - reductionFactor)
+
+        event.foodLevel = (oldFoodLevel - reducedLoss).toInt()
     }
 }
