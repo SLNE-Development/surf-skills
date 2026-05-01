@@ -81,7 +81,7 @@ object ForagingListener : Listener {
         )
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onKill(event: EntityDeathEvent) {
         val killer = event.entity.killer ?: return
         val entity = event.entity
@@ -103,7 +103,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onPostTelekinesis(event: PostTelekinesisItemEvent) {
         if (event.isCancelled) return
 
@@ -125,7 +125,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
 
@@ -141,7 +141,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onShearEntity(event: PlayerShearEntityEvent) {
         if (event.isCancelled) return
 
@@ -156,7 +156,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onHarvestBlock(event: PlayerHarvestBlockEvent) {
         if (event.isCancelled) return
 
@@ -174,7 +174,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onFarmlandHarvest(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
@@ -196,7 +196,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
@@ -212,7 +212,7 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 

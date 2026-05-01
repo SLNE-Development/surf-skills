@@ -13,7 +13,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 
 object WoodcuttingSkillListener : Listener {
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
 

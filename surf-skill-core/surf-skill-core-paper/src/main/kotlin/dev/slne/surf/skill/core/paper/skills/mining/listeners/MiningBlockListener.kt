@@ -26,7 +26,7 @@ object MiningBlockListener : Listener {
         .expireAfterWrite(2.seconds)
         .build<BlockBreakKey, Boolean>()
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBlockDamage(event: BlockDamageEvent) {
         val block = event.block
 
@@ -40,7 +40,7 @@ object MiningBlockListener : Listener {
         )
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
         val block = event.block

@@ -43,7 +43,7 @@ object AlchemyAbilityListener : Listener {
     private const val RECYCLER_MIN_LEVEL = 11
     private const val RECYCLER_MAX_VALUE = 0.20
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onPotionRecycler(event: PlayerItemConsumeEvent) {
         val player = event.player
         val item = event.item

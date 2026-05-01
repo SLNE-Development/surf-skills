@@ -80,7 +80,7 @@ object MiningAbilityListener : Listener {
         Material.TUFF, Material.CALCITE, Material.DRIPSTONE_BLOCK
     )
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onDynamicMining(event: BlockBreakEvent) {
         val player = event.player
         val blockType = event.block.type

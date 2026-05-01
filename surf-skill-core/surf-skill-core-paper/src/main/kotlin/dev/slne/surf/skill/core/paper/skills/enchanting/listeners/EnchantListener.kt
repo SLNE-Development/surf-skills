@@ -18,7 +18,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 
 object EnchantListener : Listener {
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onEnchant(event: EnchantItemEvent) {
         if (event.isCancelled) return
 
@@ -47,7 +47,7 @@ object EnchantListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onGrindstone(event: InventoryClickEvent) {
         if (event.isCancelled) return
 

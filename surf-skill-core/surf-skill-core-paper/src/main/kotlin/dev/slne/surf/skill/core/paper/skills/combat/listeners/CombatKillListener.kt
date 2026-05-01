@@ -68,7 +68,7 @@ object CombatKillListener : Listener {
         EntityType.CAMEL_HUSK to 40,
         EntityType.NAUTILUS to 5,
         EntityType.ZOMBIE_NAUTILUS to 10,
-        
+
 
         EntityType.BAT to 5,
         EntityType.VILLAGER to 5,
@@ -79,7 +79,7 @@ object CombatKillListener : Listener {
         EntityType.SILVERFISH to 1
     )
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onKill(event: EntityDeathEvent) {
         var killer = event.entity.killer
         val entity = event.entity

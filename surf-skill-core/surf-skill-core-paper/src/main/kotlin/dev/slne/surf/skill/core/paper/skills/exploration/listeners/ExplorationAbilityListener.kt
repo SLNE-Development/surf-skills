@@ -52,7 +52,7 @@ object ExplorationAbilityListener : Listener {
 
     private val SPEED_MODIFIER_KEY = NamespacedKey("surf", "skill_exploration_speed")
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerJoin(event: PlayerJoinEvent) {
         SkillInstance.launch {
             val player = event.player
@@ -61,7 +61,7 @@ object ExplorationAbilityListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerQuit(event: PlayerQuitEvent) {
         removeSpeedModifier(event.player)
     }

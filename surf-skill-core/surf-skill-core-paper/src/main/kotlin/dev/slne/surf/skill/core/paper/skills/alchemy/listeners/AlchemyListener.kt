@@ -23,7 +23,7 @@ import org.bukkit.persistence.PersistentDataType
 object AlchemyListener : Listener {
     private val ALCHEMY_RESULT_ITEM_KEY = NamespacedKey("surf", "skill_alchemy_result_item")
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onBrew(event: InventoryClickEvent) {
         if (event.isCancelled) return
         if (event.clickedInventory?.type != InventoryType.BREWING) return
@@ -72,7 +72,7 @@ object AlchemyListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onLingeringHit(event: LingeringPotionSplashEvent) {
         if (event.isCancelled) return
 
@@ -89,7 +89,7 @@ object AlchemyListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onSplash(event: PotionSplashEvent) {
         if (event.isCancelled) return
 
@@ -103,7 +103,7 @@ object AlchemyListener : Listener {
         handlePotionHit(shooter, event.affectedEntities.toList())
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onEffect(event: AreaEffectCloudApplyEvent) {
         if (event.isCancelled) return
 
@@ -117,7 +117,7 @@ object AlchemyListener : Listener {
         handlePotionHit(shooter, affectedEntities)
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onDrink(event: PlayerItemConsumeEvent) {
         if (event.isCancelled) return
 

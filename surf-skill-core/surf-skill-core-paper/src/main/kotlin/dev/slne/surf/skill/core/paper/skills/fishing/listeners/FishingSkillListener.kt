@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
 
 object FishingSkillListener : Listener {
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onFish(event: PlayerFishEvent) {
         if (event.isCancelled) {
             return
@@ -66,7 +66,7 @@ object FishingSkillListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onKill(event: EntityDeathEvent) {
         val killer = event.entity.killer ?: return
         val entity = event.entity
