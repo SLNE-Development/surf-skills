@@ -20,7 +20,7 @@ import java.time.Instant
 import java.util.Locale
 import kotlin.io.path.div
 
-internal object RewardGrantLogger {
+object RewardGrantLogger {
     private val log = logger()
     private val writeMutex = Mutex()
     private val plainTextSerializer = PlainTextComponentSerializer.plainText()
