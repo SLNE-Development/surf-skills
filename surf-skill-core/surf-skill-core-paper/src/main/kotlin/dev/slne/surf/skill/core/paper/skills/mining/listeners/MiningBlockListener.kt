@@ -12,7 +12,6 @@ import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -53,10 +52,6 @@ object MiningBlockListener : Listener {
         var exp = blockExpMap[block.type] ?: return
 
         if (!block.isEligibleForExperience()) {
-            return
-        }
-
-        if (event.player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
             return
         }
 
