@@ -71,56 +71,86 @@ class ForagingSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(suspiciousStewReward(
-                        loreText = "Saturation (02:00:00)",
-                        effectType = PotionEffectType.SATURATION,
-                        duration = 1
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                suspiciousStewReward(
+                                    loreText = "Saturation (02:00:00)",
+                                    effectType = PotionEffectType.SATURATION,
+                                    duration = 144000
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(potionReward(
-                        name = "Haste Potion",
-                        color = 16701501,
-                        effectType = PotionEffectType.HASTE,
-                        amplifier = 9,
-                        duration = 24000
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                potionReward(
+                                    name = "Haste Potion",
+                                    color = 16701501,
+                                    effectType = PotionEffectType.HASTE,
+                                    amplifier = 9,
+                                    duration = 24000
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = surfEnchantment("mending"),
-                        level = 1
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = surfEnchantment("mending"),
+                                    level = 1
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = Enchantment.EFFICIENCY,
-                        level = 6,
-                        special = true
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = Enchantment.EFFICIENCY,
+                                    level = 6,
+                                    special = true
+                                )
+                            )
+                        )
+                    )
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(enchantedBook(
-                        enchantment = Enchantment.FEATHER_FALLING,
-                        level = 7,
-                        special = true
-                    ))))
+                    add(
+                        LevelItemRewards(
+                            objectListOf(
+                                enchantedBook(
+                                    enchantment = Enchantment.FEATHER_FALLING,
+                                    level = 7,
+                                    special = true
+                                )
+                            )
+                        )
+                    )
                 }
             )
         )
