@@ -14,13 +14,16 @@ import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatAbilityListener
 import dev.slne.surf.skill.core.paper.skills.combat.listeners.CombatKillListener
-import dev.slne.surf.skill.core.paper.skills.rewards.combatBow
-import dev.slne.surf.skill.core.paper.skills.rewards.combatResistancePotion
-import dev.slne.surf.skill.core.paper.skills.rewards.experienceBook
-import dev.slne.surf.skill.core.paper.skills.rewards.lootingBook
-import dev.slne.surf.skill.core.paper.skills.rewards.totemOfUndying
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedItem
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
 import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemRarity
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(CombatSkill::class)
 class CombatSkillImpl : AbstractSkill(
@@ -69,35 +72,57 @@ class CombatSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(combatResistancePotion())))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Resistance Potion",
+                        color = 10329495,
+                        effectType = PotionEffectType.RESISTANCE,
+                        amplifier = 3,
+                        duration = 24000
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(totemOfUndying())))
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.TOTEM_OF_UNDYING))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(experienceBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("experience"),
+                        level = 4,
+                        special = true,
+                        hideEnchantments = true
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(lootingBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.LOOTING,
+                        level = 5,
+                        special = true
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(combatBow())))
+                    add(LevelItemRewards(objectListOf(enchantedItem(
+                        type = ItemType.BOW,
+                        Enchantment.INFINITY to 1,
+                        Enchantment.MENDING to 1,
+                        rarity = ItemRarity.EPIC,
+                        special = true,
+                        hideEnchantments = true
+                    ))))
                 }
             )
         )
