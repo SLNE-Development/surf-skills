@@ -14,13 +14,14 @@ import dev.slne.surf.skill.core.paper.ability.SkillAbility
 import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingListener
-import dev.slne.surf.skill.core.paper.skills.rewards.efficiencyBook
-import dev.slne.surf.skill.core.paper.skills.rewards.featherFallingBook
-import dev.slne.surf.skill.core.paper.skills.rewards.hastePotion
-import dev.slne.surf.skill.core.paper.skills.rewards.saturationStew
-import dev.slne.surf.skill.core.paper.skills.rewards.surfMendingBook
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
+import dev.slne.surf.skill.core.paper.skills.rewards.suspiciousStewReward
 import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
 
 @AutoService(ForagingSkill::class)
 class ForagingSkillImpl : AbstractSkill(
@@ -70,35 +71,56 @@ class ForagingSkillImpl : AbstractSkill(
                 skill = this,
                 level = 10,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(saturationStew())))
+                    add(LevelItemRewards(objectListOf(suspiciousStewReward(
+                        loreText = "Saturation (02:00:00)",
+                        effectType = PotionEffectType.SATURATION,
+                        duration = 1
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 20,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(hastePotion())))
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Haste Potion",
+                        color = 16701501,
+                        effectType = PotionEffectType.HASTE,
+                        amplifier = 9,
+                        duration = 24000
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 30,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(surfMendingBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("mending"),
+                        level = 1
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 40,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(efficiencyBook(6))))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 6,
+                        special = true
+                    ))))
                 }
             ),
             skillLevel(
                 skill = this,
                 level = 50,
                 rewards = {
-                    add(LevelItemRewards(objectListOf(featherFallingBook())))
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.FEATHER_FALLING,
+                        level = 7,
+                        special = true
+                    ))))
                 }
             )
         )
