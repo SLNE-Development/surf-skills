@@ -10,14 +10,18 @@ import org.bukkit.event.block.BlockPlaceEvent
 object BlockExperienceListener : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onBlockPlace(event: BlockPlaceEvent) {
-        if (event.isCancelled) return
+        if (event.isCancelled) {
+            return
+        }
 
         BlockExperienceHandler.handleBlockPlace(event)
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.isCancelled) return
+        if (event.isCancelled) {
+            return
+        }
 
         BlockExperienceHandler.handleBlockBreak(event)
     }
