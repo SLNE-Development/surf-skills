@@ -7,11 +7,20 @@ import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.api.core.util.objectListOf
 import dev.slne.surf.skill.api.common.curve.curves.StaticExperienceCurveSmall
+import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
 import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.core.paper.AbstractSkill
 import dev.slne.surf.skill.core.paper.ability.SkillAbility
+import dev.slne.surf.skill.core.paper.level.skillLevel
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingAbilityListener
 import dev.slne.surf.skill.core.paper.skills.fishing.listeners.FishingSkillListener
+import dev.slne.surf.skill.core.paper.skills.rewards.dolphinsGracePotion
+import dev.slne.surf.skill.core.paper.skills.rewards.heartOfTheSea
+import dev.slne.surf.skill.core.paper.skills.rewards.lureBook
+import dev.slne.surf.skill.core.paper.skills.rewards.riptideBook
+import dev.slne.surf.skill.core.paper.skills.rewards.surfMendingBook
+import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.inventory.ItemType
 
 @AutoService(FishingSkill::class)
@@ -55,4 +64,44 @@ class FishingSkillImpl : AbstractSkill(
         )
     ),
     experienceCurve = StaticExperienceCurveSmall()
-), FishingSkill
+), FishingSkill {
+    override fun getExtraLevels(): ObjectList<SkillLevel> {
+        return objectListOf(
+            skillLevel(
+                skill = this,
+                level = 10,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(dolphinsGracePotion())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(heartOfTheSea())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 30,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(surfMendingBook())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 40,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(lureBook())))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 50,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(riptideBook())))
+                }
+            )
+        )
+    }
+}
