@@ -45,7 +45,7 @@ class CombatSkillImpl : AbstractSkill(
     abilities = objectListOf(
         SkillAbility(
             displayName = buildText { primary("Battle Hardened".toSmallCaps()) },
-            description = "Waffen und Rüstungen verlieren 0% → 50% weniger Haltbarkeit.",
+            description = "Waffen und Rüstungen verlieren 0% → 50% weniger Haltbarkeit",
             minLevel = 1,
             maxValue = 0.50,
             valueFormatter = SkillAbility.percentageFormatter()
