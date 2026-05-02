@@ -5,6 +5,7 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayer
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlin.jvm.Volatile
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -12,6 +13,7 @@ object SkillStatsHook {
     private val log = logger()
 
     private val snapshots = ConcurrentHashMap<UUID, Map<String, Int>>()
+    @Volatile
     private var flushJob: Job? = null
 
     suspend fun pushCurrent(player: SkillPlayer) {
