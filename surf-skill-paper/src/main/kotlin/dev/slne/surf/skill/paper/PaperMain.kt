@@ -8,6 +8,7 @@ import dev.slne.surf.skill.core.paper.PaperSkillInstance
 import dev.slne.surf.skill.core.paper.manager.skillManagerImpl
 import dev.slne.surf.skill.core.paper.settings.SettingsHook
 import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
+import dev.slne.surf.skill.core.paper.stats.hasStatsApi
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
 import dev.slne.surf.skill.paper.listener.StatsDiffSaveListener
@@ -34,13 +35,18 @@ class PaperMain : SuspendingJavaPlugin() {
             SettingsHook.registerSettings()
         }
 
-        StatsDiffSaveListener.start()
+        if (hasStatsApi()) {
+            StatsDiffSaveListener.start()
+        }
+
 
         skillCommand()
     }
 
     override suspend fun onDisableAsync() {
-        StatsDiffSaveListener.stop()
+        if (hasStatsApi()) {
+            StatsDiffSaveListener.stop()
+        }
 
         server.onlinePlayers.forEach { player ->
             val uuid = player.uniqueId

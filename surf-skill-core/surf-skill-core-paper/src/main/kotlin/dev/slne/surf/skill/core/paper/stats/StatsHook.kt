@@ -7,7 +7,9 @@ import dev.slne.surf.stats.api.SurfStatsApi
 import dev.slne.surf.stats.api.model.PlayerStats
 import dev.slne.surf.stats.api.model.StatEntry
 import it.unimi.dsi.fastutil.objects.ObjectList
+import kotlinx.coroutines.withTimeout
 import java.util.*
+import kotlin.time.Duration.Companion.seconds
 
 object StatsHook {
     private val CATEGORY = key("surf:skills")
@@ -16,9 +18,10 @@ object StatsHook {
         SurfStatsApi.saveStats(uuid, buildPlayerStats(uuid, experiences))
     }
 
-    suspend fun saveDiff(uuid: UUID, experiences: ObjectList<SkillExperience>) {
-        SurfStatsApi.saveDiffStats(uuid, buildPlayerStats(uuid, experiences))
-    }
+    suspend fun saveDiff(uuid: UUID, experiences: ObjectList<SkillExperience>) =
+        withTimeout(5.seconds) {
+            SurfStatsApi.saveDiffStats(uuid, buildPlayerStats(uuid, experiences))
+        }
 
     private fun buildPlayerStats(
         uuid: UUID,

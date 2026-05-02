@@ -10,10 +10,12 @@ import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
+import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingListener.isFullyGrown
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.block.BlockState
 import org.bukkit.block.data.Ageable
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
@@ -210,7 +212,7 @@ object ForagingListener : Listener {
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
 
-        if (!event.block.isFullyGrown()) {
+        if (!event.blockState.isFullyGrown()) {
             return
         }
 
@@ -249,6 +251,11 @@ object ForagingListener : Listener {
     }
 
     fun Block.isFullyGrown(): Boolean {
+        val data = blockData
+        return data !is Ageable || data.age >= data.maximumAge
+    }
+
+    fun BlockState.isFullyGrown(): Boolean {
         val data = blockData
         return data !is Ageable || data.age >= data.maximumAge
     }
