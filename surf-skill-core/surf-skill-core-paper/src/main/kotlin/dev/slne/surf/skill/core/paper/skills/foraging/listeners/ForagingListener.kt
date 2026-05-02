@@ -4,7 +4,6 @@ package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishBlockEvent
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
-import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
@@ -14,6 +13,7 @@ import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.block.data.Ageable
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
@@ -103,27 +103,27 @@ object ForagingListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    fun onPostTelekinesis(event: PostTelekinesisItemEvent) {
-        if (event.isCancelled) return
-
-        val xp = event.itemStack.amount
-        if (xp <= 0) {
-            return
-        }
-
-        if (event.itemStack.type !in ForagingXp.mine && event.itemStack.type !in ForagingXp.click) {
-            return
-        }
-
-        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
-            return
-        }
-
-        SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGH)
+//    fun onPostTelekinesis(event: PostTelekinesisItemEvent) {
+//        if (event.isCancelled) return
+//
+//        val xp = event.itemStack.amount
+//        if (xp <= 0) {
+//            return
+//        }
+//
+//        if (event.itemStack.type !in ForagingXp.mine && event.itemStack.type !in ForagingXp.click) {
+//            return
+//        }
+//
+//        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+//            return
+//        }
+//
+//        SkillInstance.launch {
+//            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
+//        }
+//    }
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onShearBlock(event: PlayerShearBlockEvent) {
@@ -164,6 +164,10 @@ object ForagingListener : Listener {
             return
         }
 
+        if (!event.harvestedBlock.isFullyGrown()) {
+            return
+        }
+
         val xp = ForagingXp.click[event.harvestedBlock.type]
             ?: event.itemsHarvested.sumOf { it.amount }
 
@@ -182,11 +186,12 @@ object ForagingListener : Listener {
             return
         }
 
+        if (!event.block.isFullyGrown()) {
+            return
+        }
+
         val player = event.player
         if (player.inventory.itemInMainHand.hasCustomEnchantment<ReplenishEnchantment>()) return
-
-        val data = event.blockState.blockData
-        if (data !is Ageable || data.age < data.maximumAge) return
 
         val xp = event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
@@ -199,6 +204,10 @@ object ForagingListener : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onReplenish(event: ReplenishBlockEvent) {
         if (event.isCancelled) return
+
+        if (!event.block.isFullyGrown()) {
+            return
+        }
 
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
@@ -216,6 +225,10 @@ object ForagingListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
+        if (!event.block.isFullyGrown()) {
+            return
+        }
+
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
@@ -228,5 +241,10 @@ object ForagingListener : Listener {
         SkillInstance.launch {
             event.player.skillPlayer().incrementExperience<ForagingSkill>(total)
         }
+    }
+
+    fun Block.isFullyGrown(): Boolean {
+        val data = blockData
+        return data !is Ageable || data.age >= data.maximumAge
     }
 }
