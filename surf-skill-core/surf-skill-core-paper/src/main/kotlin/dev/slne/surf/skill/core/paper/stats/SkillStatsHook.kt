@@ -39,14 +39,32 @@ object SkillStatsHook {
         if (!hasStatsApi()) {
             return
         }
-        // Implemented in Task 6.
+        snapshots[player.uuid] = snapshotOf(player)
     }
 
     suspend fun flushDiff(player: SkillPlayer) {
         if (!hasStatsApi()) {
             return
         }
-        // Implemented in Task 6.
+        val current = snapshotOf(player)
+        val deltas = mutableMapOf<String, Int>()
+        snapshots.compute(player.uuid) { _, previous ->
+            val computed = computeDeltas(current, previous ?: emptyMap())
+            deltas.putAll(computed)
+            current
+        }
+        if (deltas.isEmpty()) {
+            return
+        }
+        try {
+            SurfStatsApi.saveDiffStats(player.uuid, buildDiffStats(player, deltas))
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (exception: Exception) {
+            log.atWarning()
+                .withCause(exception)
+                .log("Failed to push surf-stats diff for ${player.uuid}")
+        }
     }
 
     suspend fun flushAllOnline() {
@@ -87,6 +105,34 @@ object SkillStatsHook {
         return player.experiences.associate { experience ->
             experience.skill.name to experience.currentExperience
         }
+    }
+
+    private fun buildDiffStats(player: SkillPlayer, deltas: Map<String, Int>): PlayerStats {
+        val entries = mutableListOf<StatEntry>()
+        for ((skillName, deltaXp) in deltas) {
+            val experience = player.experiences.firstOrNull { exp ->
+                exp.skill.name == skillName
+            } ?: continue
+            entries.add(
+                StatEntry(
+                    category = SkillStatsKeys.CATEGORY,
+                    key = SkillStatsKeys.xpKeyFor(skillName),
+                    value = deltaXp.toLong()
+                )
+            )
+            entries.add(
+                StatEntry(
+                    category = SkillStatsKeys.CATEGORY,
+                    key = SkillStatsKeys.levelKeyFor(skillName),
+                    value = experience.currentLevel.toLong()
+                )
+            )
+        }
+        return PlayerStats(
+            playerUuid = player.uuid,
+            serverName = SurfCoreApi.getCurrentServerName(),
+            stats = entries
+        )
     }
 
     private fun buildPlayerStats(player: SkillPlayer): PlayerStats {
