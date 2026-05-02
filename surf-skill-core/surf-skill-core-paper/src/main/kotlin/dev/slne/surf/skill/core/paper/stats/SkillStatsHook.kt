@@ -1,15 +1,21 @@
 package dev.slne.surf.skill.core.paper.stats
 
 import dev.slne.surf.api.core.util.logger
+import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.core.api.common.SurfCoreApi
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayer
+import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.stats.api.SurfStatsApi
 import dev.slne.surf.stats.api.model.PlayerStats
 import dev.slne.surf.stats.api.model.StatEntry
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlin.coroutines.coroutineContext
 import kotlin.jvm.Volatile
+import kotlin.time.Duration.Companion.minutes
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -70,14 +76,33 @@ object SkillStatsHook {
         if (!hasStatsApi()) {
             return
         }
-        // Implemented in Task 7.
+        for (online in server.onlinePlayers) {
+            val cached = SkillPlayerManager.getPlayerIfCached(online.uniqueId) ?: continue
+            flushDiff(cached)
+        }
     }
 
     fun startPeriodicFlush() {
         if (!hasStatsApi()) {
             return
         }
-        // Implemented in Task 7.
+        if (flushJob?.isActive == true) {
+            return
+        }
+        flushJob = SkillInstance.launch(SkillInstance.asyncDispatcher) {
+            while (coroutineContext.isActive) {
+                delay(5.minutes)
+                try {
+                    flushAllOnline()
+                } catch (cancellation: CancellationException) {
+                    throw cancellation
+                } catch (exception: Exception) {
+                    log.atWarning()
+                        .withCause(exception)
+                        .log("Periodic surf-stats diff flush failed")
+                }
+            }
+        }
     }
 
     fun stopPeriodicFlush() {
