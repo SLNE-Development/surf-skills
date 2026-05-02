@@ -1,6 +1,9 @@
 package dev.slne.surf.skill.paper
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
+import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.scope
+import dev.slne.surf.api.core.util.runAtFixedRate
 import dev.slne.surf.api.paper.inventory.framework.register
 import dev.slne.surf.skill.api.paper.level.reward.rewards.RewardGrantLogger
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
@@ -15,7 +18,9 @@ import dev.slne.surf.skill.paper.listener.StatsDiffSaveListener
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
 import dev.slne.surf.skill.paper.menu.skillView
 import dev.slne.surf.skill.paper.menu.skillsView
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
+import kotlin.time.Duration.Companion.minutes
 
 class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
@@ -39,6 +44,15 @@ class PaperMain : SuspendingJavaPlugin() {
             StatsDiffSaveListener.start()
         }
 
+        plugin.scope.runAtFixedRate(5.minutes) {
+            Bukkit.getOnlinePlayers().forEach { player ->
+                val uuid = player.uniqueId
+
+                launch {
+                    SkillPlayerManager.savePlayer(uuid)
+                }
+            }
+        }
 
         skillCommand()
     }
