@@ -233,6 +233,9 @@ object ForagingListener : Listener {
             return
         }
 
+        val data = event.blockState.blockData
+        if (data !is Ageable || data.age < data.maximumAge) return
+
         val xp = ForagingXp.mine[event.block.type] ?: return
         if (xp <= 0) return
 
