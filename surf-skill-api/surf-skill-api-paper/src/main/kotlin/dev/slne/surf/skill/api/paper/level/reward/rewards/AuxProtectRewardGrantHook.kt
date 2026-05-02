@@ -88,22 +88,30 @@ internal object AuxProtectRewardGrantHook {
         RewardDelivery.DROPPED -> rewardDroppedAction
     }
 
+    private fun escapeDetailValue(value: Any?): String = value
+        .toString()
+        .replace("\\", "\\\\")
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+        .replace(";", "\\;")
+        .replace("=", "\\=")
+
     private fun buildDetails(
         location: Location,
         itemStack: ItemStack,
         delivery: RewardDelivery
     ) = listOf(
-        "delivery=${delivery.name}",
-        "item=${itemStack.type.key.asString()}",
-        "amount=${itemStack.amount}",
-        "displayName=${plainTextSerializer.serialize(itemStack.displayName())}",
-        "enchantments=${formatEnchantments(itemStack)}",
-        "world=${location.world.name}",
-        "x=${location.x}",
-        "y=${location.y}",
-        "z=${location.z}",
-        "yaw=${location.yaw}",
-        "pitch=${location.pitch}"
+        "delivery=${escapeDetailValue(delivery.name)}",
+        "item=${escapeDetailValue(itemStack.type.key.asString())}",
+        "amount=${escapeDetailValue(itemStack.amount)}",
+        "displayName=${escapeDetailValue(plainTextSerializer.serialize(itemStack.displayName()))}",
+        "enchantments=${escapeDetailValue(formatEnchantments(itemStack))}",
+        "world=${escapeDetailValue(location.world.name)}",
+        "x=${escapeDetailValue(location.x)}",
+        "y=${escapeDetailValue(location.y)}",
+        "z=${escapeDetailValue(location.z)}",
+        "yaw=${escapeDetailValue(location.yaw)}",
+        "pitch=${escapeDetailValue(location.pitch)}"
     ).joinToString("; ")
 
     private fun formatEnchantments(itemStack: ItemStack): String {
