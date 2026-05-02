@@ -180,7 +180,9 @@ object ForagingListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onFarmlandHarvest(event: BlockDropItemEvent) {
-        if (event.isCancelled) return
+        if (event.isCancelled) {
+            return
+        }
 
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
@@ -192,6 +194,9 @@ object ForagingListener : Listener {
 
         val player = event.player
         if (player.inventory.itemInMainHand.hasCustomEnchantment<ReplenishEnchantment>()) return
+
+        val data = event.blockState.blockData
+        if (data !is Ageable || data.age < data.maximumAge) return
 
         val xp = event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
@@ -232,9 +237,6 @@ object ForagingListener : Listener {
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
             return
         }
-
-        val data = event.blockState.blockData
-        if (data !is Ageable || data.age < data.maximumAge) return
 
         val xp = ForagingXp.mine[event.block.type] ?: return
         if (xp <= 0) return
