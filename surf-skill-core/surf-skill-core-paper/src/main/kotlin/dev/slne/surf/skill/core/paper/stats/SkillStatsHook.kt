@@ -47,10 +47,9 @@ object SkillStatsHook {
             return
         }
         val current = snapshotOf(player)
-        val deltas = mutableMapOf<String, Int>()
+        var deltas: Map<String, Int> = emptyMap()
         snapshots.compute(player.uuid) { _, previous ->
-            val computed = computeDeltas(current, previous ?: emptyMap())
-            deltas.putAll(computed)
+            deltas = computeDeltas(current, previous ?: emptyMap())
             current
         }
         if (deltas.isEmpty()) {
@@ -107,17 +106,15 @@ object SkillStatsHook {
         }
     }
 
-    private fun buildDiffStats(player: SkillPlayer, deltas: Map<String, Int>): PlayerStats {
+    private fun buildPlayerStats(player: SkillPlayer): PlayerStats {
         val entries = mutableListOf<StatEntry>()
-        for ((skillName, deltaXp) in deltas) {
-            val experience = player.experiences.firstOrNull { exp ->
-                exp.skill.name == skillName
-            } ?: continue
+        for (experience in player.experiences) {
+            val skillName = experience.skill.name
             entries.add(
                 StatEntry(
                     category = SkillStatsKeys.CATEGORY,
                     key = SkillStatsKeys.xpKeyFor(skillName),
-                    value = deltaXp.toLong()
+                    value = experience.currentExperience.toLong()
                 )
             )
             entries.add(
@@ -135,15 +132,17 @@ object SkillStatsHook {
         )
     }
 
-    private fun buildPlayerStats(player: SkillPlayer): PlayerStats {
+    private fun buildDiffStats(player: SkillPlayer, deltas: Map<String, Int>): PlayerStats {
         val entries = mutableListOf<StatEntry>()
-        for (experience in player.experiences) {
-            val skillName = experience.skill.name
+        for ((skillName, deltaXp) in deltas) {
+            val experience = player.experiences.firstOrNull { exp ->
+                exp.skill.name == skillName
+            } ?: continue
             entries.add(
                 StatEntry(
                     category = SkillStatsKeys.CATEGORY,
                     key = SkillStatsKeys.xpKeyFor(skillName),
-                    value = experience.currentExperience.toLong()
+                    value = deltaXp.toLong()
                 )
             )
             entries.add(
