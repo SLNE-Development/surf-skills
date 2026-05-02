@@ -4,19 +4,17 @@ import dev.heliosares.auxprotect.AuxProtectPaper
 import dev.heliosares.auxprotect.api.AuxProtectAPI
 import dev.heliosares.auxprotect.database.DbEntry
 import dev.heliosares.auxprotect.database.EntryAction
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.EnchantmentStorageMeta
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.logging.Level
 
 internal object AuxProtectRewardGrantHook {
     private val plugin by lazy {
         JavaPlugin.getProvidingPlugin(AuxProtectRewardGrantHook::class.java)
     }
-    private val plainTextSerializer = PlainTextComponentSerializer.plainText()
 
     private lateinit var rewardInventoryAction: EntryAction
     private lateinit var rewardDroppedAction: EntryAction
@@ -31,7 +29,7 @@ internal object AuxProtectRewardGrantHook {
             }.onSuccess {
                 plugin.logger.info("Hooked into AuxProtect. Skill item rewards will now be logged.")
             }.onFailure { throwable ->
-                plugin.logger.warning("Failed to hook into AuxProtect: ${throwable.message}")
+                plugin.logger.log(Level.WARNING, "Failed to hook into AuxProtect", throwable)
             }
         }
     }
@@ -54,7 +52,7 @@ internal object AuxProtectRewardGrantHook {
                     )
                 )
             }.onFailure { throwable ->
-                plugin.logger.warning("Failed to write AuxProtect skill reward log entry: ${throwable.message}")
+                plugin.logger.log(Level.WARNING, "Failed to write AuxProtect skill reward log entry", throwable)
             }
         }
     }
@@ -88,48 +86,23 @@ internal object AuxProtectRewardGrantHook {
         RewardDelivery.DROPPED -> rewardDroppedAction
     }
 
-    private fun escapeDetailValue(value: Any?): String = value
-        .toString()
-        .replace("\\", "\\\\")
-        .replace("\n", "\\n")
-        .replace("\r", "\\r")
-        .replace(";", "\\;")
-        .replace("=", "\\=")
-
     private fun buildDetails(
         location: Location,
         itemStack: ItemStack,
         delivery: RewardDelivery
     ) = listOf(
-        "delivery=${escapeDetailValue(delivery.name)}",
-        "item=${escapeDetailValue(itemStack.type.key.asString())}",
-        "amount=${escapeDetailValue(itemStack.amount)}",
-        "displayName=${escapeDetailValue(plainTextSerializer.serialize(itemStack.displayName()))}",
-        "enchantments=${escapeDetailValue(formatEnchantments(itemStack))}",
-        "world=${escapeDetailValue(location.world.name)}",
-        "x=${escapeDetailValue(location.x)}",
-        "y=${escapeDetailValue(location.y)}",
-        "z=${escapeDetailValue(location.z)}",
-        "yaw=${escapeDetailValue(location.yaw)}",
-        "pitch=${escapeDetailValue(location.pitch)}"
+        "delivery=${escape(delivery.name)}",
+        "item=${escape(itemStack.type.key.asString())}",
+        "amount=${escape(itemStack.amount)}",
+        "displayName=${escape(RewardGrantLogFormatter.displayName(itemStack))}",
+        "enchantments=${escape(RewardGrantLogFormatter.formatEnchantments(itemStack))}",
+        "world=${escape(location.world.name)}",
+        "x=${escape(location.x)}",
+        "y=${escape(location.y)}",
+        "z=${escape(location.z)}",
+        "yaw=${escape(location.yaw)}",
+        "pitch=${escape(location.pitch)}"
     ).joinToString("; ")
 
-    private fun formatEnchantments(itemStack: ItemStack): String {
-        val enchantments = buildList {
-            itemStack.enchantments.entries
-                .sortedBy { it.key.key.asString() }
-                .forEach { (enchantment, level) ->
-                    add("${enchantment.key.asString()}:$level")
-                }
-
-            val storageMeta = itemStack.itemMeta as? EnchantmentStorageMeta ?: return@buildList
-            storageMeta.storedEnchants.entries
-                .sortedBy { it.key.key.asString() }
-                .forEach { (enchantment, level) ->
-                    add("stored:${enchantment.key.asString()}:$level")
-                }
-        }
-
-        return enchantments.joinToString(",")
-    }
+    private fun escape(value: Any?) = RewardGrantLogFormatter.escapeAuxProtectDetailValue(value)
 }
