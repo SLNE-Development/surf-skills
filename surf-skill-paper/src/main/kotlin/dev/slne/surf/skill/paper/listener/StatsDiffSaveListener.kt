@@ -26,7 +26,7 @@ object StatsDiffSaveListener {
 
     suspend fun start() {
         jobMutex.withLock {
-            job?.cancel()
+            job?.cancelAndJoin()
             job = plugin.launch {
                 delay(SAVE_INTERVAL)
                 while (isActive) {
