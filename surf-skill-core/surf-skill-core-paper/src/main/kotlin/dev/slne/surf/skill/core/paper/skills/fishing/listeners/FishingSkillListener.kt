@@ -1,14 +1,11 @@
 package dev.slne.surf.skill.core.paper.skills.fishing.listeners
 
-import dev.slne.surf.api.core.rarity.Rarity
-import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.FishingSkill
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
-import dev.slne.surf.skill.core.paper.skills.enchanting.EnchantmentRarityMap
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import org.bukkit.Material
 import org.bukkit.entity.EntityType
@@ -18,7 +15,6 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.inventory.meta.EnchantmentStorageMeta
 
 object FishingSkillListener : Listener {
     @EventHandler(priority = EventPriority.HIGH)
@@ -48,18 +44,18 @@ object FishingSkillListener : Listener {
 
         expToGive = (expToGive * event.expToDrop * 3)
 
-        if (meta is EnchantmentStorageMeta) {
-            val enchantments = meta.storedEnchants.toList().associateWith {
-                EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: Rarity.COMMON
-            }
-
-            expToGive += enchantments.map { (enchantmentLevel, rarity) ->
-                val (_, level) = enchantmentLevel
-                val rarityMap = EnchantmentRarityMap.getByEnchantmentRarity(rarity)
-
-                rarityMap.experience + level
-            }.sum()
-        }
+//        if (meta is EnchantmentStorageMeta) {
+//            val enchantments = meta.storedEnchants.toList().associateWith {
+//                EnchantmentManager.findByBukkitEnchantment(it.first)?.rarity ?: Rarity.COMMON
+//            }
+//
+//            expToGive += enchantments.map { (enchantmentLevel, rarity) ->
+//                val (_, level) = enchantmentLevel
+//                val rarityMap = EnchantmentRarityMap.getByEnchantmentRarity(rarity)
+//
+//                rarityMap.experience + level
+//            }.sum()
+//        }
 
         SkillInstance.launch {
             event.player.skillPlayer().incrementExperience<FishingSkill>(expToGive)
