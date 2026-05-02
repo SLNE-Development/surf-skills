@@ -8,6 +8,7 @@ import dev.slne.surf.skill.api.paper.player.SkillPlayer
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.experience.ExperienceService
 import dev.slne.surf.skill.core.paper.stats.StatsHook
+import dev.slne.surf.skill.core.paper.stats.hasStatsApi
 import net.kyori.adventure.util.Services
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -39,6 +40,10 @@ class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
 
     override suspend fun savePlayer(player: SkillPlayer) {
         ExperienceService.savePlayerExperience(player.uuid, player.experiences)
+
+        if (!hasStatsApi()) {
+            return
+        }
 
         runCatching {
             StatsHook.saveCurrent(player.uuid, player.experiences)

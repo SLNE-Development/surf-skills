@@ -7,22 +7,16 @@ import dev.slne.surf.stats.api.SurfStatsApi
 import dev.slne.surf.stats.api.model.PlayerStats
 import dev.slne.surf.stats.api.model.StatEntry
 import it.unimi.dsi.fastutil.objects.ObjectList
-import java.util.UUID
+import java.util.*
 
 object StatsHook {
     private val CATEGORY = key("surf:skills")
 
     suspend fun saveCurrent(uuid: UUID, experiences: ObjectList<SkillExperience>) {
-        if (!hasStatsApi()) {
-            return
-        }
         SurfStatsApi.saveStats(uuid, buildPlayerStats(uuid, experiences))
     }
 
     suspend fun saveDiff(uuid: UUID, experiences: ObjectList<SkillExperience>) {
-        if (!hasStatsApi()) {
-            return
-        }
         SurfStatsApi.saveDiffStats(uuid, buildPlayerStats(uuid, experiences))
     }
 
@@ -34,7 +28,11 @@ object StatsHook {
             val skillName = exp.skill.name
             listOf(
                 StatEntry(CATEGORY, key("surf:${skillName}_level"), exp.currentLevel.toLong()),
-                StatEntry(CATEGORY, key("surf:${skillName}_experience"), exp.currentExperience.toLong()),
+                StatEntry(
+                    CATEGORY,
+                    key("surf:${skillName}_experience"),
+                    exp.currentExperience.toLong()
+                ),
             )
         }
         return PlayerStats(uuid, SurfCoreApi.getCurrentServerName(), entries)

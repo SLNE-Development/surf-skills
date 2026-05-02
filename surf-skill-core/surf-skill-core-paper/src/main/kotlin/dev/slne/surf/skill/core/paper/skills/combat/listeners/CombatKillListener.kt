@@ -100,6 +100,8 @@ object CombatKillListener : Listener {
         if (killer == null) return
         val uuid = killer.uniqueId
 
+        val xp = xpMap[entity.type] ?: return
+
         if (!SkillLevelingHandler.canCollectExperience(killer, CombatSkill)) {
             return
         }
@@ -107,9 +109,7 @@ object CombatKillListener : Listener {
         SkillInstance.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
 
-            skillPlayer.incrementExperience<CombatSkill>(
-                xpMap.getOrDefault(entity.type, 1)
-            )
+            skillPlayer.incrementExperience<CombatSkill>(xp)
         }
     }
 
