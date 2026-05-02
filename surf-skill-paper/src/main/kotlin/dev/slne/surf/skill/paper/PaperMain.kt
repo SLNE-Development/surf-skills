@@ -9,6 +9,7 @@ import dev.slne.surf.skill.core.paper.manager.skillManagerImpl
 import dev.slne.surf.skill.core.paper.settings.SettingsHook
 import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
 import dev.slne.surf.skill.core.paper.stats.SkillStatsHook
+import dev.slne.surf.skill.core.paper.stats.hasStatsApi
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
@@ -35,22 +36,28 @@ class PaperMain : SuspendingJavaPlugin() {
         }
 
         skillCommand()
-        SkillStatsHook.startPeriodicFlush()
+        if (hasStatsApi()) {
+            SkillStatsHook.startPeriodicFlush()
+        }
     }
 
     override suspend fun onDisableAsync() {
-        SkillStatsHook.stopPeriodicFlush()
+        if (hasStatsApi()) {
+            SkillStatsHook.stopPeriodicFlush()
+        }
 
         server.onlinePlayers.forEach { player ->
             val uuid = player.uniqueId
 
-            val cached = SkillPlayerManager.getPlayerIfCached(uuid)
-            if (cached != null) {
-                SkillStatsHook.flushDiff(cached)
+            if (hasStatsApi()) {
+                val cached = SkillPlayerManager.getPlayerIfCached(uuid)
+                if (cached != null) {
+                    SkillStatsHook.flushDiff(cached)
+                }
+                SkillPlayerManager.savePlayer(uuid)
+                SkillPlayerManager.invalidatePlayer(uuid)
+                SkillStatsHook.dropSnapshot(uuid)
             }
-            SkillPlayerManager.savePlayer(uuid)
-            SkillPlayerManager.invalidatePlayer(uuid)
-            SkillStatsHook.dropSnapshot(uuid)
         }
 
         PaperSkillInstance.paperLoader.onDisable()

@@ -13,22 +13,19 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlin.jvm.Volatile
-import kotlin.time.Duration.Companion.minutes
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration.Companion.minutes
 
 object SkillStatsHook {
     private val log = logger()
 
     private val snapshots = ConcurrentHashMap<UUID, Map<String, Int>>()
+
     @Volatile
     private var flushJob: Job? = null
 
     suspend fun pushCurrent(player: SkillPlayer) {
-        if (!hasStatsApi()) {
-            return
-        }
         try {
             SurfStatsApi.saveStats(player.uuid, buildPlayerStats(player))
         } catch (cancellation: CancellationException) {
@@ -41,16 +38,10 @@ object SkillStatsHook {
     }
 
     fun seedSnapshot(player: SkillPlayer) {
-        if (!hasStatsApi()) {
-            return
-        }
         snapshots[player.uuid] = snapshotOf(player)
     }
 
     suspend fun flushDiff(player: SkillPlayer) {
-        if (!hasStatsApi()) {
-            return
-        }
         val current = snapshotOf(player)
         var deltas: Map<String, Int> = emptyMap()
         snapshots.compute(player.uuid) { _, previous ->
@@ -72,9 +63,6 @@ object SkillStatsHook {
     }
 
     suspend fun flushAllOnline() {
-        if (!hasStatsApi()) {
-            return
-        }
         for (online in server.onlinePlayers) {
             val cached = SkillPlayerManager.getPlayerIfCached(online.uniqueId) ?: continue
             flushDiff(cached)
@@ -82,9 +70,6 @@ object SkillStatsHook {
     }
 
     fun startPeriodicFlush() {
-        if (!hasStatsApi()) {
-            return
-        }
         if (flushJob?.isActive == true) {
             return
         }

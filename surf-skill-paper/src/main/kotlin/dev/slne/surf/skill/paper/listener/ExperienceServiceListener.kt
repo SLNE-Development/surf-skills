@@ -4,6 +4,7 @@ import com.github.shynixn.mccoroutine.folia.launch
 import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.stats.SkillStatsHook
+import dev.slne.surf.skill.core.paper.stats.hasStatsApi
 import dev.slne.surf.skill.paper.plugin
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -19,7 +20,10 @@ object ExperienceServiceListener : Listener {
 
         plugin.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(uuid)
-            SkillStatsHook.seedSnapshot(skillPlayer)
+
+            if (hasStatsApi()) {
+                SkillStatsHook.seedSnapshot(skillPlayer)
+            }
         }
     }
 
@@ -28,14 +32,16 @@ object ExperienceServiceListener : Listener {
         val player = event.player
         val uuid = player.uniqueId
 
-        plugin.launch {
-            val cached = SkillPlayerManager.getPlayerIfCached(uuid)
-            if (cached != null) {
-                SkillStatsHook.flushDiff(cached)
+        if (hasStatsApi()) {
+            plugin.launch {
+                val cached = SkillPlayerManager.getPlayerIfCached(uuid)
+                if (cached != null) {
+                    SkillStatsHook.flushDiff(cached)
+                }
+                SkillPlayerManager.savePlayer(uuid)
+                SkillPlayerManager.invalidatePlayer(uuid)
+                SkillStatsHook.dropSnapshot(uuid)
             }
-            SkillPlayerManager.savePlayer(uuid)
-            SkillPlayerManager.invalidatePlayer(uuid)
-            SkillStatsHook.dropSnapshot(uuid)
         }
     }
 
