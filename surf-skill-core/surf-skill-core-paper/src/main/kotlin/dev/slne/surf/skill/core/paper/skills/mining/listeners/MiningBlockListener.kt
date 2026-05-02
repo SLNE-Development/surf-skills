@@ -132,13 +132,13 @@ object MiningBlockListener : Listener {
 
         // --- MID ORES ---
         Material.IRON_ORE to 75,
-        Material.DEEPSLATE_IRON_ORE to 75,
-        Material.DEEPSLATE_COPPER_ORE to 75,
-        Material.AMETHYST_BLOCK to 75,
+        Material.DEEPSLATE_IRON_ORE to 95,
+        Material.DEEPSLATE_COPPER_ORE to 110,
+        Material.AMETHYST_BLOCK to 25,
 
         // --- SPECIAL MID ---
         Material.OBSIDIAN to 100,
-        Material.RAW_COPPER_BLOCK to 100,
+        Material.RAW_COPPER_BLOCK to 200,
 
         // --- HIGH ORES ---
         Material.LAPIS_ORE to 125,
@@ -151,7 +151,7 @@ object MiningBlockListener : Listener {
         Material.DEEPSLATE_GOLD_ORE to 200,
         Material.DIAMOND_ORE to 200,
         Material.DEEPSLATE_DIAMOND_ORE to 200,
-        Material.BUDDING_AMETHYST to 200,
+        Material.BUDDING_AMETHYST to 75,
         Material.RAW_IRON_BLOCK to 200,
 
         // --- EXTREME ---
