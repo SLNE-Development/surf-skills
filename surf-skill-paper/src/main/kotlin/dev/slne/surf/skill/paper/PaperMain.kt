@@ -44,7 +44,7 @@ class PaperMain : SuspendingJavaPlugin() {
             StatsDiffSaveListener.start()
         }
 
-        plugin.scope.runAtFixedRate(5.minutes) {
+        plugin.scope.runAtFixedRate(5.minutes, 5.minutes) {
             Bukkit.getOnlinePlayers().forEach { player ->
                 val uuid = player.uniqueId
 
