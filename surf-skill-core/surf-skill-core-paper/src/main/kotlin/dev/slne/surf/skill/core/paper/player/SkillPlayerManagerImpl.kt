@@ -3,15 +3,18 @@ package dev.slne.surf.skill.core.paper.player
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.google.auto.service.AutoService
 import com.sksamuel.aedile.core.asLoadingCache
+import dev.slne.surf.api.core.util.logger
 import dev.slne.surf.skill.api.paper.player.SkillPlayer
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.experience.ExperienceService
+import dev.slne.surf.skill.core.paper.stats.StatsHook
 import net.kyori.adventure.util.Services
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 @AutoService(SkillPlayerManager::class)
 class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
+    private val log = logger()
     private val syncCache = ConcurrentHashMap<UUID, SkillPlayer>()
 
     private val cache = Caffeine.newBuilder()
@@ -36,6 +39,14 @@ class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
 
     override suspend fun savePlayer(player: SkillPlayer) {
         ExperienceService.savePlayerExperience(player.uuid, player.experiences)
+
+        runCatching {
+            StatsHook.saveCurrent(player.uuid, player.experiences)
+        }.onFailure { ex ->
+            log.atWarning()
+                .withCause(ex)
+                .log("Failed to push current skill stats to surf-stats")
+        }
     }
 
     override fun invalidatePlayer(uuid: UUID) {
