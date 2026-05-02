@@ -35,11 +35,22 @@ class LevelItemRewards(
     override suspend fun grant(player: Player) {
         val notAddedItemStacks = mutableObjectListOf<ItemStack>()
 
-        itemStacks.forEach {
-            val notAdded = player.inventory.addItem(it)
+        itemStacks.forEach { itemStack ->
+            val notAdded = player.inventory.addItem(itemStack)
 
-            if (notAdded.isNotEmpty()) {
+            if (notAdded.isEmpty()) {
+                RewardGrantLogger.log(player, itemStack, RewardDelivery.INVENTORY)
+            } else {
                 notAddedItemStacks.addAll(notAdded.values)
+
+                val addedAmount = itemStack.amount - notAdded.values.sumOf { it.amount }
+                if (addedAmount > 0) {
+                    RewardGrantLogger.log(
+                        player,
+                        itemStack.asQuantity(addedAmount),
+                        RewardDelivery.INVENTORY
+                    )
+                }
             }
         }
 
@@ -49,6 +60,7 @@ class LevelItemRewards(
                 item.pickupDelay = 0
                 item.owner = player.uniqueId
             }
+            RewardGrantLogger.log(player, notAdded, RewardDelivery.DROPPED)
         }
 
         if (notAddedItemStacks.isNotEmpty()) {

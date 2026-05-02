@@ -2,6 +2,7 @@ package dev.slne.surf.skill.paper
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
 import dev.slne.surf.api.paper.inventory.framework.register
+import dev.slne.surf.skill.api.paper.level.reward.rewards.RewardGrantLogger
 import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.core.paper.PaperSkillInstance
 import dev.slne.surf.skill.core.paper.manager.skillManagerImpl
@@ -26,6 +27,7 @@ class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onEnableAsync() {
         skillManagerImpl.registerAllSkills()
         ListenerManager.register()
+        RewardGrantLogger.createAuxProtectHookIfAvailable()
 
         if (hasSettingsApi()) {
             SettingsHook.registerSettings()
