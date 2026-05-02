@@ -10,6 +10,7 @@ import dev.slne.surf.skill.core.paper.settings.SettingsHook
 import dev.slne.surf.skill.core.paper.settings.hasSettingsApi
 import dev.slne.surf.skill.paper.commands.skillCommand
 import dev.slne.surf.skill.paper.listener.ListenerManager
+import dev.slne.surf.skill.paper.listener.StatsDiffSaveListener
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
 import dev.slne.surf.skill.paper.menu.skillView
 import dev.slne.surf.skill.paper.menu.skillsView
@@ -33,10 +34,14 @@ class PaperMain : SuspendingJavaPlugin() {
             SettingsHook.registerSettings()
         }
 
+        StatsDiffSaveListener.start()
+
         skillCommand()
     }
 
     override suspend fun onDisableAsync() {
+        StatsDiffSaveListener.stop()
+
         server.onlinePlayers.forEach { player ->
             val uuid = player.uniqueId
 
