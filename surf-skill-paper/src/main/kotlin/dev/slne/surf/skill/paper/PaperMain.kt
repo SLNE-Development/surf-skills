@@ -52,6 +52,8 @@ class PaperMain : SuspendingJavaPlugin() {
                     SkillPlayerManager.savePlayer(uuid)
                 }
             }
+
+            logger.info("Saved skill ${Bukkit.getOnlinePlayers().size} skill players!")
         }
 
         skillCommand()
