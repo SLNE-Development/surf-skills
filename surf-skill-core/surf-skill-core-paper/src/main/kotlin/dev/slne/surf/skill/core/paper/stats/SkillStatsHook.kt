@@ -13,7 +13,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlin.coroutines.coroutineContext
 import kotlin.jvm.Volatile
 import kotlin.time.Duration.Companion.minutes
 import java.util.UUID
@@ -90,7 +89,7 @@ object SkillStatsHook {
             return
         }
         flushJob = SkillInstance.launch(SkillInstance.asyncDispatcher) {
-            while (coroutineContext.isActive) {
+            while (isActive) {
                 delay(5.minutes)
                 try {
                     flushAllOnline()
