@@ -36,6 +36,7 @@ internal object RewardGrantLogFormatter {
         .replace("\n", "\\n")
         .replace("\r", "\\r")
         .replace("|", "\\|")
+        .replace("=", "\\=")
 
     fun escapeAuxProtectDetailValue(value: Any?): String = value
         .toString()
