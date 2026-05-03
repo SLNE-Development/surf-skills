@@ -30,7 +30,7 @@ object StatsHook {
         val entries = experiences.flatMap { exp ->
             val skillName = exp.skill.name
             listOf(
-                StatEntry(CATEGORY, key("surf:${skillName}_level"), exp.currentLevel.toLong()),
+                StatEntry(CATEGORY, key("surf:${skillName}_level"), exp.currentLevel.toLong() - 1),
                 StatEntry(
                     CATEGORY,
                     key("surf:${skillName}_experience"),
