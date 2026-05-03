@@ -191,7 +191,11 @@ object ForagingListener : Listener {
             return
         }
 
-        if (!event.block.isFullyGrown()) {
+        if (!event.blockState.isFullyGrown()) {
+            return
+        }
+
+        if (event.blockState.type == Material.MANGROVE_PROPAGULE) {
             return
         }
 
