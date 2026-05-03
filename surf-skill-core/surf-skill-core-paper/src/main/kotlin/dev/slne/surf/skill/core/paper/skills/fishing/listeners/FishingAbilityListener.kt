@@ -68,7 +68,7 @@ object FishingAbilityListener : Listener {
     }
 
     private const val BIGGER_LUNGS_MIN_LEVEL = 21
-    private const val BIGGER_LUNGS_MAX_VALUE = 3.00
+    private const val BIGGER_LUNGS_MAX_VALUE = 3.0
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBiggerLungs(event: EntityAirChangeEvent) {
@@ -80,15 +80,19 @@ object FishingAbilityListener : Listener {
         if (newAir >= oldAir) return
 
         val level = AbilityUtil.getPlayerLevel<FishingSkill>(player)
-        val breathingBonus = AbilityUtil.calculateScaledValue(
-            level, BIGGER_LUNGS_MIN_LEVEL, maxValue = BIGGER_LUNGS_MAX_VALUE
+        val bonus = AbilityUtil.calculateScaledValue(
+            level,
+            BIGGER_LUNGS_MIN_LEVEL,
+            maxValue = BIGGER_LUNGS_MAX_VALUE
         )
 
-        if (breathingBonus <= 0.0) return
+        if (bonus <= 0.0) return
 
-        val airLoss = oldAir - newAir
-        val reducedLoss = (airLoss / (1.0 + breathingBonus)).toInt().coerceAtLeast(0)
-        event.amount = oldAir - reducedLoss
+        val chance = bonus / (1.0 + bonus)
+
+        if (Math.random() < chance) {
+            event.amount = oldAir
+        }
     }
 
     private fun getKiller(event: EntityDeathEvent): Player? {
