@@ -10,7 +10,6 @@ import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
-import dev.slne.surf.skill.core.paper.skills.foraging.listeners.ForagingListener.isFullyGrown
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Material
@@ -18,10 +17,12 @@ import org.bukkit.block.Block
 import org.bukkit.block.BlockState
 import org.bukkit.block.data.Ageable
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
+import org.bukkit.event.entity.EntityBreedEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
@@ -247,6 +248,21 @@ object ForagingListener : Listener {
 
         SkillInstance.launch {
             event.player.skillPlayer().incrementExperience<ForagingSkill>(total)
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    fun onBreed(event: EntityBreedEvent) {
+        if (event.isCancelled) return
+
+        val breeder = event.breeder as? Player ?: return
+
+        if (!SkillLevelingHandler.canCollectExperience(breeder, ForagingSkill)) {
+            return
+        }
+
+        SkillInstance.launch {
+            breeder.skillPlayer().incrementExperience<ForagingSkill>(event.experience * 10)
         }
     }
 
