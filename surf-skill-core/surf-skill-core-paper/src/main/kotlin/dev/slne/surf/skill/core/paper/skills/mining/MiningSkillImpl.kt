@@ -1,0 +1,131 @@
+@file:Suppress("UnstableApiUsage")
+
+package dev.slne.surf.skill.core.paper.skills.mining
+
+import com.google.auto.service.AutoService
+import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.api.core.messages.adventure.buildText
+import dev.slne.surf.api.core.util.objectListOf
+import dev.slne.surf.skill.api.paper.level.SkillLevel
+import dev.slne.surf.skill.api.paper.level.reward.rewards.LevelItemRewards
+import dev.slne.surf.skill.api.paper.skills.MiningSkill
+import dev.slne.surf.skill.core.paper.AbstractSkill
+import dev.slne.surf.skill.core.paper.ability.SkillAbility
+import dev.slne.surf.skill.core.paper.level.skillLevel
+import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningAbilityListener
+import dev.slne.surf.skill.core.paper.skills.mining.listeners.MiningBlockListener
+import dev.slne.surf.skill.core.paper.skills.rewards.enchantedBook
+import dev.slne.surf.skill.core.paper.skills.rewards.potionReward
+import dev.slne.surf.skill.core.paper.skills.rewards.rewardItem
+import dev.slne.surf.skill.core.paper.skills.rewards.surfEnchantment
+import it.unimi.dsi.fastutil.objects.ObjectList
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemType
+import org.bukkit.potion.PotionEffectType
+
+@AutoService(MiningSkill::class)
+class MiningSkillImpl : AbstractSkill(
+    name = "mining",
+    material = ItemType.GOLDEN_PICKAXE,
+    displayName = buildText {
+        primary("Mining".toSmallCaps())
+    },
+    lore = {
+        line {
+            spacer("Dieser Skill ermöglicht es dir, deine Bergbaukünste zu verbessern.")
+        }
+
+        line {
+            spacer("Baue schneller ab, finde wertvollere Erze und meistere die Tiefen der Erde.")
+        }
+    },
+    listeners = objectListOf(MiningBlockListener, MiningAbilityListener),
+    abilities = objectListOf(
+        SkillAbility(
+            displayName = buildText { primary("Skillful Extraction".toSmallCaps()) },
+            description = "Spitzhacken verlieren 0% → 50% weniger Haltbarkeit",
+            minLevel = 1,
+            maxValue = 0.50,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Spelunking".toSmallCaps()) },
+            description = "Erhalte eine 0% → 20% Chance, 2x Drops von Erzen zu erhalten",
+            minLevel = 11,
+            maxValue = 0.20,
+            valueFormatter = SkillAbility.percentageFormatter()
+        ),
+        SkillAbility(
+            displayName = buildText { primary("Dynamic Mining".toSmallCaps()) },
+            description = "Erhalte eine 0% → 1% Chance beim Abbauen von Stein oder Deepslate für 3 → 12 Sekunden Haste VIII zu erhalten",
+            minLevel = 21,
+            maxValue = 0.01,
+            valueFormatter = { value ->
+                // scale: maxDurationSeconds / maxChance = 12.0 / 0.01 = 1200.0
+                val durationSeconds = (value * DYNAMIC_MINING_DURATION_SCALE).coerceAtLeast(3.0)
+                "%.2f%% / %.1fs".format(value * 100, durationSeconds)
+            }
+        )
+    )
+), MiningSkill {
+    override fun getExtraLevels(): ObjectList<SkillLevel> {
+        return objectListOf(
+            skillLevel(
+                skill = this,
+                level = 10,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(rewardItem(ItemType.NETHERITE_INGOT))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 20,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(potionReward(
+                        name = "Haste Potion",
+                        color = 16701501,
+                        effectType = PotionEffectType.HASTE,
+                        amplifier = 9,
+                        duration = 24000
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 30,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = surfEnchantment("soulbound"),
+                        level = 1
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 40,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 6,
+                        special = true
+                    ))))
+                }
+            ),
+            skillLevel(
+                skill = this,
+                level = 50,
+                rewards = {
+                    add(LevelItemRewards(objectListOf(enchantedBook(
+                        enchantment = Enchantment.EFFICIENCY,
+                        level = 7,
+                        special = true
+                    ))))
+                }
+            )
+        )
+    }
+
+    companion object {
+        private const val DYNAMIC_MINING_DURATION_SCALE = 1200.0 // maxDurationSeconds / maxChance
+    }
+}

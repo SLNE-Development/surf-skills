@@ -1,11 +1,19 @@
+import dev.slne.surf.microservice.gradle.plugin.rabbit.RabbitModule
+
 plugins {
-    id("dev.slne.surf.api.gradle.paper-raw")
+    id("dev.slne.surf.api.gradle.standalone")
+    id("dev.slne.surf.microservice")
 }
 
 dependencies {
-    api(projects.surfSkillCore)
+    api(projects.surfSkillCore.surfSkillCoreCommon)
 }
 
-surfRawPaperApi {
-    withSurfDatabaseR2dbc("1.3.0", "dev.slne.surf.skill.libs.r2dbc")
+surfStandaloneApi {
+    withSurfDatabaseR2dbc("1.4.0", "dev.slne.surf.core.libs.database")
+}
+
+surfMicroservice {
+    withMicroserviceApi()
+    withRabbitModule(RabbitModule.SERVER_API, true)
 }

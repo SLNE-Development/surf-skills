@@ -1,14 +1,12 @@
 package dev.slne.surf.skill.paper.listener
 
 import com.github.shynixn.mccoroutine.folia.launch
-import dev.slne.surf.skill.api.player.SkillPlayerManager
+import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.paper.plugin
-import dev.slne.surf.api.paper.extensions.server
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.event.world.WorldSaveEvent
 
 object ExperienceServiceListener : Listener {
     @EventHandler
@@ -29,19 +27,6 @@ object ExperienceServiceListener : Listener {
         plugin.launch {
             SkillPlayerManager.savePlayer(uuid)
             SkillPlayerManager.invalidatePlayer(uuid)
-        }
-    }
-
-    @EventHandler
-    fun onWorldSave(event: WorldSaveEvent) {
-        if (event.world != server.worlds.first()) return
-
-        server.onlinePlayers.forEach { player ->
-            val uuid = player.uniqueId
-
-            plugin.launch {
-                SkillPlayerManager.savePlayer(uuid)
-            }
         }
     }
 }

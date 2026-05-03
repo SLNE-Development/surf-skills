@@ -1,11 +1,6 @@
 package dev.slne.surf.skill.paper.menu
 
-import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.experience.SkillExperience
-import dev.slne.surf.skill.api.manager.SkillManager
-import dev.slne.surf.skill.api.skills.*
-import dev.slne.surf.skill.core.experience.SkillExperienceImpl
-import dev.slne.surf.skill.paper.menu.utils.MenuHeads
+import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
 import dev.slne.surf.api.paper.inventory.framework.dsl.layoutSlot
@@ -18,7 +13,13 @@ import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
+import dev.slne.surf.skill.api.paper.manager.SkillManager
+import dev.slne.surf.skill.api.paper.skills.*
+import dev.slne.surf.skill.core.paper.experience.SkillExperienceImpl
+import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
+import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import it.unimi.dsi.fastutil.objects.ObjectList
 import me.devnatan.inventoryframework.context.RenderContext
 import org.bukkit.inventory.ItemStack
@@ -26,7 +27,7 @@ import java.util.*
 import kotlin.reflect.KClass
 
 
-val skillsView = surfView("Skills") {
+val skillsView: AbstractSurfView = surfView("Skills") {
     val playerUuidState = initialState<UUID>("player_uuid")
     val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
 
@@ -45,10 +46,10 @@ val skillsView = surfView("Skills") {
     onInit {
         layout {
             empty()
-            row(" M C F A ")
+            row(" C M W F ")
             empty()
-            row(" W E I N ")
-            row("    X    ")
+            row(" I E A N ")
+            row("    X   S")
         }
     }
 
@@ -104,6 +105,20 @@ val skillsView = surfView("Skills") {
         renderSlot(ExplorationSkill::class, 'E')
         renderSlot(FishingSkill::class, 'I')
         renderSlot(EnchantingSkill::class, 'N')
+
+        layoutSlot('S', viewIcon(ViewIconType.COG, ViewIconColor.YELLOW) {
+            displayName {
+                primary("Einstellungen".toSmallCaps())
+            }
+        }).onItemClick {
+            openForPlayer(
+                skillSettingsView,
+                mapOf(
+                    "player_uuid" to playerUuidState[this],
+                    "skill_progress" to skillExperienceState[this]
+                )
+            )
+        }
 
         layoutSlot('X', viewIcon(ViewIconType.CROSS, ViewIconColor.RED) {
             displayName {

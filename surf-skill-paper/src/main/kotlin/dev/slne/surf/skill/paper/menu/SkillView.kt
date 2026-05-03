@@ -2,22 +2,23 @@
 
 package dev.slne.surf.skill.paper.menu
 
-import dev.slne.surf.skill.api.Skill
-import dev.slne.surf.skill.api.experience.SkillExperience
+import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
 import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
 import dev.slne.surf.api.paper.inventory.framework.dsl.withItem
 import dev.slne.surf.api.paper.inventory.framework.view.*
 import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.header
+import dev.slne.surf.api.paper.inventory.framework.view.pagination.AbstractPaginatedSurfView
 import dev.slne.surf.api.paper.inventory.framework.view.pagination.pagination
 import dev.slne.surf.api.paper.inventory.framework.view.settings.PaginationViewRows
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
-import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.skill.api.paper.Skill
+import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import io.papermc.paper.datacomponent.DataComponentTypes
 
-val skillView = paginatedSurfView("aaa") {
+val skillView: AbstractPaginatedSurfView = paginatedSurfView("aaa") {
     val skillExperienceState = initialState<SkillExperience>("skill_progress")
 
     layoutTarget('L')
@@ -62,7 +63,7 @@ val skillView = paginatedSurfView("aaa") {
 
     onOpen {
         modifyContainer {
-            header(skillExperienceState[this].skill.name)
+            header(skillExperienceState[this].skill.niceName)
         }
     }
 }
