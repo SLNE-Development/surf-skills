@@ -12,7 +12,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.util.Vector
 
 object CombatAbilityListener : Listener {
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
@@ -80,7 +79,7 @@ object CombatAbilityListener : Listener {
     private const val REAPERS_FORTUNE_MIN_LEVEL = 11
     private const val REAPERS_FORTUNE_MAX_VALUE = 0.20
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun onReapersFortune(event: EntityDeathEvent) {
         val entity = event.entity
         if (entity !is Monster) return
@@ -93,10 +92,9 @@ object CombatAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val extraDrops = event.drops.map { it.clone() }
-            extraDrops.forEach { drop ->
-                entity.world.dropItem(entity.location, drop).velocity = Vector(0,0,0)
-            }
+            val drops = event.drops
+            val extraDrops = drops.map { it.clone() }
+            drops += extraDrops
         }
     }
 
