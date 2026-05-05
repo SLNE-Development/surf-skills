@@ -79,7 +79,7 @@ object CombatAbilityListener : Listener {
     private const val REAPERS_FORTUNE_MIN_LEVEL = 11
     private const val REAPERS_FORTUNE_MAX_VALUE = 0.20
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onReapersFortune(event: EntityDeathEvent) {
         val entity = event.entity
         if (entity !is Monster) return
