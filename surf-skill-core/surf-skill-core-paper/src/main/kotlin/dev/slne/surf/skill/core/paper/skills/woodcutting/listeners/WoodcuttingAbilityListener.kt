@@ -80,10 +80,9 @@ object WoodcuttingAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            event.items.forEach { item ->
-                val extra = item.itemStack.clone()
-                player.world.dropItemNaturally(item.location, extra)
-            }
+            val items = event.items
+
+            items += items
         }
     }
 
