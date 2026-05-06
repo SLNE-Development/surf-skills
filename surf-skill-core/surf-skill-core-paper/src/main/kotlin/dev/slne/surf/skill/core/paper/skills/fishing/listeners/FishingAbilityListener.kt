@@ -60,10 +60,10 @@ object FishingAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val extraDrops = event.drops.map { it.clone() }
-            extraDrops.forEach { drop ->
-                entity.world.dropItemNaturally(entity.location, drop)
-            }
+            val drops = event.drops
+            val extraDrops = drops.map { it.clone() }
+
+            drops += extraDrops
         }
     }
 
