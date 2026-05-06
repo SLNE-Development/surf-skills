@@ -2,6 +2,7 @@
 
 package dev.slne.surf.skill.core.paper.skills.mining.listeners
 
+import com.destroystokyo.paper.MaterialTags
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
@@ -49,6 +50,10 @@ object MiningAbilityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
+
+        if (!MaterialTags.ORES.isTagged(event.block.type)) {
+            return
+        }
 
         if (!event.block.isEligibleForExperience()) {
             return
