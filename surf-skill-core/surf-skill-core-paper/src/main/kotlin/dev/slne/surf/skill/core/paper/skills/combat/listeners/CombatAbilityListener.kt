@@ -12,7 +12,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.util.Vector
 
 object CombatAbilityListener : Listener {
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
@@ -93,10 +92,9 @@ object CombatAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val extraDrops = event.drops.map { it.clone() }
-            extraDrops.forEach { drop ->
-                entity.world.dropItem(entity.location, drop).velocity = Vector(0,0,0)
-            }
+            val drops = event.drops
+            val extraDrops = drops.map { it.clone() }
+            drops += extraDrops
         }
     }
 
