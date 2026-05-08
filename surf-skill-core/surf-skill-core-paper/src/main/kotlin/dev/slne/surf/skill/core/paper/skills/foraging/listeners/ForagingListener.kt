@@ -237,7 +237,7 @@ object ForagingListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!event.block.isFullyGrown()) {
+        if (!event.block.isFullyGrownIfAgable()) {
             return
         }
 
@@ -245,7 +245,7 @@ object ForagingListener : Listener {
             return
         }
 
-        val xp = ForagingXp.mine[event.block.type] ?: return
+        val xp = ForagingXp.mine[event.blockState.type] ?: return
         if (xp <= 0) return
 
         val total = event.items.sumOf { it.itemStack.amount } * xp
@@ -274,6 +274,9 @@ object ForagingListener : Listener {
         val data = blockData
         return data !is Ageable || data.age >= data.maximumAge
     }
+
+    fun Block.isFullyGrownIfAgable() =
+        blockData !is Ageable || (blockData as Ageable).age >= (blockData as Ageable).maximumAge
 
     fun BlockState.isFullyGrown(): Boolean {
         val data = blockData
