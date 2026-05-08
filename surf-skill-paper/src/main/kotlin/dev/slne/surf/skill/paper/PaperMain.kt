@@ -20,6 +20,8 @@ import dev.slne.surf.skill.paper.menu.skillView
 import dev.slne.surf.skill.paper.menu.skillsView
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.minutes
 
 class PaperMain : SuspendingJavaPlugin() {
@@ -45,16 +47,19 @@ class PaperMain : SuspendingJavaPlugin() {
         }
 
         plugin.scope.runAtFixedRate(5.minutes, 5.minutes) {
+            val saved = ConcurrentHashMap.newKeySet<UUID>()
+
             Bukkit.getOnlinePlayers().forEach { player ->
                 val uuid = player.uniqueId
 
                 launch {
                     SkillPlayerManager.savePlayer(uuid)
+                    saved.add(uuid)
                 }
             }
 
-            if (Bukkit.getOnlinePlayers().isNotEmpty()) {
-                logger.info("Saved ${Bukkit.getOnlinePlayers().size} skill players!")
+            if (saved.isNotEmpty()) {
+                logger.info("Saved ${saved.size} skill players!")
             }
         }
 
