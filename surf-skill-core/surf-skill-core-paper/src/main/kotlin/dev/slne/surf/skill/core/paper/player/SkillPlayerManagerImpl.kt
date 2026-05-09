@@ -41,7 +41,7 @@ class SkillPlayerManagerImpl : SkillPlayerManager, Services.Fallback {
     override suspend fun savePlayer(player: SkillPlayer) {
         ExperienceService.savePlayerExperience(player.uuid, player.experiences)
 
-        if (!hasStatsApi()) {
+        if (!hasStatsApi) {
             return
         }
 
