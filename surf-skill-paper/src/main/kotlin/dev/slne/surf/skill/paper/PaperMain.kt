@@ -18,11 +18,13 @@ import dev.slne.surf.skill.paper.listener.StatsDiffSaveListener
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
 import dev.slne.surf.skill.paper.menu.skillView
 import dev.slne.surf.skill.paper.menu.skillsView
+import kotlinx.coroutines.withTimeoutOrNull
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 class PaperMain : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
@@ -42,7 +44,7 @@ class PaperMain : SuspendingJavaPlugin() {
             SettingsHook.registerSettings()
         }
 
-        if (hasStatsApi()) {
+        if (hasStatsApi) {
             StatsDiffSaveListener.start()
         }
 
@@ -67,10 +69,13 @@ class PaperMain : SuspendingJavaPlugin() {
     }
 
     override suspend fun onDisableAsync() {
-        if (hasStatsApi()) {
-            StatsDiffSaveListener.stop()
+        if (hasStatsApi) {
+            withTimeoutOrNull(10.seconds) {
+                StatsDiffSaveListener.stop()
+            }
+                ?: logger.severe("Failed to save all skill player diffs before shutdown! Aborted after 10 seconds.")
         }
-
+        
         server.onlinePlayers.forEach { player ->
             val uuid = player.uniqueId
 

@@ -2,6 +2,8 @@
 
 package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishBlockEvent
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
@@ -10,8 +12,10 @@ import dev.slne.surf.skill.api.paper.player.SkillPlayerManager
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
+import dev.slne.surf.skill.core.paper.util.BlockExperienceHandler
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import io.papermc.paper.event.block.PlayerShearBlockEvent
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockState
@@ -21,11 +25,13 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityBreedEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerHarvestBlockEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
+import kotlin.time.Duration.Companion.seconds
 
 object ForagingListener : Listener {
     private object ForagingXp {
@@ -182,7 +188,7 @@ object ForagingListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    fun onFarmlandHarvest(event: BlockDropItemEvent) {
+    fun onBlockDropAgeable(event: BlockDropItemEvent) {
         if (event.isCancelled) {
             return
         }
@@ -205,9 +211,9 @@ object ForagingListener : Listener {
         val data = event.blockState.blockData
         if (data !is Ageable || data.age < data.maximumAge) return
 
-        val xp = event.items.sumOf { it.itemStack.amount }
+        val xp = ForagingXp.mine[event.blockState.type] ?: event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
-
+        
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
@@ -225,7 +231,7 @@ object ForagingListener : Listener {
             return
         }
 
-        val xp = event.items.sumOf { it.itemStack.amount }
+        val xp = ForagingXp.mine[event.blockState.type] ?: event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
 
         SkillInstance.launch {
@@ -234,7 +240,26 @@ object ForagingListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    fun onBlockBreak(event: BlockDropItemEvent) {
+    fun onBlockBreak(event: BlockBreakEvent) {
+        if (event.isCancelled) return
+
+        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+            return
+        }
+
+        locationsCache.put(
+            event.block.location,
+            BlockExperienceHandler.isEligibleForExperience(event.block)
+        )
+    }
+
+    private val locationsCache = Caffeine.newBuilder()
+        .maximumSize(10_000)
+        .expireAfterWrite(1.seconds)
+        .build<Location, Boolean>()
+
+    @EventHandler(priority = EventPriority.HIGH)
+    fun onBlockDrop(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
         if (!event.block.isFullyGrownIfAgable()) {
@@ -242,6 +267,10 @@ object ForagingListener : Listener {
         }
 
         if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
+            return
+        }
+
+        if (locationsCache.getIfPresent(event.block.location) == false) {
             return
         }
 
