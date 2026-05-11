@@ -213,7 +213,7 @@ object ForagingListener : Listener {
 
         val xp = ForagingXp.mine[event.blockState.type] ?: event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return
-        
+
         SkillInstance.launch {
             player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
@@ -277,10 +277,8 @@ object ForagingListener : Listener {
         val xp = ForagingXp.mine[event.blockState.type] ?: return
         if (xp <= 0) return
 
-        val total = event.items.sumOf { it.itemStack.amount } * xp
-
         SkillInstance.launch {
-            event.player.skillPlayer().incrementExperience<ForagingSkill>(total)
+            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
         }
     }
 
