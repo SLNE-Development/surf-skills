@@ -64,7 +64,7 @@ object CombatKillListener : Listener {
         EntityType.SNOW_GOLEM to 10,
         EntityType.CREEPER to 10,
         EntityType.PARCHED to 20,
-        EntityType.ZOMBIE_HORSE to 50,
+        EntityType.BOGGED to 20,
         EntityType.CAMEL_HUSK to 40,
         EntityType.NAUTILUS to 5,
         EntityType.ZOMBIE_NAUTILUS to 10,
