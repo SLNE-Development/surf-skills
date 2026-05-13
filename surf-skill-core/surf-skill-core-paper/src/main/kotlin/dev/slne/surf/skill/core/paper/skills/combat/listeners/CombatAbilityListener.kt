@@ -56,7 +56,8 @@ object CombatAbilityListener : Listener {
         Material.NETHERITE_LEGGINGS,
         Material.NETHERITE_BOOTS,
         Material.TURTLE_HELMET,
-        Material.SHIELD
+        Material.SHIELD,
+        Material.ELYTRA
     )
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
