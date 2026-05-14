@@ -1,6 +1,6 @@
 package dev.slne.surf.skill.paper.commands
 
-import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
+import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import dev.jorel.commandapi.arguments.AsyncPlayerProfileArgument
 import dev.jorel.commandapi.kotlindsl.*
@@ -26,7 +26,7 @@ fun skillCommand() = commandTree("skill") {
         plugin.launch {
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(player.uniqueId)
 
-            withContext(plugin.globalRegionDispatcher) {
+            withContext(plugin.entityDispatcher(player)) {
                 skillsView.open(
                     player, mapOf(
                         "skill_progress" to skillPlayer.experiences,
@@ -53,7 +53,7 @@ fun skillCommand() = commandTree("skill") {
 
             val skillPlayer = SkillPlayerManager.fetchOrCreatePlayer(target.uniqueId)
 
-            withContext(plugin.globalRegionDispatcher) {
+            withContext(plugin.entityDispatcher(player)) {
                 skillsView.open(
                     player, mapOf(
                         "skill_progress" to skillPlayer.experiences,

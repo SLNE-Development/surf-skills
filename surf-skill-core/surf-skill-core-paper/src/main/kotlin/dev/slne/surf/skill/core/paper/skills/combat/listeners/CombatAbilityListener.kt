@@ -1,5 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
+import dev.slne.surf.api.core.util.random
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.Material
@@ -12,6 +13,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
+import org.bukkit.loot.LootContext
 
 object CombatAbilityListener : Listener {
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
@@ -90,20 +92,39 @@ object CombatAbilityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onReapersFortune(event: EntityDeathEvent) {
         val entity = event.entity
-        if (entity !is Monster) return
+        if (entity !is Monster) {
+            return
+        }
 
         val killer = getKiller(event) ?: return
 
         val level = AbilityUtil.getPlayerLevel<CombatSkill>(killer)
         val chance = AbilityUtil.calculateScaledValue(
-            level, REAPERS_FORTUNE_MIN_LEVEL, maxValue = REAPERS_FORTUNE_MAX_VALUE
+            level,
+            REAPERS_FORTUNE_MIN_LEVEL,
+            maxValue = REAPERS_FORTUNE_MAX_VALUE
         )
 
-        if (AbilityUtil.rollChance(chance)) {
-            val drops = event.drops
-            val extraDrops = drops.map { it.clone() }
-            drops += extraDrops
+        if (!AbilityUtil.rollChance(chance)) {
+            return
         }
+
+        val lootTable = entity.lootTable ?: return
+
+        val context = LootContext.Builder(entity.location)
+            .killer(killer)
+            .lootedEntity(entity)
+            .build()
+
+        val rerolledDrops = lootTable.populateLoot(random, context)
+
+        val extraDrops = event.drops.filter { original ->
+            rerolledDrops.any { rerolled ->
+                rerolled.isSimilar(original)
+            }
+        }.map { it.clone() }
+
+        event.drops += extraDrops
     }
 
     private const val STRONG_IMPACT_MIN_LEVEL = 21
