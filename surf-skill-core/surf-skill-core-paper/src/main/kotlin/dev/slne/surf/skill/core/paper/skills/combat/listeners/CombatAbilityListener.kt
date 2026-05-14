@@ -1,5 +1,6 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
+import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.api.core.util.random
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
@@ -106,6 +107,7 @@ object CombatAbilityListener : Listener {
         )
 
         if (!AbilityUtil.rollChance(chance)) {
+            println("Reaper's Fortune did not trigger. Chance: $chance")
             return
         }
 
@@ -123,6 +125,13 @@ object CombatAbilityListener : Listener {
                 rerolled.isSimilar(original)
             }
         }.map { it.clone() }
+
+        println("DROPS: ${event.drops.size}, EXTRA DROPS: ${extraDrops.size}")
+
+        killer.sendText {
+            appendSuccessPrefix()
+            success("Extra Drops: ${extraDrops.joinToString { it.type.toString() }}")
+        }
 
         event.drops += extraDrops
     }
