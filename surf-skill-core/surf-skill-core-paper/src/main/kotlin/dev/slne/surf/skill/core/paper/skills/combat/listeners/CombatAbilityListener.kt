@@ -23,7 +23,14 @@ object CombatAbilityListener : Listener {
         Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE,
         Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE,
         Material.COPPER_AXE, Material.COPPER_SWORD,
-        Material.BOW, Material.CROSSBOW, Material.TRIDENT, Material.MACE
+        Material.BOW, Material.CROSSBOW, Material.TRIDENT, Material.MACE,
+        Material.COPPER_SPEAR,
+        Material.GOLDEN_SPEAR,
+        Material.DIAMOND_SPEAR,
+        Material.WOODEN_SPEAR,
+        Material.STONE_SPEAR,
+        Material.IRON_SPEAR,
+        Material.NETHERITE_SPEAR
     )
 
     private val ARMOR_TYPES = setOf(
@@ -56,7 +63,8 @@ object CombatAbilityListener : Listener {
         Material.NETHERITE_LEGGINGS,
         Material.NETHERITE_BOOTS,
         Material.TURTLE_HELMET,
-        Material.SHIELD
+        Material.SHIELD,
+        Material.ELYTRA
     )
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
