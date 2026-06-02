@@ -112,28 +112,6 @@ object ForagingListener : Listener {
         }
     }
 
-//    @EventHandler(priority = EventPriority.HIGH)
-//    fun onPostTelekinesis(event: PostTelekinesisItemEvent) {
-//        if (event.isCancelled) return
-//
-//        val xp = event.itemStack.amount
-//        if (xp <= 0) {
-//            return
-//        }
-//
-//        if (event.itemStack.type !in ForagingXp.mine && event.itemStack.type !in ForagingXp.click) {
-//            return
-//        }
-//
-//        if (!SkillLevelingHandler.canCollectExperience(event.player, ForagingSkill)) {
-//            return
-//        }
-//
-//        SkillInstance.launch {
-//            event.player.skillPlayer().incrementExperience<ForagingSkill>(xp)
-//        }
-//    }
-
     @EventHandler(priority = EventPriority.HIGH)
     fun onShearBlock(event: PlayerShearBlockEvent) {
         if (event.isCancelled) return
@@ -262,7 +240,7 @@ object ForagingListener : Listener {
     fun onBlockDrop(event: BlockDropItemEvent) {
         if (event.isCancelled) return
 
-        if (!event.block.isFullyGrownIfAgable()) {
+        if (!event.blockState.isFullyGrown()) {
             return
         }
 
