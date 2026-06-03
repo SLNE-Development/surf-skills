@@ -138,6 +138,7 @@ object MiningBlockListener : Listener {
 
         // --- SPECIAL MID ---
         Material.OBSIDIAN to 100,
+        Material.CRYING_OBSIDIAN to 200,
         Material.RAW_COPPER_BLOCK to 200,
 
         // --- HIGH ORES ---
