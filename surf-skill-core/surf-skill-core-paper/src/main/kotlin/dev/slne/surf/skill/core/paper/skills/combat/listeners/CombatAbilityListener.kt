@@ -1,20 +1,23 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
-import dev.slne.surf.api.core.util.random
+import dev.slne.surf.api.paper.nms.NmsUseWithCaution
+import dev.slne.surf.api.paper.nms.bridges.SurfPaperNmsLootTableBridge
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.Material
 import org.bukkit.entity.Monster
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
+import org.bukkit.entity.Wither
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.loot.LootContext
+import org.bukkit.inventory.ItemType
 
+@Suppress("UnstableApiUsage")
 object CombatAbilityListener : Listener {
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
     private const val BATTLE_HARDENED_MAX_VALUE = 0.50
@@ -105,26 +108,18 @@ object CombatAbilityListener : Listener {
             maxValue = REAPERS_FORTUNE_MAX_VALUE
         )
 
-        if (!AbilityUtil.rollChance(chance)) {
-            return
-        }
+        if (AbilityUtil.rollChance(chance)) {
+            @OptIn(NmsUseWithCaution::class)
+            event.drops += SurfPaperNmsLootTableBridge.rollLootTable(
+                entity,
+                event.damageSource,
+                true
+            )
 
-        val lootTable = entity.lootTable ?: return
-
-        val context = LootContext.Builder(entity.location)
-            .killer(killer)
-            .lootedEntity(entity)
-            .build()
-
-        val rerolledDrops = lootTable.populateLoot(random, context)
-
-        val extraDrops = event.drops.filter { original ->
-            rerolledDrops.any { rerolled ->
-                rerolled.isSimilar(original)
+            if (entity is Wither) { // Withers drop the nether star not through the loot table
+                event.drops += ItemType.NETHER_STAR.createItemStack()
             }
-        }.map { it.clone() }
-
-        event.drops += extraDrops
+        }
     }
 
     private const val STRONG_IMPACT_MIN_LEVEL = 21
