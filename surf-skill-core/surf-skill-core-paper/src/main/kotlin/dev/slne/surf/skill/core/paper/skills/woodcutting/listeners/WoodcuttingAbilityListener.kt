@@ -80,9 +80,9 @@ object WoodcuttingAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val items = event.items
+            val items = event.items.toList()
 
-            items += items
+            event.items += items
         }
     }
 

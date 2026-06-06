@@ -105,26 +105,11 @@ object CombatAbilityListener : Listener {
             maxValue = REAPERS_FORTUNE_MAX_VALUE
         )
 
-        if (!AbilityUtil.rollChance(chance)) {
-            return
+        if (AbilityUtil.rollChance(chance)) {
+            val items = event.drops.toList()
+
+            event.drops += items
         }
-
-        val lootTable = entity.lootTable ?: return
-
-        val context = LootContext.Builder(entity.location)
-            .killer(killer)
-            .lootedEntity(entity)
-            .build()
-
-        val rerolledDrops = lootTable.populateLoot(random, context)
-
-        val extraDrops = event.drops.filter { original ->
-            rerolledDrops.any { rerolled ->
-                rerolled.isSimilar(original)
-            }
-        }.map { it.clone() }
-
-        event.drops += extraDrops
     }
 
     private const val STRONG_IMPACT_MIN_LEVEL = 21
