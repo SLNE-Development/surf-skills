@@ -1,20 +1,23 @@
 package dev.slne.surf.skill.core.paper.skills.combat.listeners
 
-import dev.slne.surf.api.core.util.random
+import dev.slne.surf.api.paper.nms.NmsUseWithCaution
+import dev.slne.surf.api.paper.nms.bridges.SurfPaperNmsLootTableBridge
 import dev.slne.surf.skill.api.paper.skills.CombatSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import org.bukkit.Material
 import org.bukkit.entity.Monster
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
+import org.bukkit.entity.Wither
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
-import org.bukkit.loot.LootContext
+import org.bukkit.inventory.ItemType
 
+@Suppress("UnstableApiUsage")
 object CombatAbilityListener : Listener {
     private const val BATTLE_HARDENED_MIN_LEVEL = 1
     private const val BATTLE_HARDENED_MAX_VALUE = 0.50
@@ -106,9 +109,16 @@ object CombatAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val items = event.drops.toList()
+            @OptIn(NmsUseWithCaution::class)
+            event.drops += SurfPaperNmsLootTableBridge.rollLootTable(
+                entity,
+                event.damageSource,
+                true
+            )
 
-            event.drops += items
+            if (entity is Wither) { // Withers drop the nether star not through the loot table
+                event.drops += ItemType.NETHER_STAR.createItemStack()
+            }
         }
     }
 
