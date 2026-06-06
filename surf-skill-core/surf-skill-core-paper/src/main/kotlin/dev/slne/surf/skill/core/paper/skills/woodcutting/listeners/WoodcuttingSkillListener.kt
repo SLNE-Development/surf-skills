@@ -40,33 +40,33 @@ object WoodcuttingSkillListener : Listener {
     private val logExpMap = mapOf(
 
         // --- BASIC WOODS ---
-        Material.OAK_LOG to 30,
-        Material.BIRCH_LOG to 30,
-        Material.SPRUCE_LOG to 30,
-        Material.JUNGLE_LOG to 30,
-        Material.ACACIA_LOG to 30,
-        Material.DARK_OAK_LOG to 30,
-        Material.PALE_OAK_LOG to 30,
+        Material.OAK_LOG to 40,
+        Material.BIRCH_LOG to 40,
+        Material.SPRUCE_LOG to 40,
+        Material.JUNGLE_LOG to 40,
+        Material.ACACIA_LOG to 40,
+        Material.DARK_OAK_LOG to 40,
+        Material.PALE_OAK_LOG to 40,
 
-        Material.OAK_WOOD to 30,
-        Material.BIRCH_WOOD to 30,
-        Material.SPRUCE_WOOD to 30,
-        Material.JUNGLE_WOOD to 30,
-        Material.ACACIA_WOOD to 30,
-        Material.DARK_OAK_WOOD to 30,
-        Material.PALE_OAK_WOOD to 30,
+        Material.OAK_WOOD to 40,
+        Material.BIRCH_WOOD to 40,
+        Material.SPRUCE_WOOD to 40,
+        Material.JUNGLE_WOOD to 40,
+        Material.ACACIA_WOOD to 40,
+        Material.DARK_OAK_WOOD to 40,
+        Material.PALE_OAK_WOOD to 40,
 
         // --- SPECIAL WOODS ---
-        Material.MANGROVE_LOG to 40,
-        Material.CHERRY_LOG to 40,
-        Material.MANGROVE_WOOD to 40,
-        Material.CHERRY_WOOD to 40,
+        Material.MANGROVE_LOG to 55,
+        Material.CHERRY_LOG to 55,
+        Material.MANGROVE_WOOD to 55,
+        Material.CHERRY_WOOD to 55,
 
         // --- NETHER WOODS ---
-        Material.CRIMSON_STEM to 50,
-        Material.WARPED_STEM to 50,
+        Material.CRIMSON_STEM to 70,
+        Material.WARPED_STEM to 70,
 
-        Material.CRIMSON_HYPHAE to 50,
-        Material.WARPED_HYPHAE to 50
+        Material.CRIMSON_HYPHAE to 70,
+        Material.WARPED_HYPHAE to 70
     )
 }

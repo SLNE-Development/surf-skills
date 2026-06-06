@@ -121,39 +121,39 @@ object MiningBlockListener : Listener {
         Material.SMOOTH_BASALT to 6,
 
         // --- RARE NETHER BLOCKS ---
-        Material.GILDED_BLACKSTONE to 14,
+        Material.GILDED_BLACKSTONE to 20,
 
         // --- LOW ORES ---
-        Material.COAL_ORE to 40,
-        Material.COPPER_ORE to 40,
-        Material.NETHER_QUARTZ_ORE to 40,
-        Material.NETHER_GOLD_ORE to 40,
-        Material.GLOWSTONE to 40,
+        Material.COAL_ORE to 60,
+        Material.COPPER_ORE to 60,
+        Material.NETHER_QUARTZ_ORE to 60,
+        Material.NETHER_GOLD_ORE to 60,
+        Material.GLOWSTONE to 50,
 
         // --- MID ORES ---
-        Material.IRON_ORE to 75,
-        Material.DEEPSLATE_IRON_ORE to 95,
-        Material.DEEPSLATE_COPPER_ORE to 110,
-        Material.AMETHYST_BLOCK to 25,
+        Material.IRON_ORE to 110,
+        Material.DEEPSLATE_IRON_ORE to 140,
+        Material.DEEPSLATE_COPPER_ORE to 160,
+        Material.AMETHYST_BLOCK to 35,
 
         // --- SPECIAL MID ---
-        Material.OBSIDIAN to 100,
-        Material.CRYING_OBSIDIAN to 200,
-        Material.RAW_COPPER_BLOCK to 200,
+        Material.OBSIDIAN to 120,
+        Material.CRYING_OBSIDIAN to 240,
+        Material.RAW_COPPER_BLOCK to 250,
 
         // --- HIGH ORES ---
-        Material.LAPIS_ORE to 125,
-        Material.DEEPSLATE_LAPIS_ORE to 125,
-        Material.REDSTONE_ORE to 125,
-        Material.DEEPSLATE_REDSTONE_ORE to 125,
+        Material.LAPIS_ORE to 175,
+        Material.DEEPSLATE_LAPIS_ORE to 210,
+        Material.REDSTONE_ORE to 175,
+        Material.DEEPSLATE_REDSTONE_ORE to 210,
 
         // --- VERY HIGH ---
-        Material.GOLD_ORE to 200,
-        Material.DEEPSLATE_GOLD_ORE to 200,
-        Material.DIAMOND_ORE to 200,
-        Material.DEEPSLATE_DIAMOND_ORE to 200,
+        Material.GOLD_ORE to 280,
+        Material.DEEPSLATE_GOLD_ORE to 330,
+        Material.DIAMOND_ORE to 300,
+        Material.DEEPSLATE_DIAMOND_ORE to 360,
         Material.BUDDING_AMETHYST to 75,
-        Material.RAW_IRON_BLOCK to 200,
+        Material.RAW_IRON_BLOCK to 250,
 
         // --- EXTREME ---
         Material.ANCIENT_DEBRIS to 750,
