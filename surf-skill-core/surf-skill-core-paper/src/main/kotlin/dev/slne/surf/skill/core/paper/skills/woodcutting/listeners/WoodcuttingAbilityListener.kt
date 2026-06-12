@@ -6,6 +6,7 @@ import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.block.BlockType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -80,9 +81,11 @@ object WoodcuttingAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            val items = event.items.toList()
+            event.items.forEach {
+                it.world.dropItemNaturally(it.location, it.itemStack.clone())
+            }
 
-            event.items += items
+            player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 5)
         }
     }
 
