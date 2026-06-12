@@ -59,10 +59,9 @@ object ForagingAbilityListener : Listener {
 
         if (AbilityUtil.rollChance(chance)) {
             event.items.forEach {
-                it.world.dropItemNaturally(it.location, it.itemStack.clone())
+                it.world.dropItemNaturally(it.location, it.itemStack.clone()).pickupDelay = 0
             }
-
-            player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 5)
+            player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 30)
         }
     }
 
