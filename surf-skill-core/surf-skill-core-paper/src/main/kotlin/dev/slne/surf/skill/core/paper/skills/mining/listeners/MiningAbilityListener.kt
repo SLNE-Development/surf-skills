@@ -8,6 +8,7 @@ import dev.slne.surf.skill.core.paper.ability.AbilityUtil
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -51,6 +52,10 @@ object MiningAbilityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
+
+        if (player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            return
+        }
 
         if (!MaterialTags.ORES.isTagged(event.blockState.type)) {
             return
