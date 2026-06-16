@@ -5,7 +5,7 @@ package dev.slne.surf.skill.core.paper.skills.mining.listeners
 import com.destroystokyo.paper.MaterialTags
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
-import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.enchantments.Enchantment
@@ -61,7 +61,7 @@ object MiningAbilityListener : Listener {
             return
         }
 
-        if (!event.block.isEligibleForExperience()) {
+        if (!event.block.wasEligibleForExperience()) {
             return
         }
 

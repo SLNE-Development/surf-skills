@@ -14,6 +14,7 @@ import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.util.BlockExperienceHandler
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
+import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import io.papermc.paper.event.block.PlayerShearBlockEvent
 import org.bukkit.Location
 import org.bukkit.Material
@@ -188,6 +189,10 @@ object ForagingListener : Listener {
 
         val data = event.blockState.blockData
         if (data !is Ageable || data.age < data.maximumAge) return
+
+        if (!event.block.wasEligibleForExperience()) {
+            return
+        }
 
         val xp = ForagingXp.mine[event.blockState.type] ?: event.items.sumOf { it.itemStack.amount }
         if (xp <= 0) return

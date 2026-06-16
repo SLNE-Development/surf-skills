@@ -4,7 +4,7 @@ package dev.slne.surf.skill.core.paper.skills.woodcutting.listeners
 
 import dev.slne.surf.skill.api.paper.skills.WoodcuttingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
-import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.BlockType
@@ -73,7 +73,7 @@ object WoodcuttingAbilityListener : Listener {
         val blockType = event.blockState.type.asBlockType() ?: return
 
         if (blockType !in LOG_BLOCKS) return
-        if (!event.block.isEligibleForExperience()) return
+        if (!event.block.wasEligibleForExperience()) return
 
         val level = AbilityUtil.getPlayerLevel<WoodcuttingSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(

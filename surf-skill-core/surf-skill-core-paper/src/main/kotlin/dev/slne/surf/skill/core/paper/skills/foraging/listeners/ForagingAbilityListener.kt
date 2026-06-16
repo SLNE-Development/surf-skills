@@ -2,7 +2,7 @@ package dev.slne.surf.skill.core.paper.skills.foraging.listeners
 
 import dev.slne.surf.skill.api.paper.skills.ForagingSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
-import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
+import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.data.Ageable
@@ -49,7 +49,7 @@ object ForagingAbilityListener : Listener {
     fun onGreenThumb(event: BlockDropItemEvent) {
         val data = event.blockState.blockData
         if (data !is Ageable || data.age < data.maximumAge) return
-        if (!event.block.isEligibleForExperience()) return
+        if (!event.block.wasEligibleForExperience()) return
 
         val player = event.player
         val level = AbilityUtil.getPlayerLevel<ForagingSkill>(player)

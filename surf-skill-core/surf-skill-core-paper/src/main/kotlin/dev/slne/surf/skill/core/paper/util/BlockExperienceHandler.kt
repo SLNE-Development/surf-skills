@@ -63,6 +63,15 @@ object BlockExperienceHandler {
 
     fun isEligibleForExperience(block: Block) = !block.pdc().has(MODIFIED_BLOCK_KEY)
 
+    /**
+     * Resolves block eligibility for [BlockDropItemEvent]-based perks from the cached eligibility
+     * captured during [handleBlockBreak]. The block's current PDC state is unreliable here because
+     * [handleBlockBreak] marks the block eligible before that event fires.
+     */
+    fun wasEligibleForExperience(block: Block): Boolean {
+        return findCacheByBlock(block)?.value == true
+    }
+
     fun setEligibleForExperience(block: Block) {
         block.pdc().remove(MODIFIED_BLOCK_KEY)
     }
@@ -73,5 +82,6 @@ object BlockExperienceHandler {
 }
 
 fun Block.isEligibleForExperience() = BlockExperienceHandler.isEligibleForExperience(this)
+fun Block.wasEligibleForExperience() = BlockExperienceHandler.wasEligibleForExperience(this)
 fun Block.setEligibleForExperience() = BlockExperienceHandler.setEligibleForExperience(this)
 fun Block.setUneligibleForExperience() = BlockExperienceHandler.setUneligibleForExperience(this)
