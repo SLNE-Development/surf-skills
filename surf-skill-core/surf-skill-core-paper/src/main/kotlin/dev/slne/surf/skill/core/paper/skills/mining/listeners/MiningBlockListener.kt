@@ -109,6 +109,7 @@ object MiningBlockListener : Listener {
         Material.DIORITE to 5,
         Material.GRANITE to 5,
         Material.ANDESITE to 5,
+        Material.STONE_BRICKS to 5,
         Material.MOSSY_COBBLESTONE to 5,
         Material.MOSSY_STONE_BRICKS to 5,
 
