@@ -112,6 +112,7 @@ object MiningBlockListener : Listener {
         Material.STONE_BRICKS to 5,
         Material.MOSSY_COBBLESTONE to 5,
         Material.MOSSY_STONE_BRICKS to 5,
+        Material.DRIPSTONE_BLOCK to 5,
 
         // --- DEEP STONE / NETHER HARD ---
         Material.TUFF to 6,
