@@ -188,7 +188,7 @@ object MiningBlockListener : Listener {
 
         // --- END RARE ---
         Material.EMERALD_ORE to 2000,
-        Material.DEEPSLATE_COAL_ORE to 4000,
+        Material.DEEPSLATE_COAL_ORE to 3000,
         Material.DEEPSLATE_EMERALD_ORE to 30000
     )
 }
