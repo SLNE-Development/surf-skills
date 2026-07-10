@@ -145,6 +145,10 @@ object MiningBlockListener : Listener {
         // --- RARE NETHER BLOCKS ---
         Material.GILDED_BLACKSTONE to 20,
 
+        Material.SULFUR to 20,
+        Material.POTENT_SULFUR to 20,
+        Material.SULFUR_SPIKE to 30,
+
         // --- LOW ORES ---
         Material.COAL_ORE to 60,
         Material.COPPER_ORE to 60,
@@ -162,6 +166,7 @@ object MiningBlockListener : Listener {
         Material.OBSIDIAN to 120,
         Material.CRYING_OBSIDIAN to 240,
         Material.RAW_COPPER_BLOCK to 250,
+        Material.RAW_GOLD_BLOCK to 250,
 
         // --- HIGH ORES ---
         Material.LAPIS_ORE to 175,
