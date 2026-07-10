@@ -184,7 +184,7 @@ object MiningBlockListener : Listener {
         Material.RAW_IRON_BLOCK to 250,
 
         // --- EXTREME ---
-        Material.ANCIENT_DEBRIS to 750,
+        Material.ANCIENT_DEBRIS to 1000,
 
         // --- END RARE ---
         Material.EMERALD_ORE to 2000,
