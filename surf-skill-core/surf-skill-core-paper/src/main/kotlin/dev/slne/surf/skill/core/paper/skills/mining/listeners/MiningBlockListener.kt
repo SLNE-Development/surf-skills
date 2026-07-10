@@ -164,6 +164,7 @@ object MiningBlockListener : Listener {
 
         // --- SPECIAL MID ---
         Material.OBSIDIAN to 120,
+        Material.COAL_BLOCK to 200,
         Material.CRYING_OBSIDIAN to 240,
         Material.RAW_COPPER_BLOCK to 250,
         Material.RAW_GOLD_BLOCK to 250,
@@ -186,8 +187,8 @@ object MiningBlockListener : Listener {
         Material.ANCIENT_DEBRIS to 750,
 
         // --- END RARE ---
-        Material.EMERALD_ORE to 1000,
-        Material.DEEPSLATE_COAL_ORE to 2000,
-        Material.DEEPSLATE_EMERALD_ORE to 20000
+        Material.EMERALD_ORE to 2000,
+        Material.DEEPSLATE_COAL_ORE to 4000,
+        Material.DEEPSLATE_EMERALD_ORE to 30000
     )
 }
