@@ -148,6 +148,7 @@ object MiningBlockListener : Listener {
         Material.SULFUR to 20,
         Material.POTENT_SULFUR to 20,
         Material.SULFUR_SPIKE to 30,
+        Material.CINNABAR to 20,
 
         // --- LOW ORES ---
         Material.COAL_ORE to 60,
