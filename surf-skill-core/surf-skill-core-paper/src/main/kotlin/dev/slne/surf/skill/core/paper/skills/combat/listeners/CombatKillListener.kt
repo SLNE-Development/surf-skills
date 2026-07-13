@@ -69,6 +69,7 @@ object CombatKillListener : Listener {
         EntityType.NAUTILUS to 5,
         EntityType.ZOMBIE_NAUTILUS to 10,
 
+        EntityType.SULFUR_CUBE to 50,
 
         EntityType.BAT to 5,
         EntityType.VILLAGER to 5,
