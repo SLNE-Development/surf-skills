@@ -75,6 +75,7 @@ object CombatKillListener : Listener {
 
         EntityType.MAGMA_CUBE to 1,
         EntityType.SLIME to 1,
+        EntityType.SULFUR_CUBE to 1,
         EntityType.ENDERMITE to 1,
         EntityType.SILVERFISH to 1
     )

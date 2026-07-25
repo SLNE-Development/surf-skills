@@ -114,6 +114,10 @@ object MiningBlockListener : Listener {
         Material.MOSSY_STONE_BRICKS to 5,
         Material.DRIPSTONE_BLOCK to 5,
 
+        Material.SULFUR to 5,
+        Material.POTENT_SULFUR to 20,
+        Material.CINNABAR to 5,
+
         Material.TERRACOTTA to 5,
         Material.RED_TERRACOTTA to 5,
         Material.ORANGE_TERRACOTTA to 5,
@@ -144,11 +148,6 @@ object MiningBlockListener : Listener {
 
         // --- RARE NETHER BLOCKS ---
         Material.GILDED_BLACKSTONE to 20,
-
-        Material.SULFUR to 20,
-        Material.POTENT_SULFUR to 20,
-        Material.SULFUR_SPIKE to 30,
-        Material.CINNABAR to 20,
 
         // --- LOW ORES ---
         Material.COAL_ORE to 60,
