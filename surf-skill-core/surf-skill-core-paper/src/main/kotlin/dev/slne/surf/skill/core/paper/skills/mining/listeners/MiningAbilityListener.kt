@@ -9,6 +9,7 @@ import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Item
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -71,9 +72,13 @@ object MiningAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            event.items.forEach {
-                it.world.dropItemNaturally(it.location, it.itemStack.clone()).pickupDelay = 0
+            val additional = event.items.map { item ->
+                val location = item.location
+                location.world.createEntity(location, Item::class.java).also { copy ->
+                    copy.itemStack = item.itemStack.clone()
+                }
             }
+            event.items.addAll(additional)
             player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 30)
         }
     }
