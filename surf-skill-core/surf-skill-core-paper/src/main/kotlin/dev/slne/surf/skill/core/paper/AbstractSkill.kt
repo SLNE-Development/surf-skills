@@ -114,6 +114,13 @@ abstract class AbstractSkill(
                         appendNewInfoPrefixedLine()
                         info("  - ")
                         append(reward.displayName)
+
+                        val descriptionLines = LoreBuilder().apply(reward.description).build()
+                        descriptionLines.forEach { descriptionLine ->
+                            appendNewInfoPrefixedLine()
+                            spacer("  ")
+                            append(descriptionLine)
+                        }
                     }
                 }
 
