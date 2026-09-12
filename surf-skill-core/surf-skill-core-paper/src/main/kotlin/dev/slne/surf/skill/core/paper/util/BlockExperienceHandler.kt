@@ -26,8 +26,15 @@ object BlockExperienceHandler {
         .build<BlockBreakEvent, Boolean>()
 
     fun handleBlockPlace(event: BlockPlaceEvent) {
+        if (isAxeBlockModification(event)) {
+            return
+        }
+
         event.block.setUneligibleForExperience()
     }
+
+    private fun isAxeBlockModification(event: BlockPlaceEvent): Boolean =
+        event.itemInHand.type.name.endsWith("_AXE")
 
     fun handleBlockBreak(event: BlockBreakEvent) {
         val block = event.block
