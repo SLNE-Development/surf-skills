@@ -5,7 +5,6 @@ package dev.slne.surf.skill.paper.menu
 import dev.slne.surf.api.core.font.toSmallCaps
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
-import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
 import dev.slne.surf.api.paper.inventory.framework.dsl.withItem
 import dev.slne.surf.api.paper.inventory.framework.view.*
 import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.header
@@ -42,8 +41,6 @@ val skillView: AbstractPaginatedSurfView = paginatedSurfView("aaa") {
                 lore(level.buildLore(state))
 
                 setData(DataComponentTypes.MAX_STACK_SIZE, Skill.MAX_SKILL_LEVEL)
-            }.onItemClick {
-                // OPEN LEVEL INFO PAGE
             }
         }
     }

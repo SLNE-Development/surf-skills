@@ -1,20 +1,25 @@
 package dev.slne.surf.skill.paper.menu.settings
 
 import com.github.shynixn.mccoroutine.folia.launch
+import dev.slne.surf.api.core.messages.adventure.playSound
 import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.api.paper.builder.buildItem
 import dev.slne.surf.api.paper.builder.buildLore
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.view.*
 import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.blockRow
+import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIcon
+import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconColor
+import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.mutableState
 import dev.slne.surf.api.paper.inventory.framework.view.state.set
+import dev.slne.surf.api.paper.util.BukkitSound
 import dev.slne.surf.skill.core.paper.settings.SettingsHook
 import dev.slne.surf.skill.paper.plugin
 import org.bukkit.Material
 
-val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
+val skillSettingsView: AbstractSurfView = surfView("Skill Einstellungen") {
     val aState = mutableState(false)
     val bState = mutableState(false)
     val cState = mutableState(false)
@@ -40,7 +45,7 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
         layout(
             "         ",
             " A D B C ",
-            "         "
+            "X        "
         )
     }
 
@@ -63,6 +68,9 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
                 appendSuccessPrefix()
                 success("Du hast den Skill XP Sound " + if (aState[click]) "aktiviert." else "deaktiviert.")
             }
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
         }
 
         layoutSlot('B').renderWith { levelUpSoundItem(bState[this]) }.onClick { click ->
@@ -72,6 +80,9 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
             this.player.sendText {
                 appendSuccessPrefix()
                 success("Du hast den Level Up Sound " + if (bState[click]) "aktiviert." else "deaktiviert.")
+            }
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
             }
         }
 
@@ -83,6 +94,9 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
                 appendSuccessPrefix()
                 success("Du hast die Level Up Nachrichten " + if (cState[click]) "aktiviert." else "deaktiviert.")
             }
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
         }
 
         layoutSlot('D').renderWith { gainXpMessageItem(dState[this]) }.onClick { click ->
@@ -93,6 +107,20 @@ val skillSettingsView: AbstractSurfView = surfView("Einstellungen") {
                 appendSuccessPrefix()
                 success("Du hast die Skill XP Nachrichten " + if (dState[click]) "aktiviert." else "deaktiviert.")
             }
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
+        }
+
+        layoutSlot('X', ViewIcon(ViewIconType.CROSS, ViewIconColor.RED).build {
+            displayName {
+                error("Schließen")
+            }
+        }).onClick { click ->
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
+            click.back()
         }
     }
 

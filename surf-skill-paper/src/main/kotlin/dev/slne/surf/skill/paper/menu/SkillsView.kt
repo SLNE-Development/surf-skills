@@ -1,6 +1,7 @@
 package dev.slne.surf.skill.paper.menu
 
 import dev.slne.surf.api.core.font.toSmallCaps
+import dev.slne.surf.api.core.messages.adventure.playSound
 import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.api.paper.inventory.framework.dsl.layout
 import dev.slne.surf.api.paper.inventory.framework.dsl.layoutSlot
@@ -8,18 +9,19 @@ import dev.slne.surf.api.paper.inventory.framework.dsl.onItemClick
 import dev.slne.surf.api.paper.inventory.framework.dsl.openForPlayer
 import dev.slne.surf.api.paper.inventory.framework.view.*
 import dev.slne.surf.api.paper.inventory.framework.view.container.dsl.blockRow
+import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconColor
 import dev.slne.surf.api.paper.inventory.framework.view.icon.ViewIconType
 import dev.slne.surf.api.paper.inventory.framework.view.icon.viewIcon
 import dev.slne.surf.api.paper.inventory.framework.view.state.get
 import dev.slne.surf.api.paper.inventory.framework.view.state.initialState
+import dev.slne.surf.api.paper.util.BukkitSound
 import dev.slne.surf.skill.api.paper.Skill
 import dev.slne.surf.skill.api.paper.experience.SkillExperience
 import dev.slne.surf.skill.api.paper.manager.SkillManager
 import dev.slne.surf.skill.api.paper.skills.*
 import dev.slne.surf.skill.core.paper.experience.SkillExperienceImpl
 import dev.slne.surf.skill.paper.menu.settings.skillSettingsView
-import dev.slne.surf.skill.paper.menu.utils.MenuHeads
 import it.unimi.dsi.fastutil.objects.ObjectList
 import me.devnatan.inventoryframework.context.RenderContext
 import org.bukkit.inventory.ItemStack
@@ -27,29 +29,28 @@ import java.util.*
 import kotlin.reflect.KClass
 
 
-val skillsView: AbstractSurfView = surfView("Skills") {
+val skillsView: AbstractSurfView = surfView("Skillübersicht") {
     val playerUuidState = initialState<UUID>("player_uuid")
     val skillExperienceState = initialState<ObjectList<SkillExperience>>("skill_progress")
 
     settings {
         navigateBackOnOutsideClick(false)
+        rows(4)
     }
 
     containerDefaults {
         blockRow(1)
-        blockRow(2, exemptColumns = intArrayOf(1, 3, 5, 7))
-        blockRow(3)
-        blockRow(4, exemptColumns = intArrayOf(1, 3, 5, 7))
-        blockRow(5)
+        blockRow(2, exemptColumns = intArrayOf(2, 3, 4, 5, 6))
+        blockRow(3, exemptColumns = intArrayOf(2, 3, 4, 5, 6))
+        blockRow(4)
     }
 
     onInit {
         layout {
             empty()
-            row(" C M W F ")
-            empty()
-            row(" I E A N ")
-            row("    X   S")
+            row("  CMWFI  ")
+            row("  EAN    ")
+            row("X       S")
         }
     }
 
@@ -89,9 +90,9 @@ val skillsView: AbstractSurfView = surfView("Skills") {
 
     onFirstRender {
         layoutSlot('X') {
-            withItem(MenuHeads.CROSS.apply {
+            withItem(ViewIcon(ViewIconType.CROSS, ViewIconColor.RED).build {
                 displayName {
-                    primary("Schliessen".toSmallCaps())
+                    error("Schließen")
                 }
             })
         }
@@ -111,6 +112,9 @@ val skillsView: AbstractSurfView = surfView("Skills") {
                 primary("Einstellungen".toSmallCaps())
             }
         }).onItemClick {
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
             openForPlayer(
                 skillSettingsView,
                 mapOf(
@@ -126,6 +130,9 @@ val skillsView: AbstractSurfView = surfView("Skills") {
             }
         }).onItemClick {
             closeForPlayer()
+            this.player.playSound(true) {
+                type(BukkitSound.UI_BUTTON_CLICK)
+            }
         }
     }
 }
