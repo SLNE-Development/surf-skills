@@ -6,6 +6,7 @@ import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.data.Ageable
+import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -58,9 +59,14 @@ object ForagingAbilityListener : Listener {
         )
 
         if (AbilityUtil.rollChance(chance)) {
-            event.items.forEach {
-                it.world.dropItemNaturally(it.location, it.itemStack.clone()).pickupDelay = 0
+            val additionalDrops = event.items.map { original ->
+                original.world.createEntity(original.location, Item::class.java).apply {
+                    itemStack = original.itemStack.clone()
+                    pickupDelay = 0
+                }
             }
+            event.items += additionalDrops
+
             player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 30)
         }
     }
