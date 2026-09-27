@@ -50,25 +50,6 @@ object MiningAbilityListener : Listener {
     private const val SPELUNKING_MIN_LEVEL = 11
     private const val SPELUNKING_MAX_VALUE = 0.20
 
-    private val REPLACEABLE_SILK_ORES = setOf(
-        Material.COAL_ORE,
-        Material.DEEPSLATE_COAL_ORE,
-        Material.COPPER_ORE,
-        Material.DEEPSLATE_COPPER_ORE,
-        Material.IRON_ORE,
-        Material.DEEPSLATE_IRON_ORE,
-        Material.GOLD_ORE,
-        Material.DEEPSLATE_GOLD_ORE,
-        Material.REDSTONE_ORE,
-        Material.DEEPSLATE_REDSTONE_ORE,
-        Material.LAPIS_ORE,
-        Material.DEEPSLATE_LAPIS_ORE,
-        Material.DIAMOND_ORE,
-        Material.DEEPSLATE_DIAMOND_ORE,
-        Material.EMERALD_ORE,
-        Material.DEEPSLATE_EMERALD_ORE
-    )
-
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
@@ -79,7 +60,11 @@ object MiningAbilityListener : Listener {
             return
         }
 
-        if (silkTouch && type !in REPLACEABLE_SILK_ORES && !event.block.wasEligibleForExperience()) {
+        if (type == Material.ANCIENT_DEBRIS) {
+            if (!event.block.wasEligibleForExperience()) {
+                return
+            }
+        } else if (silkTouch) {
             return
         }
 
