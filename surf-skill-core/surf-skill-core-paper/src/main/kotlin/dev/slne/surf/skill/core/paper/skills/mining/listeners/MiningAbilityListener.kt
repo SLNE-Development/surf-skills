@@ -53,22 +53,26 @@ object MiningAbilityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
+        val type = event.blockState.type
+        val silkTouch = player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)
 
-        if (player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+        if (!MaterialTags.ORES.isTagged(type)) {
             return
         }
 
-        if (!MaterialTags.ORES.isTagged(event.blockState.type)) {
-            return
-        }
-
-        if (!event.block.wasEligibleForExperience()) {
+        if (type == Material.ANCIENT_DEBRIS) {
+            if (!event.block.wasEligibleForExperience()) {
+                return
+            }
+        } else if (silkTouch) {
             return
         }
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
-            level, SPELUNKING_MIN_LEVEL, maxValue = SPELUNKING_MAX_VALUE
+            level,
+            SPELUNKING_MIN_LEVEL,
+            maxValue = SPELUNKING_MAX_VALUE
         )
 
         if (AbilityUtil.rollChance(chance)) {
@@ -78,6 +82,7 @@ object MiningAbilityListener : Listener {
                     copy.itemStack = item.itemStack.clone()
                 }
             }
+
             event.items.addAll(additional)
             player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 30)
         }
