@@ -49,6 +49,20 @@ object MiningAbilityListener : Listener {
 
     private const val SPELUNKING_MIN_LEVEL = 11
     private const val SPELUNKING_MAX_VALUE = 0.20
+    private val SILK_ORES = listOf(
+        Material.DEEPSLATE_DIAMOND_ORE,
+        Material.DEEPSLATE_EMERALD_ORE,
+        Material.DEEPSLATE_GOLD_ORE,
+        Material.DEEPSLATE_IRON_ORE,
+        Material.DEEPSLATE_LAPIS_ORE,
+        Material.DEEPSLATE_REDSTONE_ORE,
+        Material.DIAMOND_ORE,
+        Material.EMERALD_ORE,
+        Material.GOLD_ORE,
+        Material.IRON_ORE,
+        Material.LAPIS_ORE,
+        Material.REDSTONE_ORE
+    )
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
@@ -62,7 +76,7 @@ object MiningAbilityListener : Listener {
             return
         }
 
-        if (!event.block.wasEligibleForExperience()) {
+        if (!event.block.wasEligibleForExperience() && event.blockState.type !in SILK_ORES) {
             return
         }
 
