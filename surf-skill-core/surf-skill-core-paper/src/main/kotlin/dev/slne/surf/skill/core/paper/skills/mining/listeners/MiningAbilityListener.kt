@@ -5,10 +5,11 @@ package dev.slne.surf.skill.core.paper.skills.mining.listeners
 import com.destroystokyo.paper.MaterialTags
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
+import dev.slne.surf.skill.core.paper.skills.mining.MiningRewardRules
+import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -54,17 +55,12 @@ object MiningAbilityListener : Listener {
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
         val type = event.blockState.type
-        val silkTouch = player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)
 
         if (!MaterialTags.ORES.isTagged(type)) {
             return
         }
 
-        if (type == Material.ANCIENT_DEBRIS) {
-            if (!event.block.wasEligibleForExperience()) {
-                return
-            }
-        } else if (silkTouch) {
+        if (!MiningRewardRules.isRewardable(player, type) { event.block.wasEligibleForExperience() }) {
             return
         }
 
@@ -107,6 +103,7 @@ object MiningAbilityListener : Listener {
         val blockType = event.block.type
 
         if (blockType !in STONE_TYPES) return
+        if (!MiningRewardRules.isRewardable(player, blockType) { event.block.isEligibleForExperience() }) return
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
