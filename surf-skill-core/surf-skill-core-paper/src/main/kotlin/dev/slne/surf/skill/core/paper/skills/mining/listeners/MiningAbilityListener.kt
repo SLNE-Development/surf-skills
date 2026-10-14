@@ -5,10 +5,11 @@ package dev.slne.surf.skill.core.paper.skills.mining.listeners
 import com.destroystokyo.paper.MaterialTags
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
 import dev.slne.surf.skill.core.paper.ability.AbilityUtil
+import dev.slne.surf.skill.core.paper.skills.mining.MiningRewardRules
+import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import dev.slne.surf.skill.core.paper.util.wasEligibleForExperience
 import org.bukkit.Material
 import org.bukkit.Particle
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Item
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -53,22 +54,21 @@ object MiningAbilityListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onSpelunking(event: BlockDropItemEvent) {
         val player = event.player
+        val type = event.blockState.type
 
-        if (player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+        if (!MaterialTags.ORES.isTagged(type)) {
             return
         }
 
-        if (!MaterialTags.ORES.isTagged(event.blockState.type)) {
-            return
-        }
-
-        if (!event.block.wasEligibleForExperience()) {
+        if (!MiningRewardRules.isRewardable(player, type) { event.block.wasEligibleForExperience() }) {
             return
         }
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
-            level, SPELUNKING_MIN_LEVEL, maxValue = SPELUNKING_MAX_VALUE
+            level,
+            SPELUNKING_MIN_LEVEL,
+            maxValue = SPELUNKING_MAX_VALUE
         )
 
         if (AbilityUtil.rollChance(chance)) {
@@ -78,6 +78,7 @@ object MiningAbilityListener : Listener {
                     copy.itemStack = item.itemStack.clone()
                 }
             }
+
             event.items.addAll(additional)
             player.spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, event.block.location, 30)
         }
@@ -102,6 +103,7 @@ object MiningAbilityListener : Listener {
         val blockType = event.block.type
 
         if (blockType !in STONE_TYPES) return
+        if (!MiningRewardRules.isRewardable(player, blockType) { event.block.isEligibleForExperience() }) return
 
         val level = AbilityUtil.getPlayerLevel<MiningSkill>(player)
         val chance = AbilityUtil.calculateScaledValue(
