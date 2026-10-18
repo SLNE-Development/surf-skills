@@ -47,6 +47,7 @@ object WoodcuttingSkillListener : Listener {
         Material.ACACIA_LOG to 40,
         Material.DARK_OAK_LOG to 40,
         Material.PALE_OAK_LOG to 40,
+        Material.POPLAR_LOG to 40,
 
         Material.OAK_WOOD to 40,
         Material.BIRCH_WOOD to 40,
@@ -55,6 +56,7 @@ object WoodcuttingSkillListener : Listener {
         Material.ACACIA_WOOD to 40,
         Material.DARK_OAK_WOOD to 40,
         Material.PALE_OAK_WOOD to 40,
+        Material.POPLAR_WOOD to 40,
 
         // --- SPECIAL WOODS ---
         Material.MANGROVE_LOG to 55,
