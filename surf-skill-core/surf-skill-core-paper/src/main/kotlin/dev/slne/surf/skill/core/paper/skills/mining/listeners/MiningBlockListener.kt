@@ -8,7 +8,6 @@ import dev.slne.surf.skill.api.paper.SkillInstance
 import dev.slne.surf.skill.api.paper.player.incrementExperience
 import dev.slne.surf.skill.api.paper.player.skillPlayer
 import dev.slne.surf.skill.api.paper.skills.MiningSkill
-import dev.slne.surf.skill.core.paper.skills.mining.MiningRewardRules
 import dev.slne.surf.skill.core.paper.util.SkillLevelingHandler
 import dev.slne.surf.skill.core.paper.util.isEligibleForExperience
 import org.bukkit.Material
@@ -52,7 +51,7 @@ object MiningBlockListener : Listener {
 
         var exp = blockExpMap[block.type] ?: return
 
-        if (!MiningRewardRules.isRewardable(player, block.type) { block.isEligibleForExperience() }) {
+        if (!block.isEligibleForExperience()) {
             return
         }
 
