@@ -23,7 +23,7 @@ surfPaperPluginApi {
             loadOrder = PaperPluginDescription.RelativeLoadOrder.BEFORE
         )
         registerRequired("surf-rabbitmq-paper")
-        registerSoft("surf-settings-paper")
+        registerSoft("surf-player-paper")
         registerSoft("AuxProtect")
         registerSoft("surf-stats-paper")
     }
