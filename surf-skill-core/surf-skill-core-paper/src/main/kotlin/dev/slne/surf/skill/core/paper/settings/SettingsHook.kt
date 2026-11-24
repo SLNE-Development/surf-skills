@@ -1,8 +1,8 @@
 package dev.slne.surf.skill.core.paper.settings
 
 import dev.slne.surf.api.paper.util.namespacedKey
-import dev.slne.surf.settings.api.SurfSettingsApi
-import dev.slne.surf.settings.api.setting.SettingKey
+import dev.slne.surf.player.api.settings.SurfSettingsApi
+import dev.slne.surf.player.api.settings.setting.SettingKey
 import java.util.*
 
 object SettingsHook {
